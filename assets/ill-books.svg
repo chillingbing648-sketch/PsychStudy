@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 160" fill="none" class="ill-books-svg">
+  <defs>
+    <!-- Book 1 (Bottom) Purple -->
+    <linearGradient id="bookCover1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#3730A3"/>
+    </linearGradient>
+    <!-- Book 2 (Middle) Violet -->
+    <linearGradient id="bookCover2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#6D28D9"/>
+    </linearGradient>
+    <!-- Book 3 (Top) Sky/Indigo -->
+    <linearGradient id="bookCover3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#4338CA" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- Ambient Shadow -->
+  <ellipse cx="90" cy="145" rx="70" ry="10" fill="#312E81" opacity="0.12"/>
+
+  <!-- BOOK 1 (Bottom, Spine facing left, pages right) -->
+  <g filter="url(#softShadow)">
+    <rect x="25" y="112" width="130" height="24" rx="4" fill="url(#bookCover1)"/>
+    <rect x="35" y="115" width="118" height="18" rx="2" fill="#F8FAFC"/>
+    <!-- Page lines -->
+    <line x1="38" y1="120" x2="150" y2="120" stroke="#E2E8F0" stroke-width="1.5"/>
+    <line x1="38" y1="124" x2="148" y2="124" stroke="#CBD5E1" stroke-width="1.5"/>
+    <line x1="38" y1="128" x2="150" y2="128" stroke="#E2E8F0" stroke-width="1.5"/>
+    <!-- Spine Accent -->
+    <rect x="23" y="112" width="12" height="24" rx="3" fill="#3730A3"/>
+    <line x1="28" y1="116" x2="28" y2="132" stroke="#A5B4FC" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- BOOK 2 (Middle, slightly angled or offset) -->
+  <g filter="url(#softShadow)">
+    <rect x="35" y="86" width="115" height="22" rx="4" fill="url(#bookCover2)"/>
+    <rect x="43" y="89" width="105" height="16" rx="2" fill="#F8FAFC"/>
+    <line x1="46" y1="94" x2="145" y2="94" stroke="#E2E8F0" stroke-width="1.5"/>
+    <line x1="46" y1="98" x2="142" y2="98" stroke="#CBD5E1" stroke-width="1.5"/>
+    <!-- Ribbon Bookmark -->
+    <path d="M125 105 L 125 125 L 130 120 L 135 125 L 135 105 Z" fill="#F59E0B"/>
+    <rect x="33" y="86" width="10" height="22" rx="2.5" fill="#5B21B6"/>
+  </g>
+
+  <!-- BOOK 3 (Top) -->
+  <g filter="url(#softShadow)">
+    <rect x="48" y="62" width="98" height="20" rx="3.5" fill="url(#bookCover3)"/>
+    <rect x="54" y="65" width="90" height="14" rx="2" fill="#F8FAFC"/>
+    <line x1="57" y1="70" x2="140" y2="70" stroke="#E2E8F0" stroke-width="1.5"/>
+    <line x1="57" y1="74" x2="138" y2="74" stroke="#CBD5E1" stroke-width="1.5"/>
+    <!-- Spine badge -->
+    <rect x="46" y="62" width="8" height="20" rx="2" fill="#0369A1"/>
+  </g>
+
+  <!-- Floating Sparkles / Bookmark Leaf -->
+  <circle cx="152" cy="55" r="3" fill="#A855F7" opacity="0.8"/>
+  <circle cx="36" cy="72" r="2" fill="#38BDF8" opacity="0.7"/>
+  <circle cx="160" cy="90" r="2.5" fill="#818CF8" opacity="0.6"/>
+  <!-- Minimal Botanical Twig on top of books -->
+  <path d="M90 62 Q 105 45 125 38" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  <path d="M102 52 C 92 46 95 36 106 38 C 112 44 108 50 102 52 Z" fill="#C084FC" opacity="0.8"/>
+  <path d="M115 45 C 122 35 130 38 128 48 C 122 49 118 47 115 45 Z" fill="#A855F7" opacity="0.85"/>
+</svg>

@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>PsychStudy — The Clinical Atlas</title>
+  <meta name="description" content="The Clinical Atlas: An authoritative clinical psychology study environment, functional neuroanatomy atlas, active recall engine, and university examination suite aligned with DSM-5-TR and ICD-11."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/png" href="Minimal White Brain Sprout Icon.png"/>
+  <link rel="apple-touch-icon" href="Minimal White Brain Sprout Icon.png"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ░░░ SVG SPRITE DEFINITIONS ░░░ -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;" aria-hidden="true">
+  <defs>
+    <!-- Brand / Atlas Glyph -->
+    <symbol id="ps-icon-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2a4 4 0 0 0-4 4v1H7a4 4 0 0 0-4 4 4 4 0 0 0 1.5 3.2A4.5 4.5 0 0 0 4 18a4 4 0 0 0 4 4h4"></path>
+      <path d="M12 2a4 4 0 0 1 4 4v1h1a4 4 0 0 1 4 4 4 4 0 0 1-1.5 3.2A4.5 4.5 0 0 1 20 18a4 4 0 0 1-4 4h-4"></path>
+      <line x1="12" y1="2" x2="12" y2="22"></line>
+    </symbol>
+
+    <!-- Nav & Core Tools -->
+    <symbol id="ps-icon-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect>
+    </symbol>
+    <symbol id="ps-icon-study" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+    </symbol>
+    <symbol id="ps-icon-cards" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline>
+    </symbol>
+    <symbol id="ps-icon-quiz" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+    </symbol>
+    <symbol id="ps-icon-exam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M9 14h6"></path><path d="M9 18h6"></path><path d="M9 10h1"></path>
+    </symbol>
+    <symbol id="ps-icon-notes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line>
+    </symbol>
+    <symbol id="ps-icon-explore" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+    </symbol>
+    <symbol id="ps-icon-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z"></path>
+      <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z"></path>
+    </symbol>
+    <symbol id="ps-icon-constellation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+    </symbol>
+    <symbol id="ps-icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+    </symbol>
+    <symbol id="ps-icon-lexicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="9" y1="7" x2="15" y2="7"></line><line x1="9" y1="11" x2="13" y2="11"></line>
+    </symbol>
+    <symbol id="ps-icon-support" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </symbol>
+    <symbol id="ps-icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </symbol>
+    <symbol id="ps-icon-theme" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </symbol>
+    <symbol id="ps-icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1-2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </symbol>
+    <symbol id="ps-icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+    </symbol>
+    <symbol id="ps-icon-timer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 15 15"></polyline>
+    </symbol>
+    <symbol id="ps-icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </symbol>
+    <symbol id="ps-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+    </symbol>
+    <symbol id="ps-icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </symbol>
+    <symbol id="ps-icon-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline>
+    </symbol>
+    <symbol id="ps-icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
+    </symbol>
+    <symbol id="ps-icon-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline>
+    </symbol>
+    <symbol id="ps-icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="17" x2="12" y2="22"></line><path d="M5 17h14v-2l-2-2V5a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v8l-2 2v2z"></path>
+    </symbol>
+    <symbol id="ps-icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+    </symbol>
+    <symbol id="ps-icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+    </symbol>
+    <symbol id="ps-icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line>
+    </symbol>
+    <symbol id="ps-icon-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
+    </symbol>
+    <symbol id="ps-icon-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+    </symbol>
+    <symbol id="ps-icon-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+    </symbol>
+
+    <!-- Volume Category Symbols (Domain Badges) -->
+    <symbol id="ps-icon-vol-foundations" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line><line x1="10" y1="4" x2="10" y2="20"></line>
+    </symbol>
+    <symbol id="ps-icon-vol-anxiety" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+    </symbol>
+    <symbol id="ps-icon-vol-mood" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path><circle cx="12" cy="12" r="4"></circle>
+    </symbol>
+    <symbol id="ps-icon-vol-eating" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"></circle><path d="M12 3a9 9 0 0 0 0 18v-9Z"></path>
+    </symbol>
+    <symbol id="ps-icon-vol-personality" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+    </symbol>
+    <symbol id="ps-icon-vol-psychotic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"></circle><path d="M3 12h1m16 0h1M12 3v1m0 16v1M5.6 5.6l.7.7m11.4 11.4.7.7M5.6 18.4l.7-.7m11.4-11.4.7-.7"></path>
+    </symbol>
+    <symbol id="ps-icon-vol-therapies" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+    </symbol>
+    <symbol id="ps-icon-vol-culture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+    </symbol>
+    <symbol id="ps-icon-vol-adjustment" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ░░░ TOAST NOTIFICATIONS ░░░ -->
+<div id="toast-container" aria-live="polite"></div>
+
+<!-- ░░░ LOADING OVERLAY ░░░ -->
+<div id="loading" class="loading-overlay hidden" role="alert">
+  <div class="loading-box">
+    <div class="loading-spinner"></div>
+    <p id="loading-msg">Processing…</p>
+  </div>
+</div>
+
+<!-- ░░░ COMMAND PALETTE ░░░ -->
+<div id="cmdPalette" class="cmd-overlay hidden" onclick="closeCmdPalette(event)">
+  <div class="cmd-palette" onclick="event.stopPropagation()">
+    <div class="cmd-input-wrap">
+      <svg class="cmd-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input id="cmdInput" class="cmd-input" type="text" placeholder="Search topics, notes, actions…" autocomplete="off" oninput="filterCmdPalette(this.value)"/>
+      <span class="kbd-hint">ESC</span>
+    </div>
+    <div class="cmd-results" id="cmdResults"></div>
+  </div>
+</div>
+
+<!-- ░░░ BRAIN ANATOMY MODAL ░░░ -->
+<div id="brainModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="brainModalTitle" onclick="closeBrainModal(event)">
+  <div class="modal modal-wide" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">FUNCTIONAL NEUROANATOMY ATLAS</div>
+        <h3 id="brainModalTitle">Cerebral Cortical Lobes & Clinical Pathology</h3>
+      </div>
+      <button class="icon-btn" onclick="closeBrainModal()" aria-label="Close modal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="brain-modal-tabs" role="tablist">
+      <button class="b-tab active" data-lobe="frontal" onclick="selectBrainModalTab('frontal')">Frontal Lobe</button>
+      <button class="b-tab" data-lobe="parietal" onclick="selectBrainModalTab('parietal')">Parietal Lobe</button>
+      <button class="b-tab" data-lobe="temporal" onclick="selectBrainModalTab('temporal')">Temporal Lobe</button>
+      <button class="b-tab" data-lobe="occipital" onclick="selectBrainModalTab('occipital')">Occipital Lobe</button>
+      <button class="b-tab" data-lobe="cerebellum" onclick="selectBrainModalTab('cerebellum')">Cerebellum &amp; Stem</button>
+      <button class="b-tab" data-lobe="limbic" onclick="selectBrainModalTab('limbic')">Limbic &amp; Subcortical</button>
+    </div>
+    <div class="brain-modal-content" id="brainModalContent"></div>
+  </div>
+</div>
+
+<!-- ░░░ DESKTOP HORIZONTAL NAVBAR ░░░ -->
+<nav id="navbar" class="navbar" role="navigation" aria-label="Primary navigation">
+  <div class="nav-inner">
+    <button class="nav-brand" onclick="navigate('dashboard')" aria-label="PsychStudy — The Clinical Atlas">
+      <div class="nav-brand-group">
+        <img src="assets/logo-mark.png" alt="PsychStudy Logo" class="nav-brand-mark" width="36" height="36" />
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">Psych<span class="brand-name-purple">Study</span></span>
+          <span class="nav-brand-tag">LEARN / UNDERSTAND / GROW</span>
+        </div>
+      </div>
+    </button>
+
+    <div class="nav-links" id="navLinks">
+      <button onclick="navigate('dashboard')" class="nav-btn active" data-page="dashboard" title="Curriculum Dashboard">
+        <svg class="nav-icon" width="16" height="16" aria-hidden="true"><use href="#ps-icon-dashboard"></use></svg>
+        <span class="nav-btn-label">Dashboard</span>
+      </button>
+      <button onclick="navigate('study')" class="nav-btn" data-page="study" title="Study Reader">
+        <svg class="nav-icon" width="16" height="16" aria-hidden="true"><use href="#ps-icon-study"></use></svg>
+        <span class="nav-btn-label">Study</span>
+      </button>
+      <button onclick="navigate('flashcards')" class="nav-btn" data-page="flashcards" title="Active Recall Flashcards">
+        <svg class="nav-icon" width="16" height="16" aria-hidden="true"><use href="#ps-icon-cards"></use></svg>
+        <span class="nav-btn-label">Flashcards</span>
+      </button>
+      <button onclick="navigate('quiz')" class="nav-btn" data-page="quiz" title="Diagnostic Quizzes">
+        <svg class="nav-icon" width="16" height="16" aria-hidden="true"><use href="#ps-icon-quiz"></use></svg>
+        <span class="nav-btn-label">Quizzes</span>
+      </button>
+      <button onclick="navigate('exam')" class="nav-btn" data-page="exam" title="University Examination Suite">
+        <svg class="nav-icon" width="16" height="16" aria-hidden="true"><use href="#ps-icon-exam"></use></svg>
+        <span class="nav-btn-label">Exam Paper</span>
+      </button>
+      <button onclick="navigate('notes')" class="nav-btn" data-page="notes" title="Notes Workspace">
+        <svg class="nav-icon" width="16" height="16" aria-hidden="true"><use href="#ps-icon-notes"></use></svg>
+        <span class="nav-btn-label">Notes</span>
+      </button>
+
+      <!-- Explore Dropdown -->
+      <div class="nav-dropdown-wrap" id="exploreDropdownWrap">
+        <button class="nav-btn nav-dropdown-btn" onclick="toggleExploreDropdown(event)" aria-haspopup="true" aria-expanded="false" id="exploreBtn" title="Explore Specialised Tools">
+          <svg class="nav-icon" width="16" height="16" aria-hidden="true"><use href="#ps-icon-explore"></use></svg>
+          <span class="nav-btn-label">Explore</span>
+          <svg class="nav-chevron" width="12" height="12" aria-hidden="true"><use href="#ps-icon-chevron-down"></use></svg>
+        </button>
+        <div class="nav-dropdown-menu" id="exploreDropdownMenu" role="menu" aria-labelledby="exploreBtn">
+          <button class="nav-dropdown-item" role="menuitem" onclick="openExploreItem('brain')">
+            <svg width="16" height="16" aria-hidden="true"><use href="#ps-icon-brain"></use></svg>
+            <div>
+              <div class="dd-title">Brain Atlas (Plate I)</div>
+              <div class="dd-desc">Lateral cerebral cortex &amp; limbic schematic</div>
+            </div>
+          </button>
+          <button class="nav-dropdown-item" role="menuitem" onclick="openExploreItem('constellation')">
+            <svg width="16" height="16" aria-hidden="true"><use href="#ps-icon-constellation"></use></svg>
+            <div>
+              <div class="dd-title">Concept Map ("Constellation")</div>
+              <div class="dd-desc">Interactive comorbidity &amp; differential graph</div>
+            </div>
+          </button>
+          <button class="nav-dropdown-item" role="menuitem" onclick="openExploreItem('timeline')">
+            <svg width="16" height="16" aria-hidden="true"><use href="#ps-icon-timeline"></use></svg>
+            <div>
+              <div class="dd-title">Historical Timeline</div>
+              <div class="dd-desc">Neolithic trephination to modern Tele-MANAS</div>
+            </div>
+          </button>
+          <button class="nav-dropdown-item" role="menuitem" onclick="openExploreItem('lexicon')">
+            <svg width="16" height="16" aria-hidden="true"><use href="#ps-icon-lexicon"></use></svg>
+            <div>
+              <div class="dd-title">Clinical Lexicon (A–Z)</div>
+              <div class="dd-desc">150+ terms with etymology &amp; pronunciation</div>
+            </div>
+          </button>
+          <button class="nav-dropdown-item" role="menuitem" onclick="openExploreItem('differential')">
+            <svg width="16" height="16" aria-hidden="true"><use href="#ps-icon-sparkles"></use></svg>
+            <div>
+              <div class="dd-title">Differential Trainer</div>
+              <div class="dd-desc">"Spot the disorder" vignette practice</div>
+            </div>
+          </button>
+          <div class="dd-divider"></div>
+          <button class="nav-dropdown-item" role="menuitem" onclick="openExploreItem('support')">
+            <svg width="16" height="16" aria-hidden="true"><use href="#ps-icon-support"></use></svg>
+            <div>
+              <div class="dd-title">Crisis Support &amp; Helplines</div>
+              <div class="dd-desc">Tele-MANAS, KIRAN, AASRA, 988, 116 123</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Search Command Palette Trigger -->
+      <button class="cmd-trigger" onclick="openCmdPalette()" aria-label="Open search command palette" title="Search curriculum (⌘K / Ctrl+K)">
+        <svg width="15" height="15" aria-hidden="true"><use href="#ps-icon-search"></use></svg>
+        <span class="cmd-trigger-label">Search…</span>
+        <span class="kbd-hint" id="cmdKbdHint">⌘K</span>
+      </button>
+
+      <!-- Settings Button -->
+      <button class="icon-btn-nav" onclick="openSettingsModal()" aria-label="Open application settings" title="Preferences & Data">
+        <svg width="16" height="16" aria-hidden="true"><use href="#ps-icon-settings"></use></svg>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle visual theme" title="Toggle Paper & Ink / Imaging Suite theme">
+        <svg id="themeIcon" width="16" height="16" aria-hidden="true"><use href="#ps-icon-theme"></use></svg>
+      </button>
+
+      <!-- Overall Mastery Mini Indicator -->
+      <div class="nav-mastery-wrap" title="Overall Curriculum Mastery" onclick="navigate('dashboard')">
+        <svg class="mastery-mini-ring" width="28" height="28" viewBox="0 0 36 36">
+          <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+          <path class="ring-fill" id="navMasteryRing" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+        </svg>
+        <span class="nav-mastery-text" id="navMasteryText">0%</span>
+      </div>
+
+      <!-- Mobile Hamburger Menu Button -->
+      <button class="hamburger" onclick="toggleMobileNav()" aria-label="Toggle navigation menu" id="hamburgerBtn">
+        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-menu"></use></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ░░░ MOBILE BOTTOM BAR ░░░ -->
+<nav class="bottom-nav" id="bottomNav" aria-label="Mobile bottom navigation">
+  <div class="bottom-nav-inner">
+    <button class="bottom-nav-btn active" data-page="dashboard" onclick="navigate('dashboard')">
+      <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-dashboard"></use></svg>
+      <span>Home</span>
+    </button>
+    <button class="bottom-nav-btn" data-page="study" onclick="navigate('study')">
+      <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-study"></use></svg>
+      <span>Study</span>
+    </button>
+    <button class="bottom-nav-btn" data-page="flashcards" onclick="navigate('flashcards')">
+      <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-cards"></use></svg>
+      <span>Cards</span>
+    </button>
+    <button class="bottom-nav-btn" data-page="quiz" onclick="navigate('quiz')">
+      <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-quiz"></use></svg>
+      <span>Quiz</span>
+    </button>
+    <button class="bottom-nav-btn" onclick="openMobileMoreSheet()" aria-haspopup="dialog" id="mobileMoreBtn">
+      <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-explore"></use></svg>
+      <span>More</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ░░░ MOBILE "MORE" BOTTOM SHEET ░░░ -->
+<div class="modal-overlay hidden" id="mobileMoreSheet" role="dialog" aria-modal="true" aria-labelledby="mobileMoreTitle" onclick="closeMobileMoreSheet(event)">
+  <div class="mobile-sheet" onclick="event.stopPropagation()">
+    <div class="sheet-header">
+      <h3 id="mobileMoreTitle">Curriculum &amp; Tools</h3>
+      <button class="icon-btn" onclick="closeMobileMoreSheet()" aria-label="Close menu">
+        <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
+      </button>
+    </div>
+    <div class="sheet-grid">
+      <button class="sheet-tile" onclick="closeMobileMoreSheet(); navigate('notes');">
+        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-notes"></use></svg>
+        <span>Notes</span>
+      </button>
+      <button class="sheet-tile" onclick="closeMobileMoreSheet(); navigate('exam');">
+        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-exam"></use></svg>
+        <span>Exam Paper</span>
+      </button>
+      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('brain');">
+        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-brain"></use></svg>
+        <span>Brain Atlas</span>
+      </button>
+      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('constellation');">
+        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-constellation"></use></svg>
+        <span>Concept Map</span>
+      </button>
+      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('timeline');">
+        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-timeline"></use></svg>
+        <span>Timeline</span>
+      </button>
+      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('lexicon');">
+        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-lexicon"></use></svg>
+        <span>Lexicon</span>
+      </button>
+      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('support');">
+        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-support"></use></svg>
+        <span>Support</span>
+      </button>
+      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openSettingsModal();">
+        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-settings"></use></svg>
+        <span>Settings</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ SETTINGS MODAL ░░░ -->
+<div class="modal-overlay hidden" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle" onclick="closeSettingsModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">PREFERENCES &amp; PERSISTENCE</div>
+        <h3 id="settingsModalTitle">Atlas Settings</h3>
+      </div>
+      <button class="icon-btn" onclick="closeSettingsModal()" aria-label="Close settings">
+        <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
+      </button>
+    </div>
+    <div class="modal-body settings-body">
+      <!-- Theme Setting -->
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Visual Theme</div>
+          <div class="setting-desc">Switch between Day (Paper &amp; Ink) and Night (Imaging Suite).</div>
+        </div>
+        <div class="theme-choice-pills">
+          <button class="pill-btn active" id="pillThemeLight" onclick="setAppTheme('light')">Day</button>
+          <button class="pill-btn" id="pillThemeDark" onclick="setAppTheme('dark')">Night</button>
+          <button class="pill-btn" id="pillThemeSystem" onclick="setAppTheme('system')">System</button>
+        </div>
+      </div>
+
+      <!-- Reading Size Setting -->
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Reading Text Size</div>
+          <div class="setting-desc">Adjust long-form body scale in the Study Reader.</div>
+        </div>
+        <div class="theme-choice-pills">
+          <button class="pill-btn" id="pillFontS" onclick="setReaderFontSize('sm')">S</button>
+          <button class="pill-btn active" id="pillFontM" onclick="setReaderFontSize('md')">M</button>
+          <button class="pill-btn" id="pillFontL" onclick="setReaderFontSize('lg')">L</button>
+        </div>
+      </div>
+
+      <!-- Reduced Motion -->
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Motion Reductions</div>
+          <div class="setting-desc">Disable 3D card flips, EEG wave draw-ins, and animated transitions.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="reduceMotionToggle" onchange="toggleReducedMotion(this.checked)"/>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <!-- PDF Syllabus Ingestion -->
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Import Lecture / Syllabus PDF</div>
+          <div class="setting-desc">Extract text and auto-generate synthesized study notes.</div>
+        </div>
+        <label class="btn btn-outline btn-sm">
+          <svg width="14" height="14" aria-hidden="true"><use href="#ps-icon-upload"></use></svg>
+          <span>Choose PDF</span>
+          <input type="file" id="pdfImportSettings" accept=".pdf" onchange="importPDF(event)" hidden/>
+        </label>
+      </div>
+
+      <!-- Data Export / Import -->
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Export &amp; Backup Data</div>
+          <div class="setting-desc">Download complete learning progress, flashcard reviews, and notes.</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="exportUserData()">
+          <svg width="14" height="14" aria-hidden="true"><use href="#ps-icon-download"></use></svg>
+          <span>Export JSON</span>
+        </button>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-label">Import Backup Data</div>
+          <div class="setting-desc">Restore state from a previously exported JSON file.</div>
+        </div>
+        <label class="btn btn-outline btn-sm">
+          <svg width="14" height="14" aria-hidden="true"><use href="#ps-icon-upload"></use></svg>
+          <span>Import JSON</span>
+          <input type="file" accept=".json" onchange="importUserData(event)" hidden/>
+        </label>
+      </div>
+
+      <!-- Reset Progress -->
+      <div class="setting-row danger-zone">
+        <div>
+          <div class="setting-label text-danger">Reset Learning Data</div>
+          <div class="setting-desc">Clear topic mastery, quiz attempts, and flashcard schedules.</div>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="confirmResetProgress()">Reset Progress</button>
+      </div>
+    </div>
+  </div>
+</div>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE: DASHBOARD — Editorial Learning Command Center
+═══════════════════════════════════════════════════════════ -->
+<main id="pg-dashboard" class="page active">
+
+  <!-- ░░░ 1. THE HERO SECTION (TWO-COLUMN EDITORIAL COMPOSITION) ░░░ -->
+  <header class="master-hero-section">
+    <div class="master-hero-grid">
+      <!-- Left Section: Editorial Content -->
+      <div class="hero-editorial-col">
+        <div class="hero-meta-row">
+          <span class="hero-meta-dot"></span>
+          <span class="hero-meta-standard">Undergraduate Psychology Standard</span>
+          <span class="hero-meta-sep">·</span>
+          <span class="badge-dsm">DSM-5-TR · ICD-11 Aligned</span>
+          <span class="hero-meta-sep">·</span>
+          <span class="badge-term" id="dashTimeGreet">Session Active</span>
+        </div>
+
+        <h1 class="hero-display-headline">A clinical atlas of the <em>mind</em></h1>
+        <p class="hero-supporting-desc" id="dashMsg">University-grade clinical study companion, multi-axial diagnostic framework, and structured examination workspace.</p>
+
+        <!-- Search Bar -->
+        <div class="hero-search-wrapper">
+          <button class="hero-search-bar" id="heroSearchBar" onclick="openCommandPalette()" aria-label="Search 43 chapters, 168 clinical terms, DSM/ICD codes, exam papers">
+            <div class="hero-search-inner-left">
+              <svg class="icon icon-md" aria-hidden="true"><use href="#ps-icon-search"></use></svg>
+              <span class="hero-search-placeholder">Search 43 chapters, 168 clinical terms, DSM/ICD codes, exam papers...</span>
+            </div>
+            <kbd class="hero-search-kbd"><span class="cmd-symbol">⌘</span>K</kbd>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Section: Main Illustration (Commissioned Educational Artwork) -->
+      <div class="hero-illustration-col">
+        <div class="hero-illustration-stage">
+          <!-- Orbital lines -->
+          <div class="orbit-ring orbit-ring-outer"></div>
+          <div class="orbit-ring orbit-ring-inner"></div>
+
+          <!-- Human head silhouette & glowing brain artwork -->
+          <div class="hero-head-img-wrap">
+            <img src="assets/hero-brain-head.png" alt="Clinical Brain & Cognitive Architecture" class="hero-head-img" />
+          </div>
+
+          <!-- Floating Educational Badges -->
+          <div class="floating-badge badge-dsm-top">
+            <span class="floating-dot pulse-purple"></span>
+            <span>DSM-5-TR</span>
+          </div>
+          <div class="floating-badge badge-icd-bottom">
+            <span class="floating-dot pulse-blue"></span>
+            <span>ICD-11</span>
+          </div>
+          <div class="floating-badge badge-understanding">
+            <svg class="icon icon-xs text-indigo" aria-hidden="true"><use href="#ps-icon-sparkles"></use></svg>
+            <span>Better Understanding</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ░░░ 2. CONTINUE READING + LEARNING STATISTICS (HORIZONTAL STRIP) ░░░ -->
+  <section class="reading-stats-strip-section" aria-label="Reading Resume and Curriculum Statistics">
+    <div class="reading-stats-grid">
+      <!-- Part A: Continue Reading Card (Soft Lavender / Subtle Purple Gradient) -->
+      <div class="continue-reading-card" id="dashContinueStrip">
+        <div class="continue-card-icon-wrap">
+          <svg class="icon icon-md" aria-hidden="true"><use href="#ps-icon-study"></use></svg>
+        </div>
+        <div class="continue-card-content">
+          <div class="continue-card-eyebrow">CONTINUE READING</div>
+          <h3 class="continue-card-title" id="continueChapterName">1.1 What Are Psychological Disorders?</h3>
+          <div class="continue-card-meta" id="continueMeta">Volume I · Foundations · In Progress</div>
+          <div class="continue-card-progress">
+            <div class="continue-progress-fill" id="continueProgressFill" style="width: 25%;"></div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-sm continue-resume-btn" id="continueBtn" onclick="resumeLastTopic()">
+          <span>Resume Chapter →</span>
+        </button>
+      </div>
+
+      <!-- Part B: Statistics Panel (4 Horizontally Aligned Metrics) -->
+      <div class="stats-horizontal-panel" aria-label="Learning Metrics">
+        <!-- Metric 1: Chapters Studied -->
+        <div class="stats-metric-item">
+          <div class="stats-metric-header">
+            <span class="stats-metric-label">CHAPTERS STUDIED</span>
+            <svg class="icon icon-xs text-muted" aria-hidden="true"><use href="#ps-icon-study"></use></svg>
+          </div>
+          <div class="stats-metric-number">
+            <span id="d-studied">0</span> <span class="stats-metric-denom">/ <span id="d-topics">43</span></span>
+          </div>
+          <div class="stats-metric-bar">
+            <div class="stats-bar-fill" id="podStudiedFill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div class="stats-metric-sep" aria-hidden="true"></div>
+
+        <!-- Metric 2: Quizzes Completed -->
+        <div class="stats-metric-item">
+          <div class="stats-metric-header">
+            <span class="stats-metric-label">QUIZZES COMPLETED</span>
+            <svg class="icon icon-xs text-muted" aria-hidden="true"><use href="#ps-icon-quiz"></use></svg>
+          </div>
+          <div class="stats-metric-number" id="d-quizzes">0</div>
+          <div class="stats-metric-bar">
+            <div class="stats-bar-fill stats-bar-blue" id="podQuizFill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div class="stats-metric-sep" aria-hidden="true"></div>
+
+        <!-- Metric 3: Saved Notes -->
+        <div class="stats-metric-item">
+          <div class="stats-metric-header">
+            <span class="stats-metric-label">SAVED NOTES</span>
+            <svg class="icon icon-xs text-muted" aria-hidden="true"><use href="#ps-icon-notes"></use></svg>
+          </div>
+          <div class="stats-metric-number" id="d-notes">0</div>
+          <div class="stats-metric-bar">
+            <div class="stats-bar-fill stats-bar-teal" id="podNotesFill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div class="stats-metric-sep" aria-hidden="true"></div>
+
+        <!-- Metric 4: Curriculum Mastery -->
+        <div class="stats-metric-item stats-metric-mastery">
+          <div class="stats-metric-header">
+            <span class="stats-metric-label">CURRICULUM MASTERY</span>
+            <span class="mastery-pulse-dot"></span>
+          </div>
+          <div class="stats-metric-number mastery-purple-val" id="d-mastery-pct">0%</div>
+          <div class="stats-metric-bar">
+            <div class="stats-bar-fill stats-bar-purple" id="podMasteryFill" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░░ 3. LOWER DASHBOARD — THREE-COLUMN BALANCED COMPOSITION ░░░ -->
+  <section class="today-focus-section" aria-label="Today's Strategic Learning Focus">
+    <div class="today-focus-grid">
+      <!-- CARD 1 — ACTIVE RECALL (Soft Mint Green Visual Identity) -->
+      <div class="today-focus-card card-active-recall">
+        <div class="card-top-row">
+          <div class="card-eyebrow-group">
+            <div class="card-icon-pill icon-mint">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="#ps-icon-cards"></use></svg>
+            </div>
+            <span class="card-eyebrow-text">ACTIVE RECALL</span>
+          </div>
+          <span class="card-status-chip chip-mint" id="todayDueBadge">Ready</span>
+        </div>
+
+        <div class="card-metric-hero">
+          <div class="card-hero-num num-mint" id="todayDueCount">5</div>
+          <div class="card-hero-label">Cards due for spaced retrieval review today.</div>
+        </div>
+
+        <!-- Three compact supporting features -->
+        <div class="card-features-list">
+          <div class="feature-item">
+            <span class="feature-dot dot-mint"></span>
+            <span><strong>Quick Recall</strong> — Build stronger memory.</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-dot dot-mint"></span>
+            <span><strong>Spaced Repetition</strong> — Long-term retention.</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-dot dot-mint"></span>
+            <span><strong>Progress Tracking</strong> — See your growth.</span>
+          </div>
+        </div>
+
+        <!-- Botanical leaf watermark -->
+        <div class="card-watermark leaf-watermark" aria-hidden="true">
+          <img src="assets/ill-leaf.svg" alt="" />
+        </div>
+
+        <button class="btn btn-emerald btn-sm card-action-btn" id="todayDueCardsBtn" onclick="navigateTo('flashcards')">
+          <span>Start Review Session →</span>
+        </button>
+      </div>
+
+      <!-- CARD 2 — RECOMMENDED NEXT (Soft Lavender / Purple Visual Identity) -->
+      <div class="today-focus-card card-recommended-next">
+        <div class="card-top-row">
+          <div class="card-eyebrow-group">
+            <div class="card-icon-pill icon-purple">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="#ps-icon-study"></use></svg>
+            </div>
+            <span class="card-eyebrow-text">RECOMMENDED NEXT</span>
+          </div>
+          <span class="card-status-chip chip-purple" id="todayRecReason">Curriculum Priority</span>
+        </div>
+
+        <div class="card-metric-hero">
+          <h3 class="card-hero-title" id="todayRecTitle">What Are Psychological Disorders?</h3>
+          <p class="card-hero-desc" id="todayRecDesc">First unstudied chapter in Volume I (Foundations). High-yield examination topic.</p>
+        </div>
+
+        <!-- Academic Book Stack Illustration -->
+        <div class="card-illus-wrap books-wrap" aria-hidden="true">
+          <img src="assets/ill-books.svg" alt="" class="card-illus-img" />
+        </div>
+
+        <button class="btn btn-primary btn-sm card-action-btn" id="todayRecBtn" onclick="openStudyTopic('psych-disorders')">
+          <span>Study Chapter →</span>
+        </button>
+      </div>
+
+      <!-- CARD 3 — STUDY PULSE (Soft Warm Peach / Orange Visual Identity) -->
+      <div class="today-focus-card card-study-pulse">
+        <div class="card-top-row">
+          <div class="card-eyebrow-group">
+            <div class="card-icon-pill icon-peach">
+              <svg class="icon icon-sm" aria-hidden="true"><use href="#ps-icon-pulse"></use></svg>
+            </div>
+            <span class="card-eyebrow-text">STUDY PULSE</span>
+          </div>
+          <span class="card-status-chip chip-peach" id="studyPulseStreak">🔥 0-day streak</span>
+        </div>
+
+        <!-- 7-Day Weekly Activity Row -->
+        <div class="week-activity-container">
+          <div class="week-days-row" id="studyWeekRow">
+            <!-- Populated via script: Mon through Sun distinct activity indicators -->
+          </div>
+        </div>
+
+        <div class="pulse-supporting-msg">
+          <div class="msg-primary">Keep the streak going!</div>
+          <div class="msg-sub">Consistency builds mastery.</div>
+        </div>
+
+        <!-- 12-Week Compact Heatmap -->
+        <div class="pulse-heatmap-wrap">
+          <div class="pulse-grid" id="studyPulseGrid" role="img" aria-label="12-Week Study Activity Heatmap"></div>
+        </div>
+        <div class="pulse-legend">
+          <span class="pulse-legend-label">Less</span>
+          <span class="pulse-dot lvl-0"></span>
+          <span class="pulse-dot lvl-1"></span>
+          <span class="pulse-dot lvl-2"></span>
+          <span class="pulse-dot lvl-3"></span>
+          <span class="pulse-dot lvl-4"></span>
+          <span class="pulse-legend-label">More</span>
+        </div>
+
+        <!-- Mountain achievement watermark -->
+        <div class="card-watermark mountain-watermark" aria-hidden="true">
+          <img src="assets/ill-mountain.svg" alt="" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mastery Heatmap & Functional Anatomy Vitrine Section -->
+  <section class="atlas-board-section" aria-label="Curriculum Mastery & Neuroanatomy">
+    <div class="atlas-board-grid">
+      <!-- Left: Multi-Hue Mastery Heatmap -->
+      <div class="heatmap-panel-card">
+        <div class="panel-header-editorial">
+          <div>
+            <div class="card-eyebrow">CURRICULUM ARCHITECTURE</div>
+            <h2 class="panel-title-editorial">Curriculum Mastery Heatmap</h2>
+            <p class="panel-sub-editorial">43 chapters across 9 clinical volumes. Luminance reflects deterministic multi-axial mastery (reading completion, spaced retrieval retention, and quiz accuracy).</p>
+          </div>
+          <div class="volume-legend" id="volumeLegend">
+            <!-- Populated via script: Vol I-IX chips -->
+          </div>
+        </div>
+        <div class="mastery-heatmap-container" id="masteryHeatmap" role="grid" aria-label="Curriculum Mastery Heatmap by Volume">
+          <!-- Populated via script: chapters grouped by volume -->
+        </div>
+      </div>
+
+      <!-- Right: Plate I Vitrine Teaser -->
+      <div class="neuro-vitrine-card">
+        <div class="vitrine-header">
+          <div>
+            <div class="card-eyebrow">PLATE I · NEUROANATOMY ATLAS</div>
+            <h3 class="vitrine-title">Cortical &amp; Subcortical Topography</h3>
+          </div>
+          <button class="btn btn-outline btn-xs" onclick="openBrainModal()">
+            <svg class="icon" aria-hidden="true"><use href="#ps-icon-brain"></use></svg>
+            <span>Full Atlas</span>
+          </button>
+        </div>
+        <div class="vitrine-stage">
+          <div class="vitrine-img-wrap">
+            <img src="assets/brain-anatomy.jpg" alt="Human Brain Anatomy Lateral View" class="vitrine-img" />
+            <div class="vitrine-overlay" id="vitrineOverlay">
+              <!-- Interactive hotspot pins -->
+            </div>
+          </div>
+        </div>
+        <div class="vitrine-lobe-nav" id="vitrineLobeNav">
+          <button class="btn-lobe-chip active" onclick="selectVitrineLobe('frontal', this)">Frontal</button>
+          <button class="btn-lobe-chip" onclick="selectVitrineLobe('parietal', this)">Parietal</button>
+          <button class="btn-lobe-chip" onclick="selectVitrineLobe('temporal', this)">Temporal</button>
+          <button class="btn-lobe-chip" onclick="selectVitrineLobe('occipital', this)">Occipital</button>
+          <button class="btn-lobe-chip" onclick="selectVitrineLobe('limbic', this)">Limbic</button>
+        </div>
+        <div class="vitrine-desc" id="vitrineLobeDesc">
+          <strong>Frontal Lobe (Brodmann 4, 6, 9–12, 44–47):</strong> Executive functioning, working memory, emotional regulation, and motor planning. Implicated in ADHD, Schizophrenia, and Mood Disorders.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comprehensive Curriculum Browser (43 Chapters / 9 Volumes) -->
+  <section class="curriculum-browser-section" aria-labelledby="curriculumHeading">
+    <div class="curriculum-header-row">
+      <div>
+        <div class="card-eyebrow">SYLLABUS BLUEPRINT</div>
+        <h2 id="curriculumHeading" class="curriculum-heading">Curriculum Specimens &amp; Chapters</h2>
+      </div>
+      <div class="curriculum-filter-bar">
+        <!-- Volume Tabs -->
+        <div class="vol-tabs" id="volumeTabsFilter" role="tablist">
+          <button class="vol-tab active" data-vol="all" onclick="filterCurriculum('all', this)" role="tab" aria-selected="true">All Volumes</button>
+          <button class="vol-tab" data-vol="I" onclick="filterCurriculum('I', this)" role="tab" aria-selected="false">Vol I</button>
+          <button class="vol-tab" data-vol="II" onclick="filterCurriculum('II', this)" role="tab" aria-selected="false">Vol II</button>
+          <button class="vol-tab" data-vol="III" onclick="filterCurriculum('III', this)" role="tab" aria-selected="false">Vol III</button>
+          <button class="vol-tab" data-vol="IV" onclick="filterCurriculum('IV', this)" role="tab" aria-selected="false">Vol IV</button>
+          <button class="vol-tab" data-vol="V" onclick="filterCurriculum('V', this)" role="tab" aria-selected="false">Vol V</button>
+          <button class="vol-tab" data-vol="VI" onclick="filterCurriculum('VI', this)" role="tab" aria-selected="false">Vol VI</button>
+          <button class="vol-tab" data-vol="VII" onclick="filterCurriculum('VII', this)" role="tab" aria-selected="false">Vol VII</button>
+          <button class="vol-tab" data-vol="VIII" onclick="filterCurriculum('VIII', this)" role="tab" aria-selected="false">Vol VIII</button>
+          <button class="vol-tab" data-vol="IX" onclick="filterCurriculum('IX', this)" role="tab" aria-selected="false">Vol IX</button>
+        </div>
+        <!-- Sort / Filter -->
+        <div class="curriculum-sort-wrap">
+          <select id="curriculumSortSelect" class="select-input select-sm" onchange="sortCurriculum(this.value)" aria-label="Sort chapters">
+            <option value="default">Syllabus Order</option>
+            <option value="weak">Weakest Mastery First</option>
+            <option value="unstudied">Unstudied First</option>
+            <option value="time">Read Time</option>
+            <option value="alpha">Alphabetical</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Responsive Grid of Specimen Cards -->
+    <div class="topics-grid specimen-grid" id="topicsGrid" role="list">
+      <!-- 43 Specimen Cards populated via script.js -->
+    </div>
+  </section>
+
+  <!-- Daily Clinical Insight & PDF Ingestion -->
+  <section class="dash-bottom-strip">
+    <div class="dash-bottom-grid">
+      <!-- Daily Clinical Insight -->
+      <article class="daily-insight-card" id="dailyInsightCard">
+        <div class="insight-badge-row">
+          <span class="card-eyebrow">DAILY CLINICAL INSIGHT</span>
+          <span class="badge-source" id="factSource">DSM-5-TR · APA</span>
+        </div>
+        <h3 class="insight-title" id="factTitle">Loading insight…</h3>
+        <p class="insight-text" id="factText"></p>
+      </article>
+
+      <!-- PDF Ingestion Pipeline -->
+      <aside class="upload-hero">
+        <div class="upload-icon-wrap">
+          <svg class="icon icon-lg" aria-hidden="true"><use href="#ps-icon-exam"></use></svg>
+        </div>
+        <div class="upload-hero-text">
+          <div class="card-eyebrow">EXTERNAL INGESTION</div>
+          <h3>Import Psychology PDF</h3>
+          <p>Extract syllabus reading, textbook chapters, or clinical case papers directly into your study workspace.</p>
+        </div>
+        <label class="btn btn-outline btn-sm">
+          <span>Select Document</span>
+          <input type="file" accept=".pdf" onchange="importPDF(event)" hidden/>
+        </label>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Clean Editorial Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <strong>PsychStudy</strong> — Clinical Psychology Learning Workspace
+      </div>
+      <div class="footer-meta">
+        <span>Undergraduate Curriculum Standard</span>
+        <span class="footer-dot">·</span>
+        <span>DSM-5-TR &amp; ICD-11 Aligned</span>
+        <span class="footer-dot">·</span>
+        <span>Educational use only</span>
+        <span class="footer-dot">·</span>
+        <a href="#support" onclick="navigateTo('support'); return false;" class="footer-link">Support &amp; Helplines</a>
+        <span class="footer-dot">·</span>
+        <span>Made by <strong>Harsh Dubey</strong></span>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<!-- ═══════════════════════════════════
+     PAGE: STUDY (Dual Mode Academic Reader)
+═══════════════════════════════════ -->
+<main id="pg-study" class="page">
+  <!-- Hairline Reading Progress Bar -->
+  <div class="reader-hairline" aria-hidden="true">
+    <div class="reader-hairline-fill" id="readerHairlineFill" style="width: 0%;"></div>
+  </div>
+
+  <!-- Reader Top Bar -->
+  <header class="reader-top-bar">
+    <div class="reader-top-left">
+      <div class="reader-breadcrumb" id="readerBreadcrumb">
+        <span class="bread-vol" id="studyBreadVol">Volume I · Foundations</span>
+        <span class="bread-sep">›</span>
+        <span class="bread-plate" id="studyBreadPlate">Plate 1.1</span>
+      </div>
+      <div class="reader-title-meta">
+        <span class="badge-readtime" id="studyReadTime">12 min read</span>
+        <span class="badge-code-chip mono" id="studyDsmCode">DSM-5-TR</span>
+        <span class="badge-code-chip mono" id="studyIcdCode">ICD-11</span>
+      </div>
+    </div>
+
+    <!-- Center: Topic Selector Navigation -->
+    <div class="reader-nav-controls">
+      <button class="btn btn-ghost btn-sm" id="prevTopic" onclick="changeStudyTopic(-1)" aria-label="Previous chapter" title="Previous chapter (←)">
+        <svg class="icon" aria-hidden="true"><use href="#ps-icon-chevron-left"></use></svg>
+      </button>
+      <select id="topicSelect" onchange="loadStudyTopic(this.value)" aria-label="Select study chapter" class="reader-topic-select"></select>
+      <button class="btn btn-ghost btn-sm" id="nextTopic" onclick="changeStudyTopic(1)" aria-label="Next chapter" title="Next chapter (→)">
+        <svg class="icon" aria-hidden="true"><use href="#ps-icon-chevron-right"></use></svg>
+      </button>
+    </div>
+
+    <!-- Right: Mode Switcher & Focus Mode -->
+    <div class="reader-mode-controls">
+      <button class="focus-timer-pill" id="readerFocusTimerBtn" onclick="openFocusTimerModal()" title="Pomodoro Focus Timer & Breathing Orb" aria-label="Open Focus Timer and Breathing Orb">
+        <svg class="icon icon-xs" aria-hidden="true"><use href="#ps-icon-clock"></use></svg>
+        <span id="readerFocusTimerDisplay">25:00</span>
+        <span>🫁</span>
+      </button>
+      <div class="mode-pill-group" role="radiogroup" aria-label="Reading Mode">
+        <button class="mode-pill active" id="modeBtnDeep" onclick="setStudyMode('deep')" role="radio" aria-checked="true" title="Deep Comprehensive Study">Deep</button>
+        <button class="mode-pill" id="modeBtnQuick" onclick="setStudyMode('quick')" role="radio" aria-checked="false" title="Quick Criteria & Key Points">Quick</button>
+        <button class="mode-pill" id="modeBtnExam" onclick="setStudyMode('exam')" role="radio" aria-checked="false" title="Exam-Answer Structure & Rubric">Exam</button>
+      </div>
+      <button class="btn btn-ghost btn-sm focus-toggle-btn" id="studyFocusBtn" onclick="toggleFocusMode()" aria-label="Toggle Focus Mode" title="Toggle Focus Mode (hide rails)">
+        <svg class="icon" aria-hidden="true"><use href="#ps-icon-crosshair"></use></svg>
+        <span class="focus-btn-text">Focus</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 3-Column Academic Layout -->
+  <div class="study-3col-layout" id="study3ColLayout">
+    <!-- LEFT: Sticky Chapter Rail (TOC with Scroll-Spy) -->
+    <aside class="reader-rail" id="studyRail" aria-label="Chapter Table of Contents">
+      <div class="rail-header">
+        <span class="rail-title">IN THIS CHAPTER</span>
+      </div>
+      <nav class="rail-nav" id="railNav">
+        <!-- Generated sections §1–§12 -->
+      </nav>
+      <div class="rail-actions">
+        <button class="btn btn-outline btn-xs w-full" id="railMarkStudiedBtn" onclick="toggleTopicStudied()">
+          <svg class="icon" aria-hidden="true"><use href="#ps-icon-check"></use></svg>
+          <span id="railMarkStudiedText">Mark Reviewed</span>
+        </button>
+        <button class="btn btn-ghost btn-xs w-full" onclick="startTopicCards()">
+          <svg class="icon" aria-hidden="true"><use href="#ps-icon-cards"></use></svg>
+          <span>Practise Flashcards</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- CENTER: Article Container (62–68ch Newsreader) -->
+    <article class="reader-article" id="studyArticle">
+      <!-- Content banner (if sensitive topic) -->
+      <div class="content-banner hidden" id="studyContentBanner">
+        <svg class="icon" aria-hidden="true"><use href="#ps-icon-alert"></use></svg>
+        <span id="studyContentBannerText">Clinical content notice: sensitive clinical psychopathology and diagnostic criteria.</span>
+      </div>
+
+      <!-- Main Section Content Container -->
+      <div class="study-content-flow" id="studyContent">
+        <!-- Populated via script.js -->
+      </div>
+
+      <!-- Article End Navigation -->
+      <footer class="article-footer" id="articleFooter">
+        <div class="article-footer-nav">
+          <button class="btn btn-outline" id="articlePrevBtn" onclick="changeStudyTopic(-1)">← Previous Chapter</button>
+          <button class="btn btn-primary" id="articleNextBtn" onclick="changeStudyTopic(1)">Next Chapter →</button>
+        </div>
+      </footer>
+    </article>
+
+    <!-- RIGHT: Marginalia (Notes, Key Terms, References) -->
+    <aside class="reader-marginalia" id="studyMarginalia" aria-label="Chapter Marginalia and Notes">
+      <div class="marginalia-section marginalia-notes">
+        <div class="marginalia-header">
+          <span class="marginalia-title">CHAPTER NOTES</span>
+          <button class="btn-icon-xs" onclick="saveCurrentTopicNote()" title="Save Note">
+            <svg class="icon" aria-hidden="true"><use href="#ps-icon-save"></use></svg>
+          </button>
+        </div>
+        <textarea id="topicNotesEditor" class="marginalia-textarea" placeholder="Record clinical reflections, mnemonics, or revision reminders for this chapter…" rows="7" oninput="debounceAutoSaveNote()"></textarea>
+        <div class="marginalia-note-footer">
+          <span class="note-save-status" id="noteSaveStatus">Auto-saved</span>
+          <button class="btn btn-ghost btn-xs" onclick="openNotesWorkspace()">All Notes ↗</button>
+        </div>
+      </div>
+
+      <div class="marginalia-section marginalia-terms">
+        <div class="marginalia-header">
+          <span class="marginalia-title">KEY CLINICAL TERMS</span>
+        </div>
+        <div class="marginalia-terms-list" id="marginaliaKeyTerms">
+          <!-- Populated from chapter keyTerms -->
+        </div>
+      </div>
+
+      <div class="marginalia-section marginalia-refs">
+        <div class="marginalia-header">
+          <span class="marginalia-title">CITATIONS</span>
+        </div>
+        <div class="marginalia-refs-list" id="marginaliaRefs">
+          <!-- Populated from chapter refs -->
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- ═══════════════════════════════════
+     PAGE: FLASHCARDS (Active Recall Engine)
+═══════════════════════════════════ -->
+<main id="pg-flashcards" class="page">
+  <div class="page-shell">
+    <div class="page-hdr">
+      <div>
+        <div class="page-eyebrow">ACTIVE RECALL &amp; SPACED RETRIEVAL (SM-2-LITE)</div>
+        <h1 class="page-h1">Clinical Flashcards Deck</h1>
+        <p class="page-subtitle">Reinforce criteria, differential rules, clinical vignettes, and diagnostic definitions with explainable spaced repetition.</p>
+      </div>
+      <div class="fc-deck-selector-wrap">
+        <select id="fcTopicSelect" class="select-input" onchange="loadFlashcards(this.value)" aria-label="Select flashcard deck">
+          <option value="all">— All 43 Chapters Combined (121 Cards) —</option>
+          <option value="due">⏰ Due Today for Retrieval</option>
+          <option value="weak">⚡ Weakest Cards (Again / Hard)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Session Stats & Retention Rate -->
+    <div class="fc-session-stats" id="fcSessionStats">
+      <span class="fc-stat">Reviewed: <span id="fcStatsReviewed" class="fc-stat-digit">0</span></span>
+      <span class="fc-stat-divider">·</span>
+      <span class="fc-stat">Recalled: <span id="fcStatsKnown" class="fc-stat-digit">0</span></span>
+      <span class="fc-stat-divider">·</span>
+      <span class="fc-stat">Requeued: <span id="fcStatsReview" class="fc-stat-digit">0</span></span>
+      <span class="fc-stat-divider">·</span>
+      <span class="fc-stat">Retention: <span id="fcStatsRetention" class="fc-stat-digit">100%</span></span>
+    </div>
+
+    <div class="fc-progress-bar">
+      <div class="fc-progress-fill" id="fcProgressFill" style="width: 0%;"></div>
+    </div>
+    <div class="fc-counter" id="fcCounter">Card 1 of 121</div>
+
+    <!-- 3D Ruled Index Card -->
+    <div class="fc-stage">
+      <div class="fc-card-wrap" id="fcWrap" onclick="flipCard()" role="button" tabindex="0" aria-label="Flip flashcard">
+        <div class="fc-card" id="fcCard">
+          <div class="fc-face fc-front" id="fcFront">
+            <div class="fc-top-tab">
+              <span class="fc-card-tag" id="fcPlateTag">VOL I · PLATE 1.1</span>
+              <span class="badge-source" id="fcQNum">1 / 121</span>
+            </div>
+            <div class="fc-term" id="fcTerm">Select a topic to begin recall</div>
+            <div class="fc-hint-chip">
+              <kbd class="kbd-badge">Space</kbd>
+              <span>Click card or press Space to reveal answer</span>
+              <span style="opacity:0.6;font-size:10px">↻</span>
+            </div>
+          </div>
+          <div class="fc-face fc-back" id="fcBack">
+            <div class="fc-top-tab">
+              <span class="fc-back-label" id="fcBackTypeLabel">CLINICAL EXPLANATION</span>
+              <span class="fc-card-tag" id="fcBackPlateTag">DIAGNOSTIC CRITERIA</span>
+            </div>
+            <div class="fc-back-content">
+              <div class="fc-definition" id="fcDef"></div>
+              <div class="fc-example" id="fcEx"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confidence Rating (Spaced Retrieval Triggers) -->
+    <div class="fc-confidence" id="fcConfidence">
+      <button class="fc-conf-btn again" onclick="rateFlashcard('again')" title="Press 1: Immediate resurface in session">
+        <span class="conf-key">1</span>
+        <span>Again</span>
+        <span style="font-size:10px;opacity:0.75">&lt; 10m</span>
+      </button>
+      <button class="fc-conf-btn hard" onclick="rateFlashcard('hard')" title="Press 2: Resurface soon (x1.2 interval)">
+        <span class="conf-key">2</span>
+        <span>Hard</span>
+        <span style="font-size:10px;opacity:0.75">1d</span>
+      </button>
+      <button class="fc-conf-btn good" onclick="rateFlashcard('good')" title="Press 3: Normal SM-2 interval">
+        <span class="conf-key">3</span>
+        <span>Good</span>
+        <span style="font-size:10px;opacity:0.75">3d</span>
+      </button>
+      <button class="fc-conf-btn easy" onclick="rateFlashcard('easy')" title="Press 4: Extended interval (x1.3 bonus)">
+        <span class="conf-key">4</span>
+        <span>Easy</span>
+        <span style="font-size:10px;opacity:0.75">6d</span>
+      </button>
+    </div>
+
+    <div class="fc-controls">
+      <button class="btn btn-outline" onclick="prevCard()" aria-label="Previous flashcard">
+        <svg class="icon" aria-hidden="true"><use href="#ps-icon-chevron-left"></use></svg>
+        <span>Previous</span>
+      </button>
+      <div class="fc-dots" id="fcDots"></div>
+      <button class="btn btn-primary" onclick="nextCard()" aria-label="Next flashcard">
+        <span>Next Card</span>
+        <svg class="icon" aria-hidden="true"><use href="#ps-icon-chevron-right"></use></svg>
+      </button>
+    </div>
+
+    <!-- Keyboard Shortcuts Bar -->
+    <div class="fc-shortcuts-bar">
+      <span><kbd class="fc-kbd-chip">Space</kbd> Flip</span>
+      <span><kbd class="fc-kbd-chip">1–4</kbd> Rate</span>
+      <span><kbd class="fc-kbd-chip">← / →</kbd> Navigate</span>
+      <span><kbd class="fc-kbd-chip">U</kbd> Undo Rating</span>
+    </div>
+
+    <div class="fc-key-points" id="fcKeyPoints"></div>
+  </div>
+</main>
+
+<!-- ═══════════════════════════════════
+     PAGE: NOTES WORKSPACE
+═══════════════════════════════════ -->
+<main id="pg-notes" class="page">
+  <div class="page-shell">
+    <div class="page-hdr">
+      <div>
+        <div class="page-eyebrow">PERSONAL STUDY JOURNAL</div>
+        <h1 class="page-h1">Clinical Notes Workspace</h1>
+        <p class="page-subtitle">Record clinical formulation notes, mnemonic frameworks, and examination summaries with local backup and restore.</p>
+      </div>
+      <div class="notes-header-actions" style="display:flex;gap:var(--sp-2)">
+        <button class="btn btn-outline btn-sm" onclick="exportNotesJSON()">
+          <svg class="icon icon-xs" aria-hidden="true"><use href="#ps-icon-download"></use></svg>
+          <span>Export JSON</span>
+        </button>
+        <label class="btn btn-outline btn-sm">
+          <svg class="icon icon-xs" aria-hidden="true"><use href="#ps-icon-exam"></use></svg>
+          <span>Import JSON</span>
+          <input type="file" accept=".json" onchange="importNotesJSON(event)" hidden />
+        </label>
+        <button class="btn btn-primary btn-sm" onclick="openNewNoteModal()">
+          <svg class="icon icon-xs" aria-hidden="true"><use href="#ps-icon-edit"></use></svg>
+          <span>New Note</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="notes-filter-bar">
+      <div class="search-input-wrap">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input class="search-input" id="notesSearch" placeholder="Filter notes by keyword, chapter, or tag…" oninput="filterNotes(this.value)" aria-label="Search notes"/>
+      </div>
+      <select class="select-input" id="notesCatFilter" onchange="filterNotes(document.getElementById('notesSearch').value)" aria-label="Filter notes by topic">
+        <option value="all">All Topics</option>
+      </select>
+    </div>
+
+    <div class="notes-grid" id="notesGrid">
+      <div class="empty-state large">No notes recorded yet. Write notes while studying or create your first one above.</div>
+    </div>
+  </div>
+
+  <!-- Note Editor Modal -->
+  <div class="modal-overlay hidden" id="noteModal" role="dialog" aria-modal="true" aria-label="Study Note Editor">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Create Study Note</h3>
+        <button class="icon-btn" onclick="closeNoteModal()" aria-label="Close modal">
+          <svg class="icon" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
+        </button>
+      </div>
+      <input id="modalNoteTitle" class="modal-input" placeholder="Note heading…" aria-label="Note title"/>
+      <select id="modalNoteCat" class="modal-select" aria-label="Curriculum Topic Association">
+        <option value="General">General Reflection</option>
+      </select>
+      <input id="modalNoteTags" class="modal-input" placeholder="Tags (comma-separated, e.g. etiology, criteria, high-yield)…" aria-label="Note tags"/>
+      <textarea id="modalNoteBody" class="modal-textarea" placeholder="Record case formulation, differential points, or mnemonics (supports **bold**, *italics*, and lists)…" aria-label="Note content"></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeNoteModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveModalNote()">Save Note</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════════════════════════════════
+     PAGE: QUIZZES
+═══════════════════════════════════ -->
+<main id="pg-quiz" class="page">
+  <div class="page-shell">
+    <div class="page-hdr">
+      <div>
+        <div class="page-eyebrow">STANDARDIZED ASSESSMENT ENGINE</div>
+        <h1 class="page-h1">Diagnostic Assessment &amp; Quiz Suite</h1>
+        <p id="quiz-sub" class="page-subtitle">Test clinical recall, cloze criteria completion, and multi-axial diagnostic reasoning.</p>
+      </div>
+    </div>
+
+    <!-- Mode Switcher -->
+    <div class="quiz-modes-bar" role="tablist">
+      <button class="quiz-mode-btn active" id="quizModePractice" onclick="setQuizMode('practice')" role="tab" aria-selected="true">Practice Mode (Instant Feedback)</button>
+      <button class="quiz-mode-btn" id="quizModeExam" onclick="setQuizMode('exam')" role="tab" aria-selected="false">Exam Simulation (Timed 15 min)</button>
+      <button class="quiz-mode-btn" id="quizModeWeak" onclick="setQuizMode('weak')" role="tab" aria-selected="false">Weak Spots (Adaptive)</button>
+    </div>
+
+    <!-- Timer (Hidden in practice mode) -->
+    <div class="quiz-timer-wrap hidden" id="quizTimerWrap">
+      <svg class="icon" aria-hidden="true"><use href="#ps-icon-clock"></use></svg>
+      <span>Time Remaining:</span>
+      <span class="quiz-timer-val" id="quizTimerVal">15:00</span>
+    </div>
+
+    <!-- ⚡ Quick-Start Assessment Launchpad -->
+    <div class="quiz-hero-launchpad">
+      <div class="quiz-launchpad-header">
+        <div>
+          <span class="card-eyebrow">ONE-CLICK DIAGNOSTIC LAUNCHPAD</span>
+          <h3 class="quiz-launchpad-title">Select Assessment Preset</h3>
+        </div>
+        <button class="btn btn-primary quiz-launch-cta" onclick="setupQuiz()">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="#ps-icon-exam"></use></svg>
+          <span>⚡ Launch Assessment</span>
+        </button>
+      </div>
+
+      <!-- Quick Preset Cards -->
+      <div class="quiz-presets-grid">
+        <button type="button" class="quiz-preset-card active" id="qpRapid10" onclick="setQuizPreset(10, 'practice')">
+          <div class="preset-badge">QUICK DRILL</div>
+          <div class="preset-name">⚡ Rapid 10</div>
+          <div class="preset-meta">10 High-Yield Items · Instant Feedback</div>
+        </button>
+        <button type="button" class="quiz-preset-card" id="qpStandard20" onclick="setQuizPreset(20, 'practice')">
+          <div class="preset-badge">RECOMMENDED</div>
+          <div class="preset-name">🎯 Standard 20</div>
+          <div class="preset-meta">20 Multi-Domain Items · Balanced Test</div>
+        </button>
+        <button type="button" class="quiz-preset-card" id="qpExam30" onclick="setQuizPreset(30, 'exam')">
+          <div class="preset-badge">TIMED BENCHMARK</div>
+          <div class="preset-name">🏆 Timed Exam</div>
+          <div class="preset-meta">30 Comprehensive Items · 15 Min Clock</div>
+        </button>
+        <button type="button" class="quiz-preset-card" id="qpWeakSpots" onclick="setQuizPreset(15, 'weak')">
+          <div class="preset-badge">ADAPTIVE</div>
+          <div class="preset-name">🧠 Weak Spots</div>
+          <div class="preset-meta">Adaptive Retrieval from Flagged Topics</div>
+        </button>
+      </div>
+
+      <!-- Collapsible Advanced Settings -->
+      <details class="quiz-advanced-details" id="quizAdvancedDetails">
+        <summary class="quiz-advanced-summary">
+          <span>⚙ Customize Curriculum Domain &amp; Question Count</span>
+          <span class="quiz-summary-arrow">▾</span>
+        </summary>
+        <div class="quiz-config-inner">
+          <div class="quiz-config-group">
+            <label class="quiz-config-label" for="quizTopicSel">Curriculum Domain Filter</label>
+            <select class="select-input" id="quizTopicSel" onchange="setupQuiz()" aria-label="Quiz domain filter">
+              <option value="mixed">Comprehensive Curriculum (All 9 Volumes Mixed)</option>
+            </select>
+          </div>
+          <div class="quiz-config-group">
+            <label class="quiz-config-label" for="quizCountRange">Questions: <span id="quizCountLabel" class="tnum-mono">10</span></label>
+            <input type="range" id="quizCountRange" min="5" max="30" value="10" oninput="document.getElementById('quizCountLabel').textContent=this.value"/>
+          </div>
+          <div class="quiz-config-group" style="align-self: flex-end;">
+            <button class="btn btn-outline" onclick="setupQuiz()">Regenerate Custom Assessment</button>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div id="quizScoreCard" class="score-card hidden"></div>
+    <div id="quizBody"></div>
+    <button id="quizSubmitBtn" class="btn btn-primary btn-full hidden" onclick="submitQuiz()">Submit Assessment</button>
+    <button id="quizRetryBtn" class="btn btn-outline btn-full hidden" onclick="resetQuiz()">Retry Assessment</button>
+  </div>
+</main>
+
+<!-- ═══════════════════════════════════
+     PAGE: EXAM PAPER
+═══════════════════════════════════ -->
+<main id="pg-exam" class="page">
+  <div class="page-shell">
+    <div class="page-hdr">
+      <div>
+        <div class="page-eyebrow">UNIVERSITY EXAMINATION SUITE</div>
+        <h1 class="page-h1">University Examination Papers &amp; Question Bank</h1>
+      </div>
+      <div class="exam-controls">
+        <button class="btn btn-outline" id="toggleAnsBtn" onclick="toggleAnswers()">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="#ps-icon-info"></use></svg>
+          <span id="toggleAnsText">Reveal Model Answers</span>
+        </button>
+        <button class="btn btn-primary" onclick="window.print()">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="#ps-icon-download"></use></svg>
+          <span>Print A4 Paper</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Suite Tabs: Paper A / Paper B / Question Bank (16 Questions) / Coach -->
+    <nav class="exam-suite-nav" role="tablist">
+      <button class="exam-suite-tab active" id="tabPaperA" onclick="selectExamSuiteTab('paperA', this)" role="tab" aria-selected="true">Paper A (University Standard · 30M)</button>
+      <button class="exam-suite-tab" id="tabPaperB" onclick="selectExamSuiteTab('paperB', this)" role="tab" aria-selected="false">Paper B (Adjustment Blueprint · 30M)</button>
+      <button class="exam-suite-tab" id="tabQB" onclick="selectExamSuiteTab('qb', this)" role="tab" aria-selected="false">Question Bank (16 Long-Answer Questions)</button>
+      <button class="exam-suite-tab" id="tabCoach" onclick="selectExamSuiteTab('coach', this)" role="tab" aria-selected="false">Live Answer-Writing Coach</button>
+    </nav>
+
+    <!-- Standardized Papers A & B View -->
+    <div id="examPaper" class="exam-paper-container"></div>
+
+    <!-- Question Bank View (16 Questions Accordion) -->
+    <div id="examQuestionBank" class="exam-qb-container hidden">
+      <div class="qb-filter-bar">
+        <span class="card-eyebrow">PDF SYLLABUS BLUEPRINT · 16 LONG-ANSWER QUESTIONS</span>
+        <div class="qb-filter-actions">
+          <input type="text" id="qbSearchInput" class="search-input" placeholder="Search questions, criteria, or theorists…" oninput="filterQuestionBank(this.value)" />
+        </div>
+      </div>
+      <div id="qbList" class="qb-list"></div>
+    </div>
+
+    <!-- Live Answer Writing Coach View -->
+    <div id="examCoach" class="coach-workspace hidden">
+      <div class="coach-header">
+        <div>
+          <span class="card-eyebrow">LIVE WRITING COACH &amp; SELF-RUBRIC</span>
+          <h2 class="coach-title" id="coachTitle">Select an exam prompt to begin practice</h2>
+        </div>
+        <div class="coach-timer-pill" id="coachTimerPill">
+          ⏱ <span id="coachTimerVal" class="mono">00:00</span>
+        </div>
+      </div>
+
+      <div class="coach-prompt-select-row" style="margin:var(--sp-4) 0">
+        <select id="coachPromptSelect" class="select-input" onchange="selectCoachPrompt(this.value)" aria-label="Select long answer prompt"></select>
+      </div>
+
+      <div class="coach-split-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5)">
+        <!-- Writing Area -->
+        <div class="coach-write-pane">
+          <div class="coach-stats-bar">
+            <span>Word Count: <strong id="coachWordCount" class="mono">0</strong> / <span id="coachWordTarget" class="mono">600</span> words</span>
+            <span class="badge-source" id="coachPacingBadge">Writing Active</span>
+          </div>
+          <textarea id="coachAnswerEditor" class="coach-editor" placeholder="Write your university examination answer here according to structured academic headings (Introduction, Clinical Diagnostic Criteria, Biopsychosocial Etiology, Interventions, Conclusion)…" oninput="updateCoachWordCount()"></textarea>
+          <div class="coach-actions" style="display:flex;gap:var(--sp-3);margin-top:var(--sp-3)">
+            <button class="btn btn-outline btn-sm" onclick="resetCoachAnswer()">Clear Draft</button>
+            <button class="btn btn-primary btn-sm" onclick="revealCoachModelAnswer()">Reveal Model Answer Side-by-Side →</button>
+          </div>
+        </div>
+
+        <!-- Structure Checklist & Model Answer Panel -->
+        <div class="coach-side-pane">
+          <div class="card-eyebrow">STRUCTURE CHECKLIST &amp; KEYWORDS</div>
+          <div id="coachChecklist" class="coach-checklist" style="margin:var(--sp-3) 0"></div>
+          <div id="coachModelAnswerPanel" class="coach-model-panel hidden">
+            <div class="card-eyebrow" style="color:var(--mint);margin-bottom:var(--sp-2)">15-MARK MODEL ANSWER COMPARISON</div>
+            <div id="coachModelAnswerText" class="coach-model-text" style="font-family:var(--font-reading);line-height:var(--lh-relaxed);max-height:360px;overflow-y:auto;background:var(--surface-inset);padding:var(--sp-4);border-radius:var(--radius-sm)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-footer-note">⸻ End of Standardized Paper ⸻<br>PsychStudy University Revision Platform · Department of Psychology</div>
+  </div>
+</main>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PHASE 6: SIGNATURE FEATURES MODALS & DIALOGS
+     ══════════════════════════════════════════════════════════════ -->
+
+<!-- ░░░ 1. CLINICAL LEXICON MODAL ░░░ -->
+<div class="modal-overlay hidden" id="lexiconModal" role="dialog" aria-modal="true" aria-labelledby="lexiconModalTitle" onclick="closeLexiconModal(event)">
+  <div class="modal modal-atlas-large" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">STANDARDIZED CLINICAL TERMINOLOGY · DSM-5-TR &amp; ICD-11</div>
+        <h3 id="lexiconModalTitle" class="modal-title">The Clinical Lexicon</h3>
+      </div>
+      <button class="icon-btn" onclick="closeLexiconModal()" aria-label="Close Lexicon">
+        <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
+      </button>
+    </div>
+    <div class="modal-atlas-body">
+      <div class="lexicon-controls">
+        <div class="lexicon-search-wrap">
+          <svg class="lexicon-search-icon" aria-hidden="true"><use href="#ps-icon-search"></use></svg>
+          <input type="text" id="lexiconSearchInput" class="lexicon-search-input" placeholder="Search 168+ clinical terms, etymologies, or diagnostic definitions…" oninput="filterLexicon()" />
+        </div>
+        <div class="lexicon-alpha-ribbon" id="lexiconAlphaRibbon" role="toolbar" aria-label="A-Z Alphabet Filter"></div>
+        <div class="lexicon-volume-filter" id="lexiconVolFilter" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+      </div>
+      <div class="lexicon-meta-bar" style="margin-bottom:var(--sp-4);display:flex;justify-content:space-between;font-size:var(--text-xs);color:var(--text-secondary)">
+        <span id="lexiconCountLabel">Showing 168 clinical terms</span>
+        <span>Etymologies: Greek (Gk), Latin (L), French, German</span>
+      </div>
+      <div class="lexicon-grid" id="lexiconGrid" role="list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ 2. CONCEPT MAP: CONSTELLATION MODAL ░░░ -->
+<div class="modal-overlay hidden" id="constellationModal" role="dialog" aria-modal="true" aria-labelledby="constellationModalTitle" onclick="closeConstellationModal(event)">
+  <div class="modal modal-atlas-large" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">TOPOLOGICAL KNOWLEDGE GRAPH · 43 CHAPTERS</div>
+        <h3 id="constellationModalTitle" class="modal-title">Concept Map ("Constellation")</h3>
+      </div>
+      <button class="icon-btn" onclick="closeConstellationModal()" aria-label="Close Constellation">
+        <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
+      </button>
+    </div>
+    <div class="modal-atlas-body">
+      <div class="constellation-wrapper">
+        <div class="constellation-toolbar">
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <button class="btn btn-primary btn-xs active" id="btnConstellationGraph" onclick="setConstellationView('graph')">Graph View (SVG)</button>
+            <button class="btn btn-outline btn-xs" id="btnConstellationList" onclick="setConstellationView('list')">Accessible Table List</button>
+            
+            <div class="constellation-search-wrap">
+              <svg class="search-icon" width="13" height="13" aria-hidden="true"><use href="#ps-icon-search"></use></svg>
+              <input type="search" id="constellationSearch" class="select-input select-xs" placeholder="Search 43 concepts..." oninput="searchConstellation(this.value)" aria-label="Search Concept Map">
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <span class="card-eyebrow">VOLUME:</span>
+            <select id="constellationVolSel" class="select-input select-xs" onchange="filterConstellationByVolume(this.value)" aria-label="Filter Constellation by Volume">
+              <option value="all">All 9 Volumes</option>
+              <option value="vol-1">Vol I: Foundations</option>
+              <option value="vol-2">Vol II: Anxiety & Trauma</option>
+              <option value="vol-3">Vol III: Mood & Affective</option>
+              <option value="vol-4">Vol IV: Eating Disorders</option>
+              <option value="vol-5">Vol V: Personality Disorders</option>
+              <option value="vol-6">Vol VI: Psychotic Disorders</option>
+              <option value="vol-7">Vol VII: Therapies</option>
+              <option value="vol-8">Vol VIII: Culture & Health</option>
+              <option value="vol-9">Vol IX: Stress & Adjustment</option>
+            </select>
+            <div class="constellation-zoom-group">
+              <button class="btn btn-outline btn-xs" onclick="constellationZoom(1.2)" title="Zoom in">+</button>
+              <button class="btn btn-outline btn-xs" onclick="constellationZoom(0.8)" title="Zoom out">−</button>
+              <button class="btn btn-outline btn-xs" onclick="constellationResetZoom()" title="Reset view">⟲ Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Volume Filter Pills Strip -->
+        <div class="constellation-vol-pills" id="constellationVolPills" role="toolbar" aria-label="Constellation Volume Filters">
+          <button type="button" class="cv-pill active" data-vol="all" onclick="filterConstellationByVolume('all')">All 9 Volumes</button>
+          <button type="button" class="cv-pill" data-vol="vol-1" onclick="filterConstellationByVolume('vol-1')">Vol I Foundations</button>
+          <button type="button" class="cv-pill" data-vol="vol-2" onclick="filterConstellationByVolume('vol-2')">Vol II Anxiety</button>
+          <button type="button" class="cv-pill" data-vol="vol-3" onclick="filterConstellationByVolume('vol-3')">Vol III Mood</button>
+          <button type="button" class="cv-pill" data-vol="vol-4" onclick="filterConstellationByVolume('vol-4')">Vol IV Eating</button>
+          <button type="button" class="cv-pill" data-vol="vol-5" onclick="filterConstellationByVolume('vol-5')">Vol V Personality</button>
+          <button type="button" class="cv-pill" data-vol="vol-6" onclick="filterConstellationByVolume('vol-6')">Vol VI Psychotic</button>
+          <button type="button" class="cv-pill" data-vol="vol-7" onclick="filterConstellationByVolume('vol-7')">Vol VII Therapies</button>
+          <button type="button" class="cv-pill" data-vol="vol-8" onclick="filterConstellationByVolume('vol-8')">Vol VIII Culture</button>
+          <button type="button" class="cv-pill" data-vol="vol-9" onclick="filterConstellationByVolume('vol-9')">Vol IX Stress</button>
+        </div>
+
+        <!-- Graph SVG Canvas -->
+        <div class="constellation-canvas-container" id="constellationCanvasContainer">
+          <svg class="constellation-svg" id="constellationSvg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Interactive Clinical Knowledge Graph">
+            <g id="constellationNebulasGroup"></g>
+            <g id="constellationEdgesGroup"></g>
+            <g id="constellationNodesGroup"></g>
+          </svg>
+          <div class="constellation-tooltip hidden" id="constellationTooltip" role="tooltip"></div>
+
+          <!-- Interactive Clinical Inspector Drawer -->
+          <div class="constellation-inspector hidden" id="constellationInspector">
+            <div class="constellation-inspector-hdr">
+              <div>
+                <span class="constellation-inspector-vol" id="ciVolBadge">VOL I · FOUNDATIONS</span>
+                <h4 class="constellation-inspector-title" id="ciTitle">Major Depressive Disorder</h4>
+              </div>
+              <button class="icon-btn" onclick="closeConstellationInspector()" aria-label="Close Inspector" style="width:24px;height:24px">
+                <svg width="14" height="14" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
+              </button>
+            </div>
+            <div class="constellation-inspector-body">
+              <p class="constellation-inspector-desc" id="ciDesc"></p>
+              <div class="constellation-inspector-mastery">
+                <div class="ci-mastery-label">
+                  <span>Topic Mastery</span>
+                  <span id="ciMasteryVal" class="mono">0%</span>
+                </div>
+                <div class="ci-mastery-bar">
+                  <div class="ci-mastery-fill" id="ciMasteryFill" style="width:0%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="card-eyebrow" style="margin-bottom:6px">DIFFERENTIALS &amp; COMORBIDITIES (<span id="ciConnCount">0</span>)</div>
+                <div class="constellation-connections-list" id="ciConnectionsList"></div>
+              </div>
+            </div>
+            <div style="margin-top:var(--sp-3);padding-top:var(--sp-3);border-top:1px solid rgba(148,163,184,0.2)">
+              <button class="btn btn-primary btn-sm btn-full" id="ciReadBtn" onclick="openChapterFromConstellation(currentConstellationSelectedId)">
+                <span>Read Full Chapter ↗</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="constellation-hint-pill" id="ciHintPill">
+            <span>💡 Click any node to inspect comorbidities &amp; differentials · Pan &amp; zoom freely</span>
+          </div>
+        </div>
+
+        <!-- Accessible List View -->
+        <div class="constellation-list-view hidden" id="constellationListView"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ 3. HISTORICAL CARE TIMELINE MODAL ░░░ -->
+<div class="modal-overlay hidden" id="timelineModal" role="dialog" aria-modal="true" aria-labelledby="timelineModalTitle" onclick="closeTimelineModal(event)">
+  <div class="modal modal-atlas-large" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">CHRONOLOGICAL NOSOLOGY &amp; CARE MILESTONES · APPENDIX D</div>
+        <h3 id="timelineModalTitle" class="modal-title">Historical Care Timeline</h3>
+      </div>
+      <button class="icon-btn" onclick="closeTimelineModal()" aria-label="Close Timeline">
+        <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
+      </button>
+    </div>
+    <div class="modal-atlas-body">
+      <div class="timeline-tabs" role="tablist">
+        <button class="pill-btn active" id="tabTlAll" onclick="filterTimeline('all', this)" role="tab" aria-selected="true">All Milestones (25)</button>
+        <button class="pill-btn" id="tabTlConcepts" onclick="filterTimeline('Concepts', this)" role="tab" aria-selected="false">Concepts &amp; Nosology</button>
+        <button class="pill-btn" id="tabTlTreatments" onclick="filterTimeline('Treatments', this)" role="tab" aria-selected="false">Treatments &amp; Modalities</button>
+        <button class="pill-btn" id="tabTlLaw" onclick="filterTimeline('Law & Policy (India)', this)" role="tab" aria-selected="false">Law &amp; Policy (India)</button>
+      </div>
+      <div class="timeline-rail-wrap">
+        <div class="timeline-rail-line" aria-hidden="true"></div>
+        <div id="timelineList" role="feed" aria-label="Historical Care Milestones"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ 4. DIFFERENTIAL DIAGNOSIS TRAINER MODAL ░░░ -->
+<div class="modal-overlay hidden" id="trainerModal" role="dialog" aria-modal="true" aria-labelledby="trainerModalTitle" onclick="closeTrainerModal(event)">
+  <div class="modal modal-atlas-large" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">"SPOT THE DISORDER" · MULTI-AXIAL CLINICAL REASONING</div>
+        <h3 id="trainerModalTitle" class="modal-title">Differential Diagnosis Trainer</h3>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="badge-source" id="trainerScoreBadge">Accuracy: 0 / 0 (0%)</span>
+        <button class="icon-btn" onclick="closeTrainerModal()" aria-label="Close Trainer">
+          <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
+        </button>
+      </div>
+    </div>
+    <div class="modal-atlas-body">
+      <div class="trainer-container">
+        <div class="trainer-vignette-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-2)">
+            <span class="card-eyebrow" id="trainerCaseIndex">CASE VIGNETTE 1 OF 8</span>
+            <span class="tag-chip" id="trainerCaseDomain">Adult Clinical Assessment</span>
+          </div>
+          <h4 class="trainer-vignette-title" id="trainerCaseTitle">Patient Case Presentation</h4>
+          <p class="trainer-vignette-prose" id="trainerCaseProse"></p>
+          <div class="trainer-mse-box" id="trainerCaseMSE"></div>
+          
+          <div class="card-eyebrow" style="margin-bottom:var(--sp-2)">PRIMARY DIAGNOSIS CANDIDATES (SELECT ONE):</div>
+          <div class="trainer-options-grid" id="trainerOptionsGrid"></div>
+
+          <div style="display:flex;gap:var(--sp-3);align-items:center;margin-top:var(--sp-4)">
+            <button class="btn btn-primary" id="trainerEvalBtn" onclick="evaluateTrainerDiagnosis()">Evaluate Clinical Differential</button>
+            <button class="btn btn-outline hidden" id="trainerNextBtn" onclick="nextTrainerCase()">Next Clinical Vignette →</button>
+          </div>
+
+          <div class="trainer-feedback-card hidden" id="trainerFeedbackCard">
+            <h4 id="trainerFeedbackTitle" style="margin-bottom:var(--sp-2)"></h4>
+            <div id="trainerDistinguishingText" style="font-family:var(--font-reading);line-height:var(--lh-relaxed);margin-bottom:var(--sp-3)"></div>
+            <div class="card-eyebrow">DSM-5-TR / ICD-11 RULE-OUT JUSTIFICATIONS</div>
+            <ul id="trainerRuleOutsList" style="font-size:var(--text-sm);margin:var(--sp-2) 0 0 var(--sp-4)"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ 5. FOCUS TIMER & BREATHING ORB MODAL ░░░ -->
+<div class="modal-overlay hidden" id="focusModal" role="dialog" aria-modal="true" aria-labelledby="focusModalTitle" onclick="closeFocusModal(event)">
+  <div class="modal" style="max-width:480px" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">POMODORO WORK &amp; COGNITIVE PACING</div>
+        <h3 id="focusModalTitle" class="modal-title">Atlas Focus Timer</h3>
+      </div>
+      <button class="icon-btn" onclick="closeFocusModal()" aria-label="Close Focus Timer">
+        <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
+      </button>
+    </div>
+    <div class="modal-body" style="text-align:center">
+      <div style="display:flex;gap:6px;justify-content:center;margin-bottom:var(--sp-6)">
+        <button class="pill-btn active" id="focusMode25" onclick="setFocusTimerDuration(25)">25m Focus</button>
+        <button class="pill-btn" id="focusMode5" onclick="setFocusTimerDuration(5)">5m Break</button>
+        <button class="pill-btn" id="focusMode15" onclick="setFocusTimerDuration(15)">15m Rest</button>
+      </div>
+
+      <div style="font-family:var(--font-mono);font-size:4rem;font-weight:700;letter-spacing:0.04em;margin-bottom:var(--sp-4)" id="focusModalDisplay">25:00</div>
+
+      <div class="breathing-orb-container">
+        <div class="breathing-orb" id="breathingOrb">
+          <svg width="36" height="36" fill="none" stroke="#FFFFFF" stroke-width="2" aria-hidden="true"><circle cx="18" cy="18" r="14"></circle><path d="M18 10v8l4 4"></path></svg>
+        </div>
+        <div class="breathing-orb-cue" id="breathingOrbCue">Inhale gently (4s) · Hold (2s) · Exhale slowly (6s)</div>
+      </div>
+
+      <div style="display:flex;gap:var(--sp-3);justify-content:center;margin-top:var(--sp-6)">
+        <button class="btn btn-primary" id="focusTimerToggleBtn" onclick="toggleFocusTimer()">Start Focus Session</button>
+        <button class="btn btn-outline" onclick="resetFocusTimer()">Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ 6. CRISIS SUPPORT & HELPLINES MODAL ░░░ -->
+<div class="modal-overlay hidden" id="supportModal" role="dialog" aria-modal="true" aria-labelledby="supportModalTitle" onclick="closeSupportModal(event)">
+  <div class="modal modal-atlas-large" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow" style="color:var(--crimson)">24×7 CRISIS RESOURCES · APPENDIX F</div>
+        <h3 id="supportModalTitle" class="modal-title">Crisis Support &amp; Mental Health Helplines</h3>
+      </div>
+      <button class="icon-btn" onclick="closeSupportModal()" aria-label="Close Support">
+        <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
+      </button>
+    </div>
+    <div class="modal-atlas-body">
+      <!-- Emergency Banner -->
+      <div class="support-hero-banner">
+        <h4 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--sp-2)">You are not alone. Confidential, compassionate help is available right now.</h4>
+        <p style="font-family:var(--font-reading);line-height:var(--lh-relaxed);font-size:var(--text-sm)">If you or someone you know is going through a difficult time, experiencing thoughts of self-harm, or in acute psychiatric distress, please reach out to one of the verified services below. Trained clinical counsellors are standing by to listen.</p>
+        <div style="margin-top:var(--sp-3);font-family:var(--font-mono);font-size:var(--text-xs);font-weight:700">🚨 Immediate Medical or Psychiatric Emergency: Dial 112 (India) or 911 / 999 locally.</div>
+      </div>
+
+      <div class="card-eyebrow" style="margin-bottom:var(--sp-3)">VERIFIED NATIONAL CRISIS HELPLINES (INDIA)</div>
+      <div class="support-helpline-grid">
+        <div class="helpline-card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <strong style="font-family:var(--font-display)">Tele-MANAS</strong>
+            <span class="tag-chip" style="background:var(--mint-soft);color:var(--mint-deep)">Govt. of India · 24×7</span>
+          </div>
+          <p style="font-size:var(--text-xs);color:var(--text-secondary)">National Tele Mental Health Programme of India. Comprehensive, free, multilingual 24/7 tele-counseling across all states and union territories.</p>
+          <a href="tel:14416" class="helpline-tel-btn">📞 14416 (or 1800-891-4416)</a>
+        </div>
+
+        <div class="helpline-card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <strong style="font-family:var(--font-display)">KIRAN Helpline</strong>
+            <span class="tag-chip" style="background:var(--mint-soft);color:var(--mint-deep)">MSJE · 24×7</span>
+          </div>
+          <p style="font-size:var(--text-xs);color:var(--text-secondary)">Ministry of Social Justice and Empowerment 24/7 mental health helpline providing early screening, first-aid, psychological support, and distress management in 13 languages.</p>
+          <a href="tel:18005990019" class="helpline-tel-btn">📞 1800-599-0019</a>
+        </div>
+
+        <div class="helpline-card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <strong style="font-family:var(--font-display)">iCall (TISS)</strong>
+            <span class="tag-chip" style="background:var(--amber-soft);color:var(--amber-deep)">Mon–Sat · 10am–8pm</span>
+          </div>
+          <p style="font-size:var(--text-xs);color:var(--text-secondary)">Tata Institute of Social Sciences psychosocial helpline operated by trained clinical psychologists and professional counselors.</p>
+          <a href="tel:9152987821" class="helpline-tel-btn">📞 9152987821</a>
+        </div>
+
+        <div class="helpline-card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <strong style="font-family:var(--font-display)">AASRA</strong>
+            <span class="tag-chip" style="background:var(--mint-soft);color:var(--mint-deep)">Non-Profit · 24×7</span>
+          </div>
+          <p style="font-size:var(--text-xs);color:var(--text-secondary)">Confidential 24/7 crisis intervention helpline for individuals who are lonely, distressed, or suicidal.</p>
+          <a href="tel:+919820466726" class="helpline-tel-btn">📞 +91-9820466726</a>
+        </div>
+      </div>
+
+      <div class="card-eyebrow" style="margin-bottom:var(--sp-3)">INTERNATIONAL CRISIS DIRECTORIES</div>
+      <div class="support-helpline-grid" style="margin-bottom:var(--sp-6)">
+        <div class="helpline-card">
+          <strong style="font-family:var(--font-display)">United States &amp; Canada</strong>
+          <p style="font-size:var(--text-xs);color:var(--text-secondary)">988 Suicide &amp; Crisis Lifeline. Free, confidential support available 24 hours a day, 7 days a week by call or text.</p>
+          <a href="tel:988" class="helpline-tel-btn">📞 988</a>
+        </div>
+
+        <div class="helpline-card">
+          <strong style="font-family:var(--font-display)">United Kingdom &amp; Ireland</strong>
+          <p style="font-size:var(--text-xs);color:var(--text-secondary)">Samaritans UK &amp; Ireland. Whatever you are going through, a Samaritan will face it with you 24 hours a day, 365 days a year.</p>
+          <a href="tel:116123" class="helpline-tel-btn">📞 116 123</a>
+        </div>
+
+        <div class="helpline-card">
+          <strong style="font-family:var(--font-display)">Global Helpline Directory</strong>
+          <p style="font-size:var(--text-xs);color:var(--text-secondary)">Find confidential support from a local helpline in your country, free and searchable across 130+ nations.</p>
+          <a href="https://findahelpline.com" target="_blank" rel="noopener" class="btn btn-outline" style="text-align:center;justify-content:center">findahelpline.com ↗</a>
+        </div>
+      </div>
+
+      <div class="card-eyebrow" style="margin-bottom:var(--sp-3)">HOW TO SUPPORT A FRIEND IN DISTRESS · 5-STEP CLINICAL PEER GUIDE</div>
+      <div class="peer-support-steps" style="margin-bottom:var(--sp-6)">
+        <div class="peer-step-item">
+          <div class="peer-step-num">01</div>
+          <div>
+            <strong>Listen Actively Without Judgement</strong>
+            <p style="font-size:var(--text-xs);color:var(--text-secondary);margin-top:2px">Give them your complete, unhurried attention. Do not dismiss their pain with platitudes ("you'll get over it", "look on the bright side") or compare their distress to others.</p>
+          </div>
+        </div>
+        <div class="peer-step-item">
+          <div class="peer-step-num">02</div>
+          <div>
+            <strong>Ask Directly and Compassionately</strong>
+            <p style="font-size:var(--text-xs);color:var(--text-secondary);margin-top:2px">Clinical evidence demonstrates that asking directly ("Are you thinking about suicide?") does not plant the thought in someone's head; instead, it offers immense relief and permission to speak openly.</p>
+          </div>
+        </div>
+        <div class="peer-step-item">
+          <div class="peer-step-num">03</div>
+          <div>
+            <strong>Prioritize Immediate Environmental Safety</strong>
+            <p style="font-size:var(--text-xs);color:var(--text-secondary);margin-top:2px">If you believe they are in acute danger, do not leave them alone. Gently restrict access to potentially lethal means and stay with them in a calm, safe environment.</p>
+          </div>
+        </div>
+        <div class="peer-step-item">
+          <div class="peer-step-num">04</div>
+          <div>
+            <strong>Facilitate Professional Connection</strong>
+            <p style="font-size:var(--text-xs);color:var(--text-secondary);margin-top:2px">Offer to sit with them while calling Tele-MANAS (14416) or help them schedule an appointment with a university counselor, clinical psychologist, or psychiatrist.</p>
+          </div>
+        </div>
+        <div class="peer-step-item">
+          <div class="peer-step-num">05</div>
+          <div>
+            <strong>Maintain Ongoing Continuity and Check In</strong>
+            <p style="font-size:var(--text-xs);color:var(--text-secondary);margin-top:2px">Follow up the next day and throughout the following weeks. Consistent, caring connection significantly reduces social isolation and fosters resilience.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface-code);padding:var(--sp-4);border-radius:var(--radius-sm);border:1px solid var(--border-sm);font-size:var(--text-xs);color:var(--text-tertiary)">
+        <strong>Academic Notice:</strong> PsychStudy ("The Clinical Atlas") is an independent, non-commercial university revision and psychological sciences study application. It is strictly educational and does not provide diagnostic services, psychological therapy, medical advice, or crisis intervention.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script defer src="data/refs.js"></script>
+<script defer src="data/kb-1-foundations.js"></script>
+<script defer src="data/kb-2-anxiety.js"></script>
+<script defer src="data/kb-3-mood.js"></script>
+<script defer src="data/kb-4-eating.js"></script>
+<script defer src="data/kb-5-personality.js"></script>
+<script defer src="data/kb-6-psychotic.js"></script>
+<script defer src="data/kb-7-therapies.js"></script>
+<script defer src="data/kb-8-culture.js"></script>
+<script defer src="data/kb-9-adjustment.js"></script>
+<script defer src="data/cards.js"></script>
+<script defer src="data/quiz.js"></script>
+<script defer src="data/exam.js"></script>
+<script defer src="data/glossary.js"></script>
+<script defer src="data/timeline.js"></script>
+<script defer src="data/facts.js"></script>
+<script defer src="data/brain.js"></script>
+<script defer src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none" class="ill-leaf-svg">
+  <defs>
+    <linearGradient id="leafGrad1" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#34D399" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="leafGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#10B981" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+  <!-- Stem -->
+  <path d="M40 140 Q 70 100 120 40" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-opacity="0.5"/>
+  <!-- Leaf 1 (Left) -->
+  <path d="M60 115 C 30 110 25 80 50 75 C 65 85 70 100 60 115 Z" fill="url(#leafGrad1)"/>
+  <!-- Leaf 2 (Right) -->
+  <path d="M75 95 C 105 90 115 65 95 55 C 80 65 75 80 75 95 Z" fill="url(#leafGrad2)"/>
+  <!-- Leaf 3 (Left High) -->
+  <path d="M92 72 C 70 65 68 45 85 40 C 96 48 98 60 92 72 Z" fill="url(#leafGrad1)"/>
+  <!-- Top Bud -->
+  <path d="M120 40 C 130 25 125 15 110 20 C 105 30 112 36 120 40 Z" fill="url(#leafGrad2)"/>
+  <!-- Dew Drops / Synaptic Sparkles -->
+  <circle cx="48" cy="88" r="2.5" fill="#34D399" opacity="0.8"/>
+  <circle cx="102" cy="68" r="2" fill="#10B981" opacity="0.7"/>
+  <circle cx="118" cy="24" r="2" fill="#6EE7B7" opacity="0.9"/>
+</svg>
