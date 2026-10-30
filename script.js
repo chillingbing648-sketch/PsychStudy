@@ -880,6 +880,12 @@ function navigate(page) {
   document.querySelectorAll('.bottom-nav-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.page === page);
   });
+  document.querySelectorAll('.drawer-nav-item').forEach(b => {
+    const isAct = b.dataset.page === page;
+    b.classList.toggle('active', isAct);
+    const badge = b.querySelector('.drawer-nav-badge');
+    if (badge) badge.style.display = isAct ? 'inline-block' : 'none';
+  });
 
   S.currentPage = page;
   document.getElementById('navLinks').classList.remove('open');
@@ -1633,16 +1639,16 @@ function initVitrineHotspots() {
   if (!overlay || overlay.children.length > 0) return;
 
   const pins = [
-    { key: 'frontal', top: '28%', left: '26%', name: 'Frontal Lobe', tag: 'BA 9, 10, 46 · Executive', color: '#F472B6' },
-    { key: 'parietal', top: '24%', left: '68%', name: 'Parietal Lobe', tag: 'Somatosensory BA 1-3', color: '#60A5FA' },
-    { key: 'occipital', top: '48%', left: '84%', name: 'Occipital Lobe', tag: 'BA 17 · Primary Visual', color: '#C084FC' },
-    { key: 'temporal', top: '56%', left: '34%', name: 'Temporal Lobe', tag: 'Auditory & Memory', color: '#34D399' },
-    { key: 'cerebellum', top: '74%', left: '74%', name: 'Cerebellum', tag: 'Coordination & Balance', color: '#FBBF24' },
-    { key: 'limbic', top: '86%', left: '54%', name: 'Brainstem & Relays', tag: 'Autonomic & Homeostasis', color: '#FB923C' }
+    { key: 'frontal', top: '19.5%', left: '8.5%', name: 'Frontal Lobe', tag: 'Executive & BA 9, 10, 46', color: '#F472B6', align: 'right' },
+    { key: 'parietal', top: '14.5%', left: '53.5%', name: 'Parietal Lobe', tag: 'Somatosensory BA 1-3', color: '#60A5FA', align: 'right' },
+    { key: 'occipital', top: '39%', left: '71%', name: 'Occipital Lobe', tag: 'Primary Visual BA 17', color: '#C084FC', align: 'left' },
+    { key: 'temporal', top: '48%', left: '19%', name: 'Temporal Lobe', tag: 'Auditory & Memory', color: '#34D399', align: 'right' },
+    { key: 'cerebellum', top: '67%', left: '60.5%', name: 'Cerebellum', tag: 'Coordination & Balance', color: '#FBBF24', align: 'left' },
+    { key: 'limbic', top: '79%', left: '36.5%', name: 'Brainstem & Relays', tag: 'Autonomic & Homeostasis', color: '#FB923C', align: 'right' }
   ];
 
   overlay.innerHTML = pins.map(p => `
-    <div class="brain-hotspot-pin ${p.key === 'frontal' ? 'active' : ''}" data-lobe="${p.key}" style="top: ${p.top}; left: ${p.left};" onclick="selectVitrineLobe('${p.key}')">
+    <div class="brain-hotspot-pin ${p.key === 'frontal' ? 'active' : ''}" data-lobe="${p.key}" data-align="${p.align}" style="top: ${p.top}; left: ${p.left};" onclick="selectVitrineLobe('${p.key}')">
       <span class="hotspot-pulse" style="--pin-color: ${p.color};"></span>
       <span class="hotspot-dot" style="background: ${p.color};"></span>
       <span class="hotspot-tag">
