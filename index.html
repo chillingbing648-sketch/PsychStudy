@@ -278,6 +278,13 @@
               <div class="dd-desc">"Spot the disorder" vignette practice</div>
             </div>
           </button>
+          <button class="nav-dropdown-item" role="menuitem" onclick="openExploreItem('references')">
+            <svg width="16" height="16" aria-hidden="true"><use href="#ps-icon-notes"></use></svg>
+            <div>
+              <div class="dd-title">Clinical Bibliography (APA-7)</div>
+              <div class="dd-desc">63 verified academic sources &amp; DOIs</div>
+            </div>
+          </button>
           <div class="dd-divider"></div>
           <button class="nav-dropdown-item" role="menuitem" onclick="openExploreItem('support')">
             <svg width="16" height="16" aria-hidden="true"><use href="#ps-icon-support"></use></svg>
@@ -384,6 +391,10 @@
       <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('lexicon');">
         <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-lexicon"></use></svg>
         <span>Lexicon</span>
+      </button>
+      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('references');">
+        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-notes"></use></svg>
+        <span>References</span>
       </button>
       <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('support');">
         <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-support"></use></svg>
@@ -1791,6 +1802,61 @@
       <div style="background:var(--surface-code);padding:var(--sp-4);border-radius:var(--radius-sm);border:1px solid var(--border-sm);font-size:var(--text-xs);color:var(--text-tertiary)">
         <strong>Academic Notice:</strong> PsychStudy ("The Clinical Atlas") is an independent, non-commercial university revision and psychological sciences study application. It is strictly educational and does not provide diagnostic services, psychological therapy, medical advice, or crisis intervention.
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ CLINICAL BIBLIOGRAPHY & APA-7 REFERENCES COMPENDIUM MODAL ░░░ -->
+<div class="modal-overlay hidden" id="referencesModal" role="dialog" aria-modal="true" aria-labelledby="refModalTitle" onclick="closeReferencesModal(event)">
+  <div class="modal-atlas modal-references" onclick="event.stopPropagation()">
+    <div class="modal-atlas-header">
+      <div>
+        <div class="modal-eyebrow">ACADEMIC BIBLIOGRAPHY &amp; CLINICAL REGISTRY</div>
+        <h3 id="refModalTitle" class="modal-atlas-title">Verified APA-7 References &amp; Authoritative Citations</h3>
+        <p class="modal-atlas-subtitle">
+          Canonical empirical citations spanning DSM-5-TR, ICD-11, and the 43 curriculum chapters.
+        </p>
+      </div>
+      <button class="icon-btn" onclick="closeReferencesModal()" aria-label="Close references compendium">
+        <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
+      </button>
+    </div>
+
+    <!-- Search & Filter Bar -->
+    <div class="ref-toolbar">
+      <div class="ref-search-wrap">
+        <svg class="ref-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="refSearchInput" class="ref-search-input" placeholder="Search by author, year, title, or DOI (e.g., Beck, Kleinman, 2022, Schizophrenia)..." oninput="filterReferencesList()" />
+        <button type="button" class="ref-search-clear hidden" id="refSearchClear" onclick="clearRefSearch()">✕</button>
+      </div>
+
+      <!-- Domain Category Filter Pills -->
+      <div class="ref-filter-pills" id="refFilterPills">
+        <button type="button" class="ref-pill active" data-category="all" onclick="setRefCategoryFilter('all')">All (<span id="refCountAll">63</span>)</button>
+        <button type="button" class="ref-pill" data-category="standards" onclick="setRefCategoryFilter('standards')">DSM &amp; ICD</button>
+        <button type="button" class="ref-pill" data-category="anxiety" onclick="setRefCategoryFilter('anxiety')">Anxiety &amp; Trauma</button>
+        <button type="button" class="ref-pill" data-category="mood" onclick="setRefCategoryFilter('mood')">Mood Disorders</button>
+        <button type="button" class="ref-pill" data-category="eating" onclick="setRefCategoryFilter('eating')">Eating Disorders</button>
+        <button type="button" class="ref-pill" data-category="psychotic" onclick="setRefCategoryFilter('psychotic')">Psychosis</button>
+        <button type="button" class="ref-pill" data-category="therapies" onclick="setRefCategoryFilter('therapies')">Therapies</button>
+        <button type="button" class="ref-pill" data-category="culture" onclick="setRefCategoryFilter('culture')">Culture &amp; Stigma</button>
+        <button type="button" class="ref-pill" data-category="stress" onclick="setRefCategoryFilter('stress')">Stress &amp; Coping</button>
+      </div>
+    </div>
+
+    <!-- References Counter & Action Bar -->
+    <div class="ref-stats-bar">
+      <span id="refMatchesCount" class="tnum-mono">Showing 63 verified references</span>
+      <div class="ref-stats-actions">
+        <button class="btn btn-outline btn-xs" onclick="copyAllCitations()" title="Copy entire bibliography to clipboard">
+          <span>📋 Copy Complete Bibliography</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Scrollable References List -->
+    <div class="modal-atlas-body ref-list-body" id="refListContainer">
+      <!-- Populated dynamically via renderReferencesList() -->
     </div>
   </div>
 </div>

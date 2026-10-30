@@ -2354,15 +2354,26 @@ function renderSectionReferences(c) {
     <section id="sec-12" class="reader-section">
       <div class="section-badge-eyebrow">§12 ACADEMIC REFERENCES &amp; CITATIONS</div>
       <div class="references-list-card">
-        <div class="card-eyebrow">VERIFIED APA-7 REFERENCES</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-3);flex-wrap:wrap;gap:8px">
+          <div class="card-eyebrow">VERIFIED APA-7 REFERENCES FOR THIS CHAPTER</div>
+          <button type="button" class="btn btn-outline btn-xs" onclick="openReferencesModal()" style="display:inline-flex;align-items:center;gap:6px">
+            <span>📚 Browse Complete Compendium (63 Refs)</span>
+          </button>
+        </div>
         <ol class="apa-refs-list">
           ${refs.map(rKey => {
             const entry = refMap[rKey];
-            if (!entry) return `<li><strong>${rKey}</strong></li>`;
+            if (!entry) return `<li id="ref-${rKey}" class="apa-ref-item"><span class="ref-badge">[${esc(rKey)}]</span></li>`;
+            const citationText = typeof entry === 'string' ? entry : `${entry.authors} (${entry.year}). <em>${entry.title}</em>. ${entry.journal || entry.publisher || ''}.`;
             return `
               <li id="ref-${rKey}" class="apa-ref-item">
-                <span class="ref-citation">${entry.authors} (${entry.year}). <em>${entry.title}</em>. ${entry.journal || entry.publisher || ''}.</span>
-                ${entry.doi ? `<a href="https://doi.org/${entry.doi}" target="_blank" rel="noopener noreferrer" class="ref-doi-link">doi:${entry.doi} ↗</a>` : ''}
+                <div class="apa-ref-main">
+                  <span class="ref-badge">[${esc(rKey)}]</span>
+                  <div class="ref-citation">${formatCitationHtml(citationText)}</div>
+                </div>
+                <button type="button" class="ref-copy-btn" onclick="copyCitation('${esc(rKey)}')" title="Copy APA-7 citation">
+                  📋 Copy
+                </button>
               </li>
             `;
           }).join('')}
@@ -2472,7 +2483,8 @@ function renderMarginaliaRefs() {
   const wrap = document.getElementById('marginaliaRefs');
   if (!wrap || !c) return;
   const refs = c.refs || [];
-  wrap.innerHTML = refs.map(r => `<a href="#ref-${r}" class="marginalia-ref-chip">[${r}]</a>`).join('');
+  wrap.innerHTML = refs.map(r => `<a href="#ref-${r}" class="marginalia-ref-chip" title="Jump to citation">[${r}]</a>`).join('') +
+    `<button type="button" class="marginalia-all-refs-btn" onclick="openReferencesModal()" title="Open clinical bibliography compendium">All 63 Refs →</button>`;
 }
 
 function searchFromTerm(term) {
@@ -4110,6 +4122,7 @@ function filterCmdPalette(query) {
     { name: 'Practice Quiz', icon: '✏️', action: () => navigate('quiz') },
     { name: 'Personal Notes Workspace', icon: '📝', action: () => navigate('notes') },
     { name: 'Exam Paper', icon: '📋', action: () => navigate('exam') },
+    { name: 'Clinical Bibliography (APA-7 References)', icon: '📚', action: () => openReferencesModal() },
     { name: 'Brain Atlas (Plate I)', icon: '🧠', action: () => openExploreItem('brain') },
     { name: 'Clinical Lexicon (A–Z)', icon: '📖', action: () => openExploreItem('lexicon') },
     { name: 'Concept Map ("Constellation")', icon: '✨', action: () => openExploreItem('constellation') },
@@ -4212,6 +4225,8 @@ function openExploreItem(type) {
     openLexiconModal();
   } else if (type === 'differential') {
     openTrainerModal();
+  } else if (type === 'references' || type === 'refs' || type === 'bibliography') {
+    openReferencesModal();
   } else if (type === 'support') {
     openSupportModal();
   }
@@ -5451,3 +5466,258 @@ window.resetFocusTimer = resetFocusTimer;
 window.openSupportModal = openSupportModal;
 window.closeSupportModal = closeSupportModal;
 window.openExploreItem = openExploreItem;
+
+
+// ══════════════════════════════════════════════════════════════
+// CLINICAL REFERENCES & APA-7 COMPENDIUM
+// ══════════════════════════════════════════════════════════════
+
+let currentRefCategory = 'all';
+
+function formatCitationHtml(raw) {
+  if (!raw) return '';
+  return esc(raw).replace(/(https?:\/\/[^\s]+)/g, url => {
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="ref-link">${url} ↗</a>`;
+  });
+}
+
+function getRefCategory(key, citation) {
+  key = (key || '').toLowerCase();
+  const text = (citation || '').toLowerCase();
+  if (['apa2022', 'who2022', 'gururaj2016', 'goi2017'].includes(key)) return 'standards';
+  if (['watson1920', 'clark1986', 'klein1993', 'foa1986', 'salkovskis1985', 'borkovec1998', 'ehlers2000', 'seligman1971'].includes(key) || text.includes('panic') || text.includes('phobia') || text.includes('anxiety') || text.includes('ptsd') || text.includes('obsess') || text.includes('worry')) return 'anxiety';
+  if (['beck1976', 'beck1979', 'cade1949', 'rosenthal1984', 'joiner2005', 'durkheim1897', 'seligman1975'].includes(key) || text.includes('depress') || text.includes('bipolar') || text.includes('suicide') || text.includes('affective') || text.includes('seasonal affective')) return 'mood';
+  if (['arcelus2011', 'hudson2007', 'russell1979', 'fairburn2008', 'lock2013'].includes(key) || text.includes('eating') || text.includes('anorexia') || text.includes('bulimia') || text.includes('binge')) return 'eating';
+  if (['cleckley1941', 'hare2003', 'linehan1993'].includes(key) || text.includes('personality') || text.includes('psychopath') || text.includes('borderline')) return 'personality';
+  if (['bleuler1911', 'howes2009', 'cerletti1938'].includes(key) || text.includes('schizophren') || text.includes('psychot') || text.includes('dementia praecox')) return 'psychotic';
+  if (['wolpe1958', 'ayllon1968', 'rogers1951', 'rogers1957', 'maslow1954', 'frank1961', 'yalom2020', 'gottman1999', 'johnson2004', 'segal2002', 'kabatzinn1990', 'skinner1953', 'bandura1977', 'ellis1962', 'tuckman1965'].includes(key) || text.includes('therapy') || text.includes('therap') || text.includes('psychotherap') || text.includes('counsel')) return 'therapies';
+  if (['corrigan2004', 'addis2003', 'levant1992', 'kleinman1978', 'kleinman1988', 'patel2007', 'rosenhan1973', 'goffman1963', 'szasz1960'].includes(key) || text.includes('culture') || text.includes('stigma') || text.includes('masculin') || text.includes('anthropolog')) return 'culture';
+  if (['selye1936', 'lazarus1984', 'annafreud1936'].includes(key) || text.includes('stress') || text.includes('coping') || text.includes('appraisal') || text.includes('defence')) return 'stress';
+  return 'other';
+}
+
+function getRefCategoryLabel(cat) {
+  const map = {
+    standards: 'DSM & ICD Standards',
+    anxiety: 'Anxiety & Trauma',
+    mood: 'Mood & Affective',
+    eating: 'Eating Disorders',
+    personality: 'Personality Disorders',
+    psychotic: 'Psychosis & Schizophrenia',
+    therapies: 'Clinical Therapies',
+    culture: 'Culture, Gender & Stigma',
+    stress: 'Stress & Coping',
+    other: 'General Clinical'
+  };
+  return map[cat] || 'Clinical Reference';
+}
+
+function getChaptersCitingRef(refKey) {
+  if (typeof KB === 'undefined' || !Array.isArray(KB)) return [];
+  return KB.filter(ch => (ch.refs || []).includes(refKey)).map(ch => ({
+    id: ch.id,
+    name: ch.name,
+    volume: ch.volume
+  }));
+}
+
+function openReferencesModal() {
+  const m = document.getElementById('referencesModal');
+  if (!m) return;
+  m.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  const inp = document.getElementById('refSearchInput');
+  if (inp) {
+    inp.value = '';
+    inp.focus();
+  }
+  currentRefCategory = 'all';
+  updateRefCategoryPills();
+  renderReferencesList();
+}
+
+function closeReferencesModal(e) {
+  if (e && e.target && e.target.closest && e.target.closest('.modal-references')) return;
+  const m = document.getElementById('referencesModal');
+  if (m) m.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function updateRefCategoryPills() {
+  document.querySelectorAll('.ref-pill').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.category === currentRefCategory);
+  });
+}
+
+function setRefCategoryFilter(cat) {
+  currentRefCategory = cat;
+  updateRefCategoryPills();
+  renderReferencesList();
+}
+
+function filterReferencesList() {
+  const inp = document.getElementById('refSearchInput');
+  const clearBtn = document.getElementById('refSearchClear');
+  if (clearBtn) {
+    clearBtn.classList.toggle('hidden', !inp || !inp.value.trim());
+  }
+  renderReferencesList();
+}
+
+function clearRefSearch() {
+  const inp = document.getElementById('refSearchInput');
+  if (inp) {
+    inp.value = '';
+    inp.focus();
+  }
+  const clearBtn = document.getElementById('refSearchClear');
+  if (clearBtn) clearBtn.classList.add('hidden');
+  renderReferencesList();
+}
+
+function renderReferencesList() {
+  const container = document.getElementById('refListContainer');
+  const countEl = document.getElementById('refMatchesCount');
+  if (!container) return;
+
+  const refMap = window.REFERENCES || {};
+  const query = (document.getElementById('refSearchInput')?.value || '').toLowerCase().trim();
+
+  let keys = Object.keys(refMap);
+  const totalAll = keys.length;
+  const countAllEl = document.getElementById('refCountAll');
+  if (countAllEl) countAllEl.textContent = totalAll;
+
+  // Filter by category
+  if (currentRefCategory !== 'all') {
+    keys = keys.filter(k => {
+      const cat = getRefCategory(k, refMap[k]);
+      return cat === currentRefCategory;
+    });
+  }
+
+  // Filter by search query
+  if (query) {
+    keys = keys.filter(k => {
+      const cit = (refMap[k] || '').toLowerCase();
+      const catLabel = getRefCategoryLabel(getRefCategory(k, refMap[k])).toLowerCase();
+      return k.toLowerCase().includes(query) || cit.includes(query) || catLabel.includes(query);
+    });
+  }
+
+  if (countEl) {
+    countEl.textContent = `Showing ${keys.length} of ${totalAll} verified references`;
+  }
+
+  if (!keys.length) {
+    container.innerHTML = `
+      <div style="text-align:center;padding:var(--sp-8);color:var(--text-3)">
+        <p style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--sp-2)">No references matched your query</p>
+        <p style="font-size:var(--text-sm)">Try searching for another author (e.g., Beck, Rogers, Freud, Kleinman) or clear the filter.</p>
+        <button class="btn btn-outline btn-sm" onclick="clearRefSearch(); setRefCategoryFilter('all');" style="margin-top:var(--sp-3)">
+          Clear Search &amp; Show All
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  let html = '';
+  keys.forEach(k => {
+    const raw = refMap[k] || '';
+    const cat = getRefCategory(k, raw);
+    const catLabel = getRefCategoryLabel(cat);
+    const citedIn = getChaptersCitingRef(k);
+
+    const linkMatch = raw.match(/(https?:\/\/[^\s]+)/);
+    const externalLink = linkMatch ? linkMatch[0] : null;
+
+    html += `
+      <article class="ref-card" id="ref-card-${k}">
+        <div class="ref-card-header">
+          <span class="ref-key-badge">[${esc(k)}]</span>
+          <span class="ref-domain-tag">${esc(catLabel)}</span>
+        </div>
+        <div class="ref-citation-prose">${formatCitationHtml(raw)}</div>
+        <div class="ref-card-footer">
+          <div class="ref-cited-chapters">
+            <span>Cited in:</span>
+            ${citedIn.length ? citedIn.map(ch => `
+              <a href="javascript:void(0)" onclick="closeReferencesModal(); openStudyTopic('${esc(ch.id)}');" class="ref-chapter-chip" title="Read chapter: ${esc(ch.name)}">
+                ${esc(ch.id)}
+              </a>
+            `).join('') : '<span style="font-style:italic;opacity:0.75">Foundational Source / Appendix B</span>'}
+          </div>
+          <div class="ref-card-actions">
+            ${externalLink ? `
+              <a href="${externalLink}" target="_blank" rel="noopener noreferrer" class="ref-doi-btn" title="Open source DOI or publication URL">
+                <span>↗ Open Source</span>
+              </a>
+            ` : ''}
+            <button type="button" class="ref-copy-btn" onclick="copyCitation('${k}')" title="Copy full APA-7 citation">
+              <span>📋 Copy</span>
+            </button>
+          </div>
+        </div>
+      </article>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+function copyCitation(refKey) {
+  const refMap = window.REFERENCES || {};
+  const raw = refMap[refKey];
+  if (!raw) return;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(raw).then(() => {
+      toast(`Copied citation [${refKey}] to clipboard!`, 'success');
+    }).catch(() => {
+      fallbackCopyText(raw);
+    });
+  } else {
+    fallbackCopyText(raw);
+  }
+}
+
+function copyAllCitations() {
+  const refMap = window.REFERENCES || {};
+  const list = Object.keys(refMap).sort().map(k => refMap[k]).join('\n\n');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(list).then(() => {
+      toast(`Copied all ${Object.keys(refMap).length} references to clipboard!`, 'success');
+    }).catch(() => {
+      fallbackCopyText(list);
+    });
+  } else {
+    fallbackCopyText(list);
+  }
+}
+
+function fallbackCopyText(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    toast('Citation copied to clipboard!', 'success');
+  } catch (e) {
+    toast('Unable to copy citation automatically', 'error');
+  }
+  document.body.removeChild(ta);
+}
+
+// Global modal hooks
+window.openReferencesModal = openReferencesModal;
+window.closeReferencesModal = closeReferencesModal;
+window.setRefCategoryFilter = setRefCategoryFilter;
+window.filterReferencesList = filterReferencesList;
+window.clearRefSearch = clearRefSearch;
+window.copyCitation = copyCitation;
+window.copyAllCitations = copyAllCitations;
+window.formatCitationHtml = formatCitationHtml;

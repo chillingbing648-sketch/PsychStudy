@@ -1,25 +1,47 @@
 <div align="center">
 
-  <!-- Bioluminescent Synaptic Banner (Animated Vector Graphic) -->
-  <a href="https://chillingbing648-sketch.github.io/PsychStudy/">
-    <img src="assets/readme-hero.svg" alt="PsychStudy — The Clinical Atlas of the Mind" width="100%" />
-  </a>
-
-  <br/><br/>
-
   <!-- Blended Brand Identity & Academic Emblem -->
   <a href="https://chillingbing648-sketch.github.io/PsychStudy/">
-    <img src="assets/logo.png" alt="PsychStudy Emblem" width="340" />
+    <img src="assets/logo.png" alt="PsychStudy Emblem" width="300" />
   </a>
 
-  <h1 align="center" style="font-size: 2.4rem; font-weight: 800; letter-spacing: -0.04em; margin-top: 12px;">
-    PSYCHSTUDY · THE CLINICAL ATLAS
+  <!-- Academic Standard Pill Strip -->
+  <p align="center">
+    <code>● UNDERGRADUATE PSYCHOLOGY STANDARD</code>
+    &nbsp;•&nbsp;
+    <code>APA DSM-5-TR (2022)</code>
+    &nbsp;•&nbsp;
+    <code>WHO ICD-11 (2023)</code>
+    &nbsp;•&nbsp;
+    <code>100% OFFLINE</code>
+  </p>
+
+  <!-- Creative Editorial Title Display (Pure Typography) -->
+  <h1 align="center" style="font-size: 2.85rem; font-weight: 800; letter-spacing: 0.08em; line-height: 1.15; margin: 12px 0 6px 0;">
+    P S Y C H S T U D Y
   </h1>
 
-  <p align="center" style="font-size: 1.15rem; color: #64748B; max-width: 780px; line-height: 1.6;">
-    <strong>An Undergraduate Psychology Standard Study Companion, Multi-Axial Diagnostic Framework &amp; Clinical Revision Suite</strong>
+  <p align="center" style="font-size: 1.45rem; font-style: italic; font-family: Georgia, serif; color: #4338CA; margin: 0 0 16px 0; letter-spacing: 0.02em;">
+    The Clinical Atlas of the Mind
+  </p>
+
+  <p align="center" style="font-size: 1.12rem; color: #475569; max-width: 780px; line-height: 1.6; margin: 0 auto 20px auto;">
+    <strong>A University-Grade Clinical Psychology Study Companion, Multi-Axial Diagnostic Framework &amp; Examination Suite</strong>
     <br/>
-    <em>Rigorously aligned with the APA DSM-5-TR (2022) &amp; WHO ICD-11 (2023) Classification Systems</em>
+    <em>Integrating 43 psychopathology chapters across 9 clinical volumes with explainable spaced retrieval, case vignettes, and verified APA-7 citations.</em>
+  </p>
+
+  <!-- Curated Clinical Metrics Quick Strip -->
+  <p align="center">
+    <a href="#-curriculum-topology--the-9-clinical-volumes"><code>📖 43 Chapters · 9 Volumes</code></a>
+    &nbsp;•&nbsp;
+    <a href="#2-️-active-recall--spaced-retrieval"><code>🗂️ 121 Recall Cards (SM-2)</code></a>
+    &nbsp;•&nbsp;
+    <a href="#3--concept-map-constellation"><code>🌌 39 Comorbidity Vectors</code></a>
+    &nbsp;•&nbsp;
+    <a href="#4-️-diagnostic-assessment--quiz-suite"><code>⚡ 60 Quiz Items</code></a>
+    &nbsp;•&nbsp;
+    <a href="#-clinical-references--apa-7-compendium"><code>📚 63 APA-7 References</code></a>
   </p>
 
   <!-- Live Deployment & Core Badges -->
@@ -32,18 +54,20 @@
 
   <!-- Navigation Anchors -->
   <p align="center">
-    <a href="https://chillingbing648-sketch.github.io/PsychStudy/"><strong>🚀 Launch Live Web Atlas</strong></a>
-    &nbsp;•&nbsp;
+    <a href="https://chillingbing648-sketch.github.io/PsychStudy/"><strong>🚀 Launch Live Web Atlas »</strong></a>
+    &nbsp;◈&nbsp;
     <a href="#-interactive-workstation-preview">Studio Preview</a>
-    &nbsp;•&nbsp;
+    &nbsp;◈&nbsp;
     <a href="#-architectural-blueprint">Architecture</a>
-    &nbsp;•&nbsp;
+    &nbsp;◈&nbsp;
     <a href="#-six-clinical-learning-engines">Core Engines</a>
-    &nbsp;•&nbsp;
+    &nbsp;◈&nbsp;
+    <a href="#-clinical-references--apa-7-compendium">References Compendium</a>
+    &nbsp;◈&nbsp;
     <a href="#-curriculum-topology--the-9-clinical-volumes">The 9 Volumes</a>
-    &nbsp;•&nbsp;
+    &nbsp;◈&nbsp;
     <a href="#-repository-structure">File Structure</a>
-    &nbsp;•&nbsp;
+    &nbsp;◈&nbsp;
     <a href="#-getting-started--offline-execution">Run Offline</a>
   </p>
 
@@ -119,7 +143,8 @@ The Clinical Atlas is structured into three clean, decoupled layers operating st
 │   • Luminous Porcelain Canvas (Day)          • Nocturnal Imaging Workstation (Night)        │
 │   • 3-Column Academic Article Reader         • 3D Ruled Index-Card Recall Workspace         │
 │   • Topological Constellation Graph (SVG)    • Interactive Neuroanatomy Plate Vitrine       │
-│   • Command Palette Modal (⌘K / Ctrl+K)      • Mobile Touch-First Bottom Dock Layout        │
+│   • Command Palette Modal (⌘K / Ctrl+K)      • Clinical References Compendium Modal (APA-7) │
+│   • Mobile Touch-First Bottom Dock Layout    • Live Exam Coach & Split Notes Drawer         │
 └──────────────────────────────────────────────┬──────────────────────────────────────────────┘
                                                │ DOM Events & User Interactions
                                                ▼
@@ -128,6 +153,7 @@ The Clinical Atlas is structured into three clean, decoupled layers operating st
 │   • Router Engine (SPA Page Switching & Scroll Memory)                                      │
 │   • SM-2-Lite Spaced Retrieval Scheduler (Intervals, Requeuing & Mastery Calculation)       │
 │   • Diagnostic Assessment Engine (Cloze Alias Evaluator & Case Vignette Rationale)          │
+│   • Clinical Bibliography Engine (Live Author/DOI Search & One-Click Citation Copy)         │
 │   • Live Examination Writing Coach (Word-Count Monitor & Scoring Rubrics)                   │
 │   • Lexicon Contextual Popover Engine (Bidirectional Clinical Cross-Linking)                │
 └──────────────────────────────────────────────┬──────────────────────────────────────────────┘
@@ -135,7 +161,7 @@ The Clinical Atlas is structured into three clean, decoupled layers operating st
                                                ▼
 ┌─────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                 DATA STORE & PERSISTENCE                                    │
-│   • 17 Validated ESM Modules: 43 Chapters · 121 Flashcards · 60 Quiz Items · 168 Glossary   │
+│   • 17 Validated ESM Modules: 43 Chapters · 121 Flashcards · 60 Quiz Items · 63 References  │
 │   • Browser LocalStorage: psychstudy_progress · psychstudy_fc_reviews · psa_notes           │
 │   • JSON Import / Export Pipeline: Standalone encrypted data backup & restoration           │
 └─────────────────────────────────────────────────────────────────────────────────────────────┘
@@ -216,6 +242,18 @@ The Clinical Atlas is structured into three clean, decoupled layers operating st
 
 ---
 
+## 📚 Clinical References & APA-7 Compendium
+
+PsychStudy maintains a centralized registry of **63 pre-vetted academic and clinical sources** registered in `data/refs.js`. Every diagnostic criterion, empirical prevalence rate, and therapeutic modality links directly to canonical literature:
+
+- **Diagnostic Manuals:** APA DSM-5-TR (2022) and WHO ICD-11 (2022/2023).
+- **Landmark Psychiatric Studies:** Rosenhan (1973), Kraepelin (1899), Bleuler (1911), Szasz (1960), Pinel (1801).
+- **Psychotherapy Founders:** Beck (1976, 1979), Rogers (1951, 1957), Wolpe (1958), Linehan (1993), Ellis (1962), Yalom (2020), Fairburn (2008).
+- **Empirical Epidemiology:** National Mental Health Survey of India (Gururaj et al., 2016), Kessler et al. (2005 NCS-R), Arcelus et al. (2011).
+- **One-Click Citation Copy:** Integrated clinical modal allows instant copying of formatted APA-7 citations with direct DOI hyperlinks.
+
+---
+
 ## 📚 Curriculum Topology · The 9 Clinical Volumes
 
 The curriculum incorporates **43 comprehensively researched chapters** mapped across **9 Domain Stains**:
@@ -246,8 +284,7 @@ PsychStudy/
 │   ├── favicon.png                # High-res Minimal White Brain Sprout icon
 │   ├── hero-brain-head.png        # Rorschach synaptic backdrop
 │   ├── logo.png                   # Primary PsychStudy brand emblem
-│   ├── platform-preview.svg       # Studio Workstation SVG interactive preview
-│   └── readme-hero.svg            # Animated bioluminescent synaptic header banner
+│   └── platform-preview.svg       # Studio Workstation SVG interactive preview
 ├── data/
 │   ├── brain.js                   # 6 Neuroanatomical divisions & neural pathways
 │   ├── cards.js                   # 121 Spaced retrieval clinical flashcards
@@ -264,7 +301,7 @@ PsychStudy/
 │   ├── kb-8-culture.js            # Vol VIII: Culture, Stigma & Global Health (Chapters 35–38)
 │   ├── kb-9-adjustment.js         # Vol IX: Stress, Adjustment & Coping (Chapters 39–43)
 │   ├── quiz.js                    # 60 Diagnostic assessment questions (Cloze & MCQ)
-│   ├── refs.js                    # 47 APA-7 academic citations & registries
+│   ├── refs.js                    # 63 APA-7 academic citations & registries
 │   └── timeline.js                # 25 Historical psychiatric milestones (1800–2024)
 ├── tools/
 │   └── validate-data.mjs          # Standalone Node.js curriculum schema validator
@@ -315,7 +352,7 @@ node tools/validate-data.mjs
 =======================================================
    The Clinical Atlas — Data Integrity Validator
 =======================================================
-  ✔ Verified 47 APA-7 references registered.
+  ✔ Verified 63 APA-7 references registered.
   ✔ Found 43 total chapters loaded across 9 volumes.
   ✔ Verified 121 active recall cards across 39 decks.
   ✔ 60 Quiz items verified (25 canonical cloze, 35 MCQs).
