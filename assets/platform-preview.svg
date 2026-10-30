@@ -1,0 +1,242 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="windowChrome" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E2235" />
+      <stop offset="100%" stop-color="#121624" />
+    </linearGradient>
+
+    <filter id="shadowPlate" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.65" />
+    </filter>
+
+    <style>
+      .font-sans { font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      .font-mono { font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace; }
+      .font-serif { font-family: 'Fraunces', 'Georgia', serif; }
+      .font-reading { font-family: 'Newsreader', 'Times New Roman', serif; }
+    </style>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1000" height="520" rx="14" fill="#090D16" />
+
+  <!-- Studio Workstation Window Frame -->
+  <g filter="url(#shadowPlate)" transform="translate(30, 20)">
+    <!-- Window Outer Shell -->
+    <rect width="940" height="476" rx="12" fill="url(#windowChrome)" stroke="#334155" stroke-width="1.2" />
+
+    <!-- Window Top Header Bar -->
+    <rect width="940" height="38" rx="12" fill="#131B2E" />
+    <rect y="26" width="940" height="12" fill="#131B2E" />
+    <line x1="0" y1="38" x2="940" y2="38" stroke="#1E293B" stroke-width="1" />
+
+    <!-- Traffic Lights -->
+    <circle cx="20" cy="19" r="5" fill="#EF4444" />
+    <circle cx="36" cy="19" r="5" fill="#F59E0B" />
+    <circle cx="52" cy="19" r="5" fill="#10B981" />
+
+    <!-- Window Title -->
+    <text x="470" y="24" text-anchor="middle" class="font-mono" font-size="11" font-weight="600" fill="#94A3B8" letter-spacing="0.05em">
+      PsychStudy — The Clinical Atlas · [DSM-5-TR · ICD-11 Environment]
+    </text>
+
+    <!-- Window Body Workspace Grid (3 Panels: Reader, Flashcards, Constellation) -->
+    <g transform="translate(16, 52)">
+
+      <!-- PANEL 1: Academic 3-Column Reader (Left) -->
+      <g transform="translate(0, 0)">
+        <rect width="280" height="396" rx="8" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1" />
+        
+        <!-- Reader Header -->
+        <rect width="280" height="32" rx="8" fill="#182033" />
+        <text x="14" y="21" class="font-mono" font-size="9" font-weight="700" fill="#2DD4BF" letter-spacing="0.08em">VOL III · PLATE 3.1</text>
+        <rect x="204" y="8" width="64" height="16" rx="4" fill="#26334D" />
+        <text x="236" y="20" text-anchor="middle" class="font-mono" font-size="9" fill="#94A3B8">DSM: 296.22</text>
+
+        <!-- Chapter Title -->
+        <text x="14" y="58" class="font-serif" font-size="15" font-weight="700" fill="#F8FAFC">Major Depressive Disorder</text>
+        <text x="14" y="74" class="font-sans" font-size="10.5" fill="#64748B">Persistent sad, empty, or irritable mood with somatic disturbances.</text>
+
+        <!-- Criteria Checklist Box -->
+        <g transform="translate(12, 88)">
+          <rect width="256" height="106" rx="6" fill="#0F172A" stroke="#1E293B" stroke-width="1" />
+          <text x="10" y="16" class="font-mono" font-size="8.5" font-weight="700" fill="#818CF8">§3 CRITERIA CHECKLIST (5 OF 9 IN 2 WEEKS)</text>
+          
+          <g transform="translate(10, 26)">
+            <rect x="0" y="0" width="10" height="10" rx="2" fill="#10B981" />
+            <text x="3" y="8" font-size="8" fill="#FFF">✓</text>
+            <text x="16" y="9" class="font-sans" font-size="9" fill="#E2E8F0">Depressed mood most of day</text>
+          </g>
+          <g transform="translate(10, 42)">
+            <rect x="0" y="0" width="10" height="10" rx="2" fill="#10B981" />
+            <text x="3" y="8" font-size="8" fill="#FFF">✓</text>
+            <text x="16" y="9" class="font-sans" font-size="9" fill="#E2E8F0">Marked anhedonia in activities</text>
+          </g>
+          <g transform="translate(10, 58)">
+            <rect x="0" y="0" width="10" height="10" rx="2" fill="#10B981" />
+            <text x="3" y="8" font-size="8" fill="#FFF">✓</text>
+            <text x="16" y="9" class="font-sans" font-size="9" fill="#E2E8F0">Insomnia or hypersomnia nearly daily</text>
+          </g>
+          <g transform="translate(10, 74)">
+            <rect x="0" y="0" width="10" height="10" rx="2" fill="#10B981" />
+            <text x="3" y="8" font-size="8" fill="#FFF">✓</text>
+            <text x="16" y="9" class="font-sans" font-size="9" fill="#E2E8F0">Fatigue or loss of energy</text>
+          </g>
+          <g transform="translate(10, 90)">
+            <rect x="0" y="0" width="10" height="10" rx="2" fill="#334155" />
+            <text x="16" y="9" class="font-sans" font-size="9" fill="#94A3B8">Diminished cognitive concentration</text>
+          </g>
+        </g>
+
+        <!-- Biopsychosocial Tri-Panel Snippet -->
+        <g transform="translate(12, 206)">
+          <rect width="256" height="88" rx="6" fill="#0F172A" stroke="#1E293B" stroke-width="1" />
+          <text x="10" y="16" class="font-mono" font-size="8.5" font-weight="700" fill="#2DD4BF">§5 ETIOLOGY TRI-PANEL</text>
+          <rect x="10" y="24" width="70" height="16" rx="4" fill="#26334D" />
+          <text x="45" y="35" text-anchor="middle" class="font-mono" font-size="8" font-weight="700" fill="#38BDF8">Biological</text>
+          <text x="10" y="56" class="font-sans" font-size="9" fill="#94A3B8">5-HTT polymorphism, HPA-axis hyperactivation, and reduced hippocampal volume.</text>
+        </g>
+
+        <!-- Footnote Navigation -->
+        <rect x="12" y="306" width="256" height="34" rx="6" fill="#182033" />
+        <text x="24" y="328" class="font-mono" font-size="9.5" fill="#818CF8">§7 Differential: Bipolar vs MDD →</text>
+        <rect x="12" y="350" width="256" height="34" rx="6" fill="#4338CA" />
+        <text x="140" y="371" text-anchor="middle" class="font-sans" font-size="11" font-weight="600" fill="#FFF">Practice Flashcards (4 Cards)</text>
+      </g>
+
+      <!-- PANEL 2: Active Recall 3D Index Card (Center) -->
+      <g transform="translate(296, 0)">
+        <rect width="324" height="396" rx="8" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1" />
+        
+        <!-- Header Strip -->
+        <rect width="324" height="32" rx="8" fill="#182033" />
+        <text x="14" y="21" class="font-mono" font-size="9" font-weight="700" fill="#818CF8">SM-2 LITE ACTIVE RETRIEVAL</text>
+        <text x="264" y="21" class="font-mono" font-size="9" fill="#64748B">Card 1 / 121</text>
+
+        <!-- Simulated 3D Card Face -->
+        <g transform="translate(16, 46)">
+          <rect width="292" height="236" rx="10" fill="#0B0F19" stroke="#3730A3" stroke-width="1.5" />
+          <!-- Top Domain Accent Bar -->
+          <rect width="292" height="4" rx="2" fill="#818CF8" />
+          
+          <g transform="translate(14, 20)">
+            <rect width="90" height="18" rx="9" fill="rgba(129, 140, 248, 0.15)" stroke="#818CF8" stroke-width="0.8" />
+            <text x="45" y="12" text-anchor="middle" class="font-mono" font-size="8.5" font-weight="700" fill="#818CF8">VOL III · PLATE 3.1</text>
+            <text x="250" y="13" class="font-mono" font-size="9" fill="#64748B">1 / 121</text>
+          </g>
+
+          <!-- Flashcard Question -->
+          <text x="146" y="112" text-anchor="middle" class="font-serif" font-size="17" font-weight="700" fill="#F8FAFC">
+            What distinguishes Major
+          </text>
+          <text x="146" y="134" text-anchor="middle" class="font-serif" font-size="17" font-weight="700" fill="#F8FAFC">
+            Depression from Dysthymia?
+          </text>
+
+          <!-- Interaction Hint -->
+          <g transform="translate(56, 186)">
+            <rect width="180" height="24" rx="12" fill="#1E293B" stroke="#334155" stroke-width="0.8" />
+            <rect x="6" y="4" width="34" height="16" rx="4" fill="#334155" />
+            <text x="23" y="15" text-anchor="middle" class="font-mono" font-size="8" font-weight="700" fill="#FFF">Space</text>
+            <text x="110" y="16" text-anchor="middle" class="font-sans" font-size="9.5" fill="#94A3B8">Click or Space to Flip</text>
+          </g>
+        </g>
+
+        <!-- SM-2 Confidence Buttons Grid -->
+        <g transform="translate(16, 296)">
+          <text x="0" y="-8" class="font-mono" font-size="8.5" font-weight="700" fill="#64748B">SPACED RETRIEVAL RATING</text>
+          
+          <!-- Again -->
+          <rect x="0" y="0" width="67" height="42" rx="6" fill="#182033" stroke="#EF4444" stroke-width="1" />
+          <text x="33" y="18" text-anchor="middle" class="font-sans" font-size="10" font-weight="700" fill="#F87171">Again</text>
+          <text x="33" y="32" text-anchor="middle" class="font-mono" font-size="8" fill="#64748B">&lt; 10m</text>
+
+          <!-- Hard -->
+          <rect x="75" y="0" width="67" height="42" rx="6" fill="#182033" stroke="#F59E0B" stroke-width="1" />
+          <text x="108" y="18" text-anchor="middle" class="font-sans" font-size="10" font-weight="700" fill="#FBBF24">Hard</text>
+          <text x="108" y="32" text-anchor="middle" class="font-mono" font-size="8" fill="#64748B">1d</text>
+
+          <!-- Good -->
+          <rect x="150" y="0" width="67" height="42" rx="6" fill="#182033" stroke="#3B82F6" stroke-width="1" />
+          <text x="183" y="18" text-anchor="middle" class="font-sans" font-size="10" font-weight="700" fill="#60A5FA">Good</text>
+          <text x="183" y="32" text-anchor="middle" class="font-mono" font-size="8" fill="#64748B">3d</text>
+
+          <!-- Easy -->
+          <rect x="225" y="0" width="67" height="42" rx="6" fill="#182033" stroke="#10B981" stroke-width="1" />
+          <text x="258" y="18" text-anchor="middle" class="font-sans" font-size="10" font-weight="700" fill="#34D399">Easy</text>
+          <text x="258" y="32" text-anchor="middle" class="font-mono" font-size="8" fill="#64748B">6d</text>
+        </g>
+
+        <!-- Retention Bar -->
+        <rect x="16" y="354" width="292" height="26" rx="6" fill="#0F172A" />
+        <text x="26" y="371" class="font-mono" font-size="9" fill="#94A3B8">Retention Rate: <tspan fill="#10B981" font-weight="700">100%</tspan></text>
+        <text x="240" y="371" class="font-mono" font-size="9" fill="#94A3B8">Due: <tspan fill="#38BDF8" font-weight="700">0 Today</tspan></text>
+      </g>
+
+      <!-- PANEL 3: Constellation Concept Graph (Right) -->
+      <g transform="translate(636, 0)">
+        <rect width="272" height="396" rx="8" fill="url(#cardGrad)" stroke="#1E293B" stroke-width="1" />
+        
+        <!-- Header -->
+        <rect width="272" height="32" rx="8" fill="#182033" />
+        <text x="14" y="21" class="font-mono" font-size="9" font-weight="700" fill="#C084FC">KNOWLEDGE GRAPH (CONSTELLATION)</text>
+        <circle cx="254" cy="16" r="4" fill="#10B981" />
+
+        <!-- Mini Constellation Graph Canvas -->
+        <g transform="translate(12, 44)">
+          <rect width="248" height="236" rx="6" fill="#090D16" stroke="#1E293B" stroke-width="1" />
+          
+          <!-- Ambient Volume Nebulae -->
+          <circle cx="60" cy="60" r="38" fill="#0D9488" opacity="0.12" />
+          <circle cx="180" cy="60" r="44" fill="#0284C7" opacity="0.15" />
+          <circle cx="124" cy="140" r="48" fill="#7C3AED" opacity="0.22" />
+          <circle cx="70" cy="190" r="32" fill="#10B981" opacity="0.14" />
+          <circle cx="190" cy="190" r="36" fill="#2563EB" opacity="0.15" />
+
+          <!-- Delicate Synaptic Connections -->
+          <g stroke="#818CF8" stroke-width="1.2" opacity="0.35" stroke-dasharray="2 3">
+            <line x1="60" y1="60" x2="180" y2="60" />
+            <line x1="180" y1="60" x2="124" y2="140" />
+            <line x1="60" y1="60" x2="124" y2="140" />
+            <line x1="124" y1="140" x2="70" y2="190" />
+            <line x1="124" y1="140" x2="190" y2="190" />
+          </g>
+
+          <!-- Highlighted Comorbidity Vector (MDD to GAD) -->
+          <line x1="124" y1="140" x2="180" y2="60" stroke="#818CF8" stroke-width="2.5" stroke-linecap="round" />
+
+          <!-- Nodes -->
+          <circle cx="60" cy="60" r="5" fill="#0D9488" stroke="#FFF" stroke-width="1" />
+          <text x="60" y="74" text-anchor="middle" class="font-sans" font-size="7.5" fill="#94A3B8">Models</text>
+
+          <circle cx="180" cy="60" r="7" fill="#0284C7" stroke="#FFF" stroke-width="1.5" />
+          <text x="180" y="76" text-anchor="middle" class="font-sans" font-size="8" font-weight="700" fill="#38BDF8">GAD</text>
+
+          <circle cx="124" cy="140" r="9" fill="#7C3AED" stroke="#FFF" stroke-width="2" />
+          <text x="124" y="160" text-anchor="middle" class="font-sans" font-size="8.5" font-weight="700" fill="#FFF">MDD (Hub)</text>
+
+          <circle cx="70" cy="190" r="6" fill="#10B981" stroke="#FFF" stroke-width="1" />
+          <text x="70" y="206" text-anchor="middle" class="font-sans" font-size="7.5" fill="#94A3B8">CBT</text>
+
+          <circle cx="190" cy="190" r="6" fill="#2563EB" stroke="#FFF" stroke-width="1" />
+          <text x="190" y="206" text-anchor="middle" class="font-sans" font-size="7.5" fill="#94A3B8">Psychosis</text>
+        </g>
+
+        <!-- Inspector Drawer Card -->
+        <g transform="translate(12, 292)">
+          <rect width="248" height="92" rx="6" fill="#0F172A" stroke="#1E293B" stroke-width="1" />
+          <text x="10" y="16" class="font-mono" font-size="8" font-weight="700" fill="#818CF8">SELECTED NODE INSPECTOR</text>
+          <text x="10" y="32" class="font-sans" font-size="11" font-weight="700" fill="#FFF">Major Depressive Disorder</text>
+          <text x="10" y="47" class="font-mono" font-size="8.5" fill="#34D399">Mastery: 94% · 60% Overlap with GAD</text>
+          <rect x="10" y="58" width="228" height="24" rx="4" fill="#4338CA" />
+          <text x="124" y="74" text-anchor="middle" class="font-sans" font-size="9.5" font-weight="600" fill="#FFF">Read Chapter ↗</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

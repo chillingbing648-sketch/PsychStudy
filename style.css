@@ -7853,10 +7853,11 @@ body {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  padding-right: 0.22em;
-  padding-left: 0.04em;
-  padding-bottom: 0.06em;
-  margin-right: -0.08em;
+  padding-right: 0.45em;
+  padding-left: 0.06em;
+  padding-top: 0.04em;
+  padding-bottom: 0.08em;
+  margin-right: -0.35em;
   color: #7C3AED;
   background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 42%, #9333EA 78%, #A855F7 100%);
   -webkit-background-clip: text;
