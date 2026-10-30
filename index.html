@@ -7,7 +7,7 @@
   <meta name="description" content="The Clinical Atlas: An authoritative clinical psychology study environment, functional neuroanatomy atlas, active recall engine, and university examination suite aligned with DSM-5-TR and ICD-11."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400..700&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="icon" type="image/png" href="Minimal White Brain Sprout Icon.png"/>
   <link rel="apple-touch-icon" href="Minimal White Brain Sprout Icon.png"/>
   <link rel="stylesheet" href="style.css"/>
@@ -202,6 +202,7 @@
     <button class="nav-brand" onclick="navigate('dashboard')" aria-label="PsychStudy — The Clinical Atlas">
       <div class="nav-brand-group">
         <img src="assets/logo-mark.png" alt="PsychStudy Logo" class="nav-brand-mark" width="36" height="36" />
+        <div class="nav-brand-divider"></div>
         <div class="nav-brand-text">
           <span class="nav-brand-name">Psych<span class="brand-name-purple">Study</span></span>
           <span class="nav-brand-tag">LEARN / UNDERSTAND / GROW</span>
@@ -325,7 +326,7 @@
       </div>
 
       <!-- Mobile Hamburger Menu Button -->
-      <button class="hamburger" onclick="toggleMobileNav()" aria-label="Toggle navigation menu" id="hamburgerBtn">
+      <button class="hamburger" onclick="openMobileNavDrawer()" aria-label="Toggle navigation menu" id="hamburgerBtn" aria-expanded="false">
         <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-menu"></use></svg>
       </button>
     </div>
@@ -351,59 +352,156 @@
       <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-quiz"></use></svg>
       <span>Quiz</span>
     </button>
-    <button class="bottom-nav-btn" onclick="openMobileMoreSheet()" aria-haspopup="dialog" id="mobileMoreBtn">
+    <button class="bottom-nav-btn" onclick="openMobileNavDrawer()" aria-haspopup="dialog" id="mobileMoreBtn">
       <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-explore"></use></svg>
       <span>More</span>
     </button>
   </div>
 </nav>
 
-<!-- ░░░ MOBILE "MORE" BOTTOM SHEET ░░░ -->
-<div class="modal-overlay hidden" id="mobileMoreSheet" role="dialog" aria-modal="true" aria-labelledby="mobileMoreTitle" onclick="closeMobileMoreSheet(event)">
-  <div class="mobile-sheet" onclick="event.stopPropagation()">
-    <div class="sheet-header">
-      <h3 id="mobileMoreTitle">Curriculum &amp; Tools</h3>
-      <button class="icon-btn" onclick="closeMobileMoreSheet()" aria-label="Close menu">
+<!-- ░░░ PREMIUM MOBILE NAVIGATION DRAWER ░░░ -->
+<div class="mobile-nav-drawer-overlay hidden" id="mobileNavDrawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu" onclick="closeMobileNavDrawer(event)">
+  <div class="mobile-nav-drawer" onclick="event.stopPropagation()">
+    <!-- Drawer Header -->
+    <div class="drawer-header">
+      <div class="nav-brand-group">
+        <img src="assets/logo-mark.png" alt="PsychStudy Logo" class="nav-brand-mark" width="28" height="28" />
+        <div class="nav-brand-divider"></div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">Psych<span class="brand-name-purple">Study</span></span>
+          <span class="nav-brand-tag">LEARN / UNDERSTAND / GROW</span>
+        </div>
+      </div>
+      <button class="drawer-close-btn" onclick="closeMobileNavDrawer()" aria-label="Close navigation menu">
         <svg width="18" height="18" aria-hidden="true"><use href="#ps-icon-close"></use></svg>
       </button>
     </div>
-    <div class="sheet-grid">
-      <button class="sheet-tile" onclick="closeMobileMoreSheet(); navigate('notes');">
-        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-notes"></use></svg>
-        <span>Notes</span>
+
+    <!-- Search Quick Access -->
+    <div class="drawer-search-wrap">
+      <button class="drawer-search-btn" onclick="closeMobileNavDrawer(); openCmdPalette();">
+        <svg width="16" height="16" aria-hidden="true"><use href="#ps-icon-search"></use></svg>
+        <span>Search topics, clinical codes, DSM-5…</span>
+        <span class="kbd-hint">⌘K</span>
       </button>
-      <button class="sheet-tile" onclick="closeMobileMoreSheet(); navigate('exam');">
-        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-exam"></use></svg>
-        <span>Exam Paper</span>
-      </button>
-      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('brain');">
-        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-brain"></use></svg>
-        <span>Brain Atlas</span>
-      </button>
-      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('constellation');">
-        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-constellation"></use></svg>
-        <span>Concept Map</span>
-      </button>
-      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('timeline');">
-        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-timeline"></use></svg>
-        <span>Timeline</span>
-      </button>
-      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('lexicon');">
-        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-lexicon"></use></svg>
-        <span>Lexicon</span>
-      </button>
-      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('references');">
-        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-notes"></use></svg>
-        <span>References</span>
-      </button>
-      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openExploreItem('support');">
-        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-support"></use></svg>
-        <span>Support</span>
-      </button>
-      <button class="sheet-tile" onclick="closeMobileMoreSheet(); openSettingsModal();">
-        <svg width="20" height="20" aria-hidden="true"><use href="#ps-icon-settings"></use></svg>
-        <span>Settings</span>
-      </button>
+    </div>
+
+    <!-- Drawer Body -->
+    <div class="drawer-body">
+      <!-- Primary Navigation Section -->
+      <div class="drawer-section">
+        <div class="drawer-section-title">CURRICULUM MODULES</div>
+        <div class="drawer-links-list">
+          <button class="drawer-nav-item active" data-page="dashboard" onclick="drawerNavigate('dashboard')">
+            <svg class="drawer-nav-icon" width="18" height="18"><use href="#ps-icon-dashboard"></use></svg>
+            <div class="drawer-nav-info">
+              <span class="drawer-nav-label">Dashboard</span>
+              <span class="drawer-nav-desc">Curriculum mastery &amp; quick access</span>
+            </div>
+            <span class="drawer-nav-badge">Active</span>
+          </button>
+          <button class="drawer-nav-item" data-page="study" onclick="drawerNavigate('study')">
+            <svg class="drawer-nav-icon" width="18" height="18"><use href="#ps-icon-study"></use></svg>
+            <div class="drawer-nav-info">
+              <span class="drawer-nav-label">Study Reader</span>
+              <span class="drawer-nav-desc">43 clinical psychopathology chapters</span>
+            </div>
+          </button>
+          <button class="drawer-nav-item" data-page="flashcards" onclick="drawerNavigate('flashcards')">
+            <svg class="drawer-nav-icon" width="18" height="18"><use href="#ps-icon-cards"></use></svg>
+            <div class="drawer-nav-info">
+              <span class="drawer-nav-label">Flashcards</span>
+              <span class="drawer-nav-desc">121 SM-2 spaced recall cards</span>
+            </div>
+          </button>
+          <button class="drawer-nav-item" data-page="quiz" onclick="drawerNavigate('quiz')">
+            <svg class="drawer-nav-icon" width="18" height="18"><use href="#ps-icon-quiz"></use></svg>
+            <div class="drawer-nav-info">
+              <span class="drawer-nav-label">Quizzes</span>
+              <span class="drawer-nav-desc">60 diagnostic MCQs &amp; cloze items</span>
+            </div>
+          </button>
+          <button class="drawer-nav-item" data-page="exam" onclick="drawerNavigate('exam')">
+            <svg class="drawer-nav-icon" width="18" height="18"><use href="#ps-icon-exam"></use></svg>
+            <div class="drawer-nav-info">
+              <span class="drawer-nav-label">Exam Paper</span>
+              <span class="drawer-nav-desc">University timed clinical examination</span>
+            </div>
+          </button>
+          <button class="drawer-nav-item" data-page="notes" onclick="drawerNavigate('notes')">
+            <svg class="drawer-nav-icon" width="18" height="18"><use href="#ps-icon-notes"></use></svg>
+            <div class="drawer-nav-info">
+              <span class="drawer-nav-label">Notes Workspace</span>
+              <span class="drawer-nav-desc">Autosaved clinical revisions &amp; notes</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Clinical Atlas & Specialized Tools Section -->
+      <div class="drawer-section">
+        <div class="drawer-section-title">CLINICAL ATLAS &amp; TOOLS</div>
+        <div class="drawer-grid-tools">
+          <button class="drawer-tool-chip" onclick="drawerOpenExplore('brain')">
+            <svg width="18" height="18"><use href="#ps-icon-brain"></use></svg>
+            <span>Brain Atlas (Plate I)</span>
+          </button>
+          <button class="drawer-tool-chip" onclick="drawerOpenExplore('constellation')">
+            <svg width="18" height="18"><use href="#ps-icon-constellation"></use></svg>
+            <span>Concept Map</span>
+          </button>
+          <button class="drawer-tool-chip" onclick="drawerOpenExplore('timeline')">
+            <svg width="18" height="18"><use href="#ps-icon-timeline"></use></svg>
+            <span>Timeline</span>
+          </button>
+          <button class="drawer-tool-chip" onclick="drawerOpenExplore('lexicon')">
+            <svg width="18" height="18"><use href="#ps-icon-lexicon"></use></svg>
+            <span>Lexicon</span>
+          </button>
+          <button class="drawer-tool-chip" onclick="drawerOpenExplore('differential')">
+            <svg width="18" height="18"><use href="#ps-icon-sparkles"></use></svg>
+            <span>Differential Trainer</span>
+          </button>
+          <button class="drawer-tool-chip" onclick="drawerOpenExplore('references')">
+            <svg width="18" height="18"><use href="#ps-icon-notes"></use></svg>
+            <span>Bibliography (APA-7)</span>
+          </button>
+          <button class="drawer-tool-chip chip-support" onclick="drawerOpenExplore('support')">
+            <svg width="18" height="18"><use href="#ps-icon-support"></use></svg>
+            <span>Crisis Support (24/7)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Utility Controls Section -->
+      <div class="drawer-section">
+        <div class="drawer-section-title">PREFERENCES &amp; THEME</div>
+        <div class="drawer-prefs-row">
+          <button class="drawer-pref-btn" onclick="toggleTheme()">
+            <svg width="18" height="18"><use href="#ps-icon-theme"></use></svg>
+            <span id="drawerThemeLabel">Toggle Theme</span>
+          </button>
+          <button class="drawer-pref-btn" onclick="closeMobileNavDrawer(); openSettingsModal();">
+            <svg width="18" height="18"><use href="#ps-icon-settings"></use></svg>
+            <span>Atlas Settings</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer Footer: Attribution -->
+    <div class="drawer-footer">
+      <div class="drawer-mastery-summary">
+        <div class="nav-mastery-wrap">
+          <svg class="mastery-mini-ring" width="26" height="26" viewBox="0 0 36 36">
+            <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+            <path class="ring-fill drawer-mastery-ring" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+          </svg>
+          <span class="nav-mastery-text drawer-mastery-val">0%</span>
+        </div>
+        <span class="drawer-mastery-text">Curriculum Mastery</span>
+      </div>
+      <div class="drawer-credit">Made by Harsh Dubey</div>
     </div>
   </div>
 </div>
@@ -516,62 +614,91 @@
 ═══════════════════════════════════════════════════════════ -->
 <main id="pg-dashboard" class="page active">
 
-  <!-- ░░░ 1. THE HERO SECTION (TWO-COLUMN EDITORIAL COMPOSITION) ░░░ -->
-  <header class="master-hero-section">
-    <div class="master-hero-grid">
-      <!-- Left Section: Editorial Content -->
-      <div class="hero-editorial-col">
-        <div class="hero-meta-row">
-          <span class="hero-meta-dot"></span>
-          <span class="hero-meta-standard">Undergraduate Psychology Standard</span>
-          <span class="hero-meta-sep">·</span>
-          <span class="badge-dsm">DSM-5-TR · ICD-11 Aligned</span>
-          <span class="hero-meta-sep">·</span>
-          <span class="badge-term" id="dashTimeGreet">Session Active</span>
+  <!-- ░░░ 1. THE ANORENT CINEMATIC HERO SECTION ░░░ -->
+  <header class="anorent-hero" id="heroSection">
+    <div class="hero-glow-layer"></div>
+    <div class="hero-grid-lines"></div>
+
+    <!-- Technical Crosshairs -->
+    <div class="grid-cross" style="top: 20px; left: 24px;">+</div>
+    <div class="grid-cross" style="top: 20px; right: 24px;">+</div>
+    <div class="grid-cross" style="bottom: 20px; left: 24px;">+</div>
+    <div class="grid-cross" style="bottom: 20px; right: 24px;">+</div>
+    <div class="grid-cross" style="top: 380px; left: 52%;">+</div>
+
+    <!-- Hero Main Stage (Two Columns) -->
+    <div class="hero-main-stage">
+      <!-- Left Column: Typographic Masthead -->
+      <div class="hero-type-col">
+        <div class="hero-eyebrow-row">
+          <span class="hero-meta-pulse-dot"></span>
+          <span>VISIONARY NEUROSCIENCE. DIGITAL FUTURES.</span>
+          <span class="hero-meta-sep">//</span>
+          <span class="copy-year">© 2026</span>
+          <span class="hero-meta-sep">//</span>
+          <span class="hero-session-status" id="dashTimeGreet">GOOD EVENING · SESSION ACTIVE</span>
         </div>
 
-        <h1 class="hero-display-headline">A clinical atlas of the <em>mind</em></h1>
-        <p class="hero-supporting-desc" id="dashMsg">University-grade clinical study companion, multi-axial diagnostic framework, and structured examination workspace.</p>
-
-        <!-- Search Bar -->
-        <div class="hero-search-wrapper">
-          <button class="hero-search-bar" id="heroSearchBar" onclick="openCommandPalette()" aria-label="Search 43 chapters, 168 clinical terms, DSM/ICD codes, exam papers">
-            <div class="hero-search-inner-left">
-              <svg class="icon icon-md" aria-hidden="true"><use href="#ps-icon-search"></use></svg>
-              <span class="hero-search-placeholder">Search 43 chapters, 168 clinical terms, DSM/ICD codes, exam papers...</span>
-            </div>
-            <kbd class="hero-search-kbd"><span class="cmd-symbol">⌘</span>K</kbd>
-          </button>
+        <div class="monumental-headline" aria-label="Clinical Beyond Reality">
+          <div class="headline-line-1"><span class="kinetic-text">CLINICAL</span></div>
+          <div class="headline-line-2"><span class="kinetic-text text-lavender">BEYOND</span></div>
+          <div class="headline-line-3"><span class="kinetic-text text-chrome">REALITY</span></div>
         </div>
+
+        <p class="hero-editorial-statement" id="dashMsg">
+          An authoritative clinical atlas of the mind &mdash; <strong>43 peer-reviewed volumes</strong>, functional neuroanatomy, multi-axial diagnostic engine, and university examination suite aligned with <span class="badge-dsm">DSM-5-TR</span> and <span class="badge-icd">WHO ICD-11</span>.
+        </p>
+
+        <!-- Search Bar Capsule -->
+        <button class="hero-search-capsule" id="heroSearchBar" onclick="openCmdPalette()" aria-label="Search 43 chapters, 168 clinical terms, DSM/ICD codes, exam papers">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <span class="search-input-placeholder">Search 43 chapters, 168 clinical terms, DSM/ICD codes, model answers...</span>
+          <kbd class="search-shortcut-badge"><span class="cmd-symbol">⌘</span>K</kbd>
+        </button>
       </div>
 
-      <!-- Right Section: Main Illustration (Commissioned Educational Artwork) -->
-      <div class="hero-illustration-col">
-        <div class="hero-illustration-stage">
-          <!-- Orbital lines -->
-          <div class="orbit-ring orbit-ring-outer"></div>
-          <div class="orbit-ring orbit-ring-inner"></div>
-
-          <!-- Human head silhouette & glowing brain artwork -->
-          <div class="hero-head-img-wrap">
-            <img src="assets/hero-brain-head.png" alt="Clinical Brain & Cognitive Architecture" class="hero-head-img" />
-          </div>
-
-          <!-- Floating Educational Badges -->
-          <div class="floating-badge badge-dsm-top">
-            <span class="floating-dot pulse-purple"></span>
-            <span>DSM-5-TR</span>
-          </div>
-          <div class="floating-badge badge-icd-bottom">
-            <span class="floating-dot pulse-blue"></span>
-            <span>ICD-11</span>
-          </div>
-          <div class="floating-badge badge-understanding">
-            <svg class="icon icon-xs text-indigo" aria-hidden="true"><use href="#ps-icon-sparkles"></use></svg>
-            <span>Better Understanding</span>
-          </div>
-        </div>
+      <!-- Right Column: Interactive 3D Visual Stage -->
+      <div class="hero-3d-stage" id="hero3dStage">
+        <canvas id="hero-three-canvas"></canvas>
       </div>
+    </div>
+
+    <!-- Bottom Dock Controls (ANORENT Style) -->
+    <div class="hero-bottom-dock">
+      <!-- Status Card with Resume Connection -->
+      <div class="dock-status-card" id="dashHeroResumeCard" onclick="resumeLastTopic()" title="Click to resume your last studied clinical chapter">
+        <div class="dock-avatar">1.1</div>
+        <div class="dock-text">
+          <span class="dock-label">Active Session · Resume</span>
+          <span class="dock-val" id="dashHeroResumeTitle">What Are Disorders?</span>
+        </div>
+        <div class="dock-arrow">→</div>
+      </div>
+
+      <!-- Tech Thumbnails (4 Specialized Clinical Engines) -->
+      <div class="dock-tech-thumbnails">
+        <button class="tech-thumb active" onclick="openExploreItem('brain')" title="Plate I: Functional Neuroanatomy 3D Atlas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"></circle><path d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"></path></svg>
+        </button>
+        <button class="tech-thumb" onclick="openExploreItem('differential')" title="Plate II: Differential Diagnosis Trainer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15 9 22 12 15 15 12 22 9 15 2 12 9 9"></polygon></svg>
+        </button>
+        <button class="tech-thumb" onclick="navigate('flashcards')" title="Plate III: Active Recall SM-2 Spaced Retrieval">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 12h5l3-9 4 18 3-9h5"></path></svg>
+        </button>
+        <button class="tech-thumb" onclick="openExploreItem('timeline')" title="Plate IV: Psychiatry Milestones & Historical Timeline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
+
+      <!-- Right Action CTA -->
+      <button class="dock-cta-btn" onclick="scrollToCurriculumTopology()">
+        <span>Explore Curriculum Topology</span>
+        <span>↘</span>
+      </button>
     </div>
   </header>
 
@@ -817,11 +944,12 @@
           </div>
         </div>
         <div class="vitrine-lobe-nav" id="vitrineLobeNav">
-          <button class="btn-lobe-chip active" onclick="selectVitrineLobe('frontal', this)">Frontal</button>
-          <button class="btn-lobe-chip" onclick="selectVitrineLobe('parietal', this)">Parietal</button>
-          <button class="btn-lobe-chip" onclick="selectVitrineLobe('temporal', this)">Temporal</button>
-          <button class="btn-lobe-chip" onclick="selectVitrineLobe('occipital', this)">Occipital</button>
-          <button class="btn-lobe-chip" onclick="selectVitrineLobe('limbic', this)">Limbic</button>
+          <button class="btn-lobe-chip active" data-lobe="frontal" onclick="selectVitrineLobe('frontal', this)"><span class="lobe-indicator" style="background:#F472B6;"></span>Frontal Lobe</button>
+          <button class="btn-lobe-chip" data-lobe="parietal" onclick="selectVitrineLobe('parietal', this)"><span class="lobe-indicator" style="background:#60A5FA;"></span>Parietal</button>
+          <button class="btn-lobe-chip" data-lobe="temporal" onclick="selectVitrineLobe('temporal', this)"><span class="lobe-indicator" style="background:#34D399;"></span>Temporal</button>
+          <button class="btn-lobe-chip" data-lobe="occipital" onclick="selectVitrineLobe('occipital', this)"><span class="lobe-indicator" style="background:#C084FC;"></span>Occipital</button>
+          <button class="btn-lobe-chip" data-lobe="cerebellum" onclick="selectVitrineLobe('cerebellum', this)"><span class="lobe-indicator" style="background:#FBBF24;"></span>Cerebellum</button>
+          <button class="btn-lobe-chip" data-lobe="limbic" onclick="selectVitrineLobe('limbic', this)"><span class="lobe-indicator" style="background:#FB923C;"></span>Brainstem &amp; Limbic</button>
         </div>
         <div class="vitrine-desc" id="vitrineLobeDesc">
           <strong>Frontal Lobe (Brodmann 4, 6, 9–12, 44–47):</strong> Executive functioning, working memory, emotional regulation, and motor planning. Implicated in ADHD, Schizophrenia, and Mood Disorders.
@@ -1878,6 +2006,9 @@
 <script defer src="data/timeline.js"></script>
 <script defer src="data/facts.js"></script>
 <script defer src="data/brain.js"></script>
+<script defer src="assets/libs/three.min.js"></script>
+<script defer src="assets/libs/gsap.min.js"></script>
+<script defer src="assets/brain-texture.js"></script>
 <script defer src="script.js"></script>
 </body>
 </html>

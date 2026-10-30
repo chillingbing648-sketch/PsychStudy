@@ -1628,18 +1628,65 @@ function renderMasteryHeatmap() {
 }
 
 // ─── VITRINE LOBE INSPECTOR ───────────────────────────────────────────────────
+function initVitrineHotspots() {
+  const overlay = document.getElementById('vitrineOverlay');
+  if (!overlay || overlay.children.length > 0) return;
+
+  const pins = [
+    { key: 'frontal', top: '28%', left: '26%', name: 'Frontal Lobe', tag: 'BA 9, 10, 46 · Executive', color: '#F472B6' },
+    { key: 'parietal', top: '24%', left: '68%', name: 'Parietal Lobe', tag: 'Somatosensory BA 1-3', color: '#60A5FA' },
+    { key: 'occipital', top: '48%', left: '84%', name: 'Occipital Lobe', tag: 'BA 17 · Primary Visual', color: '#C084FC' },
+    { key: 'temporal', top: '56%', left: '34%', name: 'Temporal Lobe', tag: 'Auditory & Memory', color: '#34D399' },
+    { key: 'cerebellum', top: '74%', left: '74%', name: 'Cerebellum', tag: 'Coordination & Balance', color: '#FBBF24' },
+    { key: 'limbic', top: '86%', left: '54%', name: 'Brainstem & Relays', tag: 'Autonomic & Homeostasis', color: '#FB923C' }
+  ];
+
+  overlay.innerHTML = pins.map(p => `
+    <div class="brain-hotspot-pin ${p.key === 'frontal' ? 'active' : ''}" data-lobe="${p.key}" style="top: ${p.top}; left: ${p.left};" onclick="selectVitrineLobe('${p.key}')">
+      <span class="hotspot-pulse" style="--pin-color: ${p.color};"></span>
+      <span class="hotspot-dot" style="background: ${p.color};"></span>
+      <span class="hotspot-tag">
+        <strong>${p.name}</strong>
+        <small>${p.tag}</small>
+      </span>
+    </div>
+  `).join('');
+}
+
 function selectVitrineLobe(lobeKey, btn) {
+  initVitrineHotspots();
+
   document.querySelectorAll('.btn-lobe-chip').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   else {
-    const activeBtn = document.querySelector(`.btn-lobe-chip[onclick*="'${lobeKey}'"]`);
+    const activeBtn = document.querySelector(`.btn-lobe-chip[data-lobe="${lobeKey}"]`);
     if (activeBtn) activeBtn.classList.add('active');
   }
+
+  // Highlight corresponding hotspot pin
+  document.querySelectorAll('.brain-hotspot-pin').forEach(pin => {
+    if (pin.getAttribute('data-lobe') === lobeKey) {
+      pin.classList.add('active');
+    } else {
+      pin.classList.remove('active');
+    }
+  });
 
   const data = (window.BRAIN_ANATOMY_DATA && window.BRAIN_ANATOMY_DATA[lobeKey]) || {};
   const descEl = document.getElementById('vitrineLobeDesc');
   if (descEl && data) {
-    descEl.innerHTML = `<strong>${data.name || lobeKey} (${data.tag || ''}):</strong> ${data.role || ''} ${data.clinical || ''}`;
+    descEl.innerHTML = `<div class="vitrine-desc-header">
+      <span class="vitrine-desc-pill" style="background: ${data.color || '#A78BFA'}22; color: ${data.color || '#A78BFA'}; border: 1px solid ${data.color || '#A78BFA'}44;">
+        ${data.name || lobeKey}
+      </span>
+      <span class="vitrine-desc-tag">${data.tag || ''}</span>
+    </div>
+    <p class="vitrine-desc-role">${data.role || ''}</p>
+    <div class="vitrine-desc-clinical"><strong>Clinical Pathology:</strong> ${data.clinical || ''}</div>`;
+
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(descEl, { opacity: 0.6, y: 6 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
+    }
   }
 }
 
@@ -1701,14 +1748,16 @@ function renderSpecimenGrid(volFilter = 'all', sortBy = 'default') {
 
     card.innerHTML = `
       <div class="tc-top">
-        <span class="tc-eyebrow" style="color:${volInfo.color}">VOL ${vol} · PLATE ${plate}</span>
-        <div style="display:flex;align-items:center;gap:6px">
+        <div class="tc-meta-badges">
+          <span class="tc-vol-badge" style="color:${volInfo.color}; background:${volInfo.color}18; border: 1px solid ${volInfo.color}35;">VOL ${vol} · PLATE ${plate}</span>
+          <span class="tc-code-pill">${dsmCode}</span>
+        </div>
+        <div class="tc-meta-right">
           ${mastery >= 80 ? '<span class="atlas-stamp atlas-stamp-reviewed">REVIEWED</span>' : ''}
           <span class="tc-mastery-tag ${mastery >= 70 ? 'high' : ''}">${mastery}% Mastery</span>
         </div>
       </div>
-      <div class="tc-code-row">
-        <span class="tc-code-chip mono">${dsmCode}</span>
+      <div class="tc-sub-meta">
         <span class="tc-read-time">${chapter.readTime || '12 min read'}</span>
       </div>
       <h3 class="tc-name">${chapter.name}</h3>
@@ -4215,6 +4264,7 @@ function closeExploreDropdown() {
 
 function openExploreItem(type) {
   closeExploreDropdown();
+    closeMobileNavDrawer();
   if (type === 'brain') {
     openBrainModal();
   } else if (type === 'constellation') {
@@ -4233,21 +4283,70 @@ function openExploreItem(type) {
 }
 
 function toggleMobileNav() {
-  const navLinks = document.getElementById('navLinks');
-  if (navLinks) navLinks.classList.toggle('open');
+  const drawer = document.getElementById('mobileNavDrawer');
+  if (drawer && !drawer.classList.contains('hidden')) {
+    closeMobileNavDrawer();
+  } else {
+    openMobileNavDrawer();
+  }
+}
+
+function openMobileNavDrawer() {
+  const drawer = document.getElementById('mobileNavDrawer');
+  if (drawer) {
+    drawer.classList.remove('hidden');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    const hamburger = document.getElementById('hamburgerBtn');
+    if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
+    // Sync active page
+    const activeBtn = document.querySelector('.nav-btn.active');
+    const page = activeBtn ? activeBtn.getAttribute('data-page') : 'dashboard';
+    document.querySelectorAll('.drawer-nav-item').forEach(it => {
+      const isAct = it.getAttribute('data-page') === page;
+      it.classList.toggle('active', isAct);
+      const badge = it.querySelector('.drawer-nav-badge');
+      if (badge) badge.style.display = isAct ? 'inline-block' : 'none';
+    });
+    // Sync mastery ring
+    const mText = document.getElementById('navMasteryText')?.textContent || '0%';
+    const ring = drawer.querySelector('.drawer-mastery-ring');
+    const val = drawer.querySelector('.drawer-mastery-val');
+    if (ring) ring.setAttribute('stroke-dasharray', `${parseInt(mText) || 0}, 100`);
+    if (val) val.textContent = mText;
+  }
+}
+
+function closeMobileNavDrawer(e) {
+  if (e && e.target && e.target !== document.getElementById('mobileNavDrawer') && !e.target.closest('.drawer-close-btn')) {
+    return;
+  }
+  const drawer = document.getElementById('mobileNavDrawer');
+  if (drawer) {
+    drawer.classList.add('hidden');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    const hamburger = document.getElementById('hamburgerBtn');
+    if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+  }
+}
+
+function drawerNavigate(page) {
+  closeMobileNavDrawer();
+  navigate(page);
+}
+
+function drawerOpenExplore(item) {
+  closeMobileNavDrawer();
+  openExploreItem(item);
 }
 
 function openMobileMoreSheet() {
-  const sheet = document.getElementById('mobileMoreSheet');
-  if (sheet) sheet.classList.remove('hidden');
+  openMobileNavDrawer();
 }
 
 function closeMobileMoreSheet(e) {
-  if (e && e.target && e.target !== document.getElementById('mobileMoreSheet') && !e.target.closest('.icon-btn')) {
-    return;
-  }
-  const sheet = document.getElementById('mobileMoreSheet');
-  if (sheet) sheet.classList.add('hidden');
+  closeMobileNavDrawer(e);
 }
 
 // ─── SETTINGS & PREFERENCES ENGINE ────────────────────────────────────────────
@@ -4385,7 +4484,7 @@ function confirmResetProgress() {
 }
 
 // Global Keyboard Shortcuts (Cmd+K, Escape, Arrow keys for flashcards)
-window.addEventListener('keydown', (e) => {
+function handleGlobalKeydown(e) {
   if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
     e.preventDefault();
     openCmdPalette();
@@ -4396,6 +4495,7 @@ window.addEventListener('keydown', (e) => {
     closeSettingsModal();
     closeMobileMoreSheet();
     closeExploreDropdown();
+    closeMobileNavDrawer();
     closeBrainModal();
   }
   // Flashcard keyboard shortcuts
@@ -4417,7 +4517,9 @@ window.addEventListener('keydown', (e) => {
       rateFlashcard('easy');
     }
   }
-});
+}
+window.addEventListener('keydown', handleGlobalKeydown);
+document.addEventListener('keydown', handleGlobalKeydown);
 
 // Close dropdown on outside click
 document.addEventListener('click', (e) => {
@@ -4480,7 +4582,7 @@ window.openCmdPalette = openCmdPalette; window.openCommandPalette = openCmdPalet
 window.executeCmdAction = executeCmdAction; window.resumeLastTopic = resumeLastTopic; window.toggleTopicCompletion = toggleTopicCompletion;
 window.selectBrainRegion = selectBrainRegion; window.selectVitrineLobe = selectVitrineLobe; window.openBrainModal = openBrainModal; window.closeBrainModal = closeBrainModal; window.selectBrainModalTab = selectBrainModalTab;
 window.toggleExploreDropdown = toggleExploreDropdown; window.closeExploreDropdown = closeExploreDropdown; window.openExploreItem = openExploreItem;
-window.toggleMobileNav = toggleMobileNav; window.openMobileMoreSheet = openMobileMoreSheet; window.closeMobileMoreSheet = closeMobileMoreSheet;
+window.toggleMobileNav = toggleMobileNav; window.openMobileNavDrawer = openMobileNavDrawer; window.closeMobileNavDrawer = closeMobileNavDrawer; window.drawerNavigate = drawerNavigate; window.drawerOpenExplore = drawerOpenExplore; window.openMobileMoreSheet = openMobileMoreSheet; window.closeMobileMoreSheet = closeMobileMoreSheet;
 window.openSettingsModal = openSettingsModal; window.closeSettingsModal = closeSettingsModal;
 window.setAppTheme = setAppTheme; window.setReaderFontSize = setReaderFontSize; window.toggleReducedMotion = toggleReducedMotion;
 window.exportUserData = exportUserData; window.importUserData = importUserData; window.confirmResetProgress = confirmResetProgress;
@@ -5721,3 +5823,272 @@ window.clearRefSearch = clearRefSearch;
 window.copyCitation = copyCitation;
 window.copyAllCitations = copyAllCitations;
 window.formatCitationHtml = formatCitationHtml;
+
+
+/* ═══════════════════════════════════════════════════════════════
+   MASTER ANORENT 3D & MOTION ENGINE (THREE.JS & GSAP)
+   ═══════════════════════════════════════════════════════════════ */
+
+let heroThreeScene = null;
+let heroThreeRenderer = null;
+let heroThreeAnimId = null;
+
+function initAnorent3DEngine() {
+  const canvas = document.getElementById('hero-three-canvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+
+  const stage = canvas.parentElement;
+  if (!stage) return;
+
+  const width = stage.clientWidth || 500;
+  const height = stage.clientHeight || 540;
+
+  const scene = new THREE.Scene();
+  heroThreeScene = scene;
+
+  const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+  camera.position.set(0, 0, 8.5);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+  heroThreeRenderer = renderer;
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  // Procedural Chrome Environment Reflection Map for Star
+  const envCanvas = document.createElement('canvas');
+  envCanvas.width = 512;
+  envCanvas.height = 256;
+  const ctx = envCanvas.getContext('2d');
+  const grad = ctx.createLinearGradient(0, 0, 0, 256);
+  grad.addColorStop(0.0, '#FFFFFF');
+  grad.addColorStop(0.25, '#D5CCF5');
+  grad.addColorStop(0.48, '#4E4472');
+  grad.addColorStop(0.52, '#120E22');
+  grad.addColorStop(0.7, '#9076D8');
+  grad.addColorStop(1.0, '#FFFFFF');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 512, 256);
+
+  const envTex = new THREE.CanvasTexture(envCanvas);
+  envTex.mapping = THREE.EquirectangularReflectionMapping;
+
+  // Scene Lighting (Optimized for Faceted Chrome Star & Specular Depth)
+  const ambientLight = new THREE.AmbientLight(0x554477, 1.2);
+  scene.add(ambientLight);
+
+  const dirLight = new THREE.DirectionalLight(0xffffff, 2.2);
+  dirLight.position.set(5, 7, 6);
+  scene.add(dirLight);
+
+  // Master Group
+  const masterGroup = new THREE.Group();
+  scene.add(masterGroup);
+
+  // 1. HYPERREALISTIC 3D ANATOMICAL BRAIN ASSEMBLY
+  const brainGroup = new THREE.Group();
+  brainGroup.position.set(0, -0.15, 0);
+  masterGroup.add(brainGroup);
+
+  function buildBrainMesh(img) {
+    if (!img.naturalWidth || brainGroup.children.length > 0) return;
+
+    const brainTex = new THREE.Texture(img);
+    brainTex.needsUpdate = true;
+    brainTex.generateMipmaps = true;
+    brainTex.minFilter = THREE.LinearMipmapLinearFilter;
+    brainTex.magFilter = THREE.LinearFilter;
+
+    // Volumetric 3D Curvature Geometry
+    const w = 5.2;
+    const h = 5.2 * (img.naturalHeight / img.naturalWidth);
+    const geo = new THREE.PlaneGeometry(w, h, 64, 64);
+
+    const pos = geo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i);
+      const y = pos.getY(i);
+      const nx = x / (w * 0.5);
+      const ny = y / (h * 0.5);
+      const d2 = nx * nx + ny * ny;
+      if (d2 < 1.0) {
+        const z = Math.cos(Math.sqrt(d2) * Math.PI * 0.5) * 0.55;
+        pos.setZ(i, z);
+      }
+    }
+    pos.needsUpdate = true;
+    geo.computeVertexNormals();
+
+    // High-Fidelity Basic Material preserving authentic photographic convolutions and neon synapses
+    const brainMat = new THREE.MeshBasicMaterial({
+      map: brainTex,
+      transparent: true,
+      side: THREE.DoubleSide,
+      alphaTest: 0.02
+    });
+
+    const brainMesh = new THREE.Mesh(geo, brainMat);
+    brainGroup.add(brainMesh);
+    renderer.render(scene, camera);
+  }
+
+  const brainImg = new Image();
+  brainImg.onload = () => buildBrainMesh(brainImg);
+  const brainSrc = window.PSYCHSTUDY_BRAIN_TEXTURE || 'assets/hyperrealistic-brain.png';
+  brainImg.src = brainSrc;
+  if (brainImg.complete && brainImg.naturalWidth) {
+    buildBrainMesh(brainImg);
+  }
+
+  // 3. SYNAPTIC PARTICLE CONSTELLATION (130 NODES)
+  const particlesCount = 130;
+  const partGeo = new THREE.BufferGeometry();
+  const posArray = new Float32Array(particlesCount * 3);
+  const colors = new Float32Array(particlesCount * 3);
+
+  const colorViolet = new THREE.Color(0xc4a8ff);
+  const colorCyan = new THREE.Color(0x38bdf8);
+  const colorWhite = new THREE.Color(0xffffff);
+
+  for (let i = 0; i < particlesCount; i++) {
+    const idx = i * 3;
+    posArray[idx] = (Math.random() - 0.5) * 8.5;
+    posArray[idx + 1] = (Math.random() - 0.5) * 6.5;
+    posArray[idx + 2] = (Math.random() - 0.5) * 4.5;
+
+    const pick = Math.random();
+    const c = pick < 0.55 ? colorViolet : (pick < 0.85 ? colorCyan : colorWhite);
+    colors[idx] = c.r;
+    colors[idx + 1] = c.g;
+    colors[idx + 2] = c.b;
+  }
+
+  partGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+  partGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+  const partMat = new THREE.PointsMaterial({
+    size: 0.045,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.85
+  });
+  const particlesMesh = new THREE.Points(partGeo, partMat);
+  scene.add(particlesMesh);
+
+  // Pointer Parallax
+  let mouseX = 0, mouseY = 0;
+  let targetRotX = 0, targetRotY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth) - 0.5;
+    const y = (e.clientY / window.innerHeight) - 0.5;
+    mouseX = x;
+    mouseY = y;
+    targetRotY = x * 0.75;
+    targetRotX = y * 0.45;
+  });
+
+  // Reduced motion support
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let isIntersecting = true;
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(([entry]) => {
+      isIntersecting = entry.isIntersecting;
+    });
+    observer.observe(canvas);
+  }
+
+  function animate() {
+    heroThreeAnimId = requestAnimationFrame(animate);
+
+    if (!isIntersecting) return; // Pause rendering loop when scrolled off-screen
+
+    if (!prefersReduced) {
+      const t = performance.now() * 0.001;
+
+      // Organic sinusoidal breathing levitation for the hyperrealistic brain
+      brainGroup.position.y = -0.15 + Math.sin(t * 1.3) * 0.08;
+      brainGroup.rotation.z = Math.sin(t * 0.8) * 0.02;
+
+
+
+      // Dynamic spring parallax tracking pointer coordinates
+      masterGroup.rotation.y += (targetRotY - masterGroup.rotation.y) * 0.045;
+      masterGroup.rotation.x += (targetRotX - masterGroup.rotation.x) * 0.045;
+
+      // Slow drift of synaptic particles
+      particlesMesh.rotation.y += 0.0006;
+    }
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    const w = stage.clientWidth;
+    const h = stage.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+}
+
+function initAnorentGsapMotion() {
+  if (typeof gsap === 'undefined') return;
+
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  // Staggered cinematic reveal of hero headline
+  gsap.from('.monumental-headline .kinetic-text', {
+    y: 60,
+    opacity: 0,
+    duration: 1.1,
+    stagger: 0.16,
+    ease: 'power3.out',
+    delay: 0.2
+  });
+
+  // Fade-in editorial statement and search capsule
+  gsap.from('.hero-editorial-statement, .hero-search-capsule', {
+    y: 24,
+    opacity: 0,
+    duration: 0.9,
+    stagger: 0.12,
+    ease: 'power2.out',
+    delay: 0.6
+  });
+
+  // Dock items entrance
+  gsap.from('.hero-bottom-dock > *', {
+    y: 18,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: 'power2.out',
+    delay: 0.8
+  });
+}
+
+function scrollToCurriculumTopology() {
+  const target = document.querySelector('.curriculum-section') || document.querySelector('.atlas-board-section');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+window.scrollToCurriculumTopology = scrollToCurriculumTopology;
+
+// Wire up initialization on DOMContentLoaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      initAnorent3DEngine();
+      initAnorentGsapMotion();
+    }, 150);
+  });
+} else {
+  setTimeout(() => {
+    initAnorent3DEngine();
+    initAnorentGsapMotion();
+  }, 150);
+}

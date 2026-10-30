@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PsychStudy — Brand Identity, Typography & Visual Standards Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --border: #E2E8F0;
+      --border-subtle: #EDF2F7;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --navy: #0A1128;
+      --purple: #5B21B6;
+      --lavender: #C4B5FD;
+      --slate: #5B6B82;
+      --dark-workstation: #0B1120;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-ui: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-brand-tag: 'Lato', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --shadow-sm: 0 1px 3px rgba(15,23,42,0.06);
+      --shadow-md: 0 4px 20px -2px rgba(15,23,42,0.08);
+      --shadow-lg: 0 12px 32px -4px rgba(15,23,42,0.12);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      line-height: 1.6;
+      padding-bottom: 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* HEADER */
+    .header {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border);
+      padding: 48px 0 40px;
+      margin-bottom: 48px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(91, 33, 182, 0.08);
+      color: var(--purple);
+      border: 1px solid rgba(91, 33, 182, 0.2);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+    .header h1 {
+      font-family: var(--font-display);
+      font-size: 2.75rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .header p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 800px;
+    }
+
+    /* SECTIONS */
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      max-width: 760px;
+    }
+
+    .section-block {
+      margin-bottom: 56px;
+    }
+
+    /* DELIVERABLE CARDS */
+    .deliverable-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(560px, 1fr));
+      gap: 28px;
+    }
+    @media (max-width: 768px) {
+      .deliverable-grid { grid-template-columns: 1fr; }
+    }
+
+    .logo-card {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .logo-card:hover {
+      box-shadow: var(--shadow-md);
+    }
+    .card-canvas {
+      padding: 48px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 240px;
+      position: relative;
+    }
+    .canvas-white { background: #FFFFFF; }
+    .canvas-checker {
+      background: repeating-conic-gradient(#F1F5F9 0% 25%, #FFFFFF 0% 50%) 50% / 18px 18px;
+    }
+    .canvas-dark {
+      background: var(--dark-workstation);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .card-canvas img {
+      max-width: 90%;
+      height: auto;
+      max-height: 120px;
+      object-fit: contain;
+    }
+    .card-meta {
+      background: #FFFFFF;
+      padding: 18px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .card-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .dl-btn-group {
+      display: flex;
+      gap: 8px;
+    }
+    .dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .dl-png {
+      background: #F1F5F9;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+    .dl-png:hover { background: #E2E8F0; }
+    .dl-svg {
+      background: rgba(91, 33, 182, 0.08);
+      color: var(--purple);
+      border: 1px solid rgba(91, 33, 182, 0.2);
+    }
+    .dl-svg:hover { background: rgba(91, 33, 182, 0.16); }
+
+    /* COLOR SWATCH GRID */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .swatch-card {
+      background: #FFFFFF;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .swatch-preview {
+      height: 96px;
+      display: flex;
+      align-items: flex-end;
+      padding: 12px;
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .swatch-details {
+      padding: 16px;
+      font-size: 0.82rem;
+    }
+    .swatch-name {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+    .swatch-role {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.75rem;
+    }
+    .spec-key { color: var(--text-muted); }
+    .spec-val { font-family: var(--font-mono); font-weight: 500; color: var(--text-main); }
+
+    /* TYPOGRAPHY SECTION */
+    .type-spec-card {
+      background: #FFFFFF;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+    .type-spec-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    .type-spec-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .type-spec-role {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .type-specimen {
+      margin-bottom: 20px;
+    }
+    .specimen-primary {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+    }
+    .specimen-tag {
+      font-family: var(--font-brand-tag);
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+    .type-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      background: #F8FAFC;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 0.8rem;
+    }
+    .metric-item { display: flex; flex-direction: column; gap: 2px; }
+    .metric-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .metric-val { font-family: var(--font-mono); font-weight: 600; color: var(--text-main); }
+
+    /* CODE SNIPPET */
+    .code-box {
+      background: #0F172A;
+      color: #E2E8F0;
+      border-radius: 8px;
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <div class="badge">Visual Identity System · DSM-5-TR & ICD-11 Standard</div>
+      <h1>PsychStudy Typography Transformation</h1>
+      <p>Luxury Academic Editorial Brand System inspired by collegiate excellence, peer-reviewed medical publishing, and clinical sophistication (10th Reference Design: Cormorant Garamond & Lato).</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. FINAL DELIVERABLES -->
+    <section class="section-block">
+      <h2 class="section-title">1. Deliverables Suite (Production Ready)</h2>
+      <p class="section-desc">Master horizontal locks, alpha-tested transparent outputs, nocturnal workstation modes, official black-and-white print editions, and standalone icon marks.</p>
+
+      <div class="deliverable-grid">
+
+        <!-- 1. Primary Horizontal Logo -->
+        <div class="logo-card">
+          <div class="card-canvas canvas-white">
+            <img src="assets/logo-primary.png" alt="PsychStudy Primary Logo (Editorial White)" />
+          </div>
+          <div class="card-meta">
+            <div>
+              <div class="card-title">1. Primary Horizontal Logo</div>
+              <div class="card-sub">Editorial Porcelain Canvas · 2200 × 720 px</div>
+            </div>
+            <div class="dl-btn-group">
+              <a href="assets/logo-primary.png" download class="dl-btn dl-png">PNG (HD)</a>
+              <a href="assets/logo-primary.svg" download class="dl-btn dl-svg">SVG Vector</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Transparent-Background Logo -->
+        <div class="logo-card">
+          <div class="card-canvas canvas-checker">
+            <img src="assets/logo-transparent.png" alt="PsychStudy Transparent Logo" />
+          </div>
+          <div class="card-meta">
+            <div>
+              <div class="card-title">2. Transparent-Background Logo</div>
+              <div class="card-sub">Alpha Channel · Light Surfaces Overlay</div>
+            </div>
+            <div class="dl-btn-group">
+              <a href="assets/logo-transparent.png" download class="dl-btn dl-png">PNG (HD)</a>
+              <a href="assets/logo-transparent.svg" download class="dl-btn dl-svg">SVG Vector</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Night / Dark Mode Suite -->
+        <div class="logo-card">
+          <div class="card-canvas canvas-dark">
+            <img src="assets/logo-dark.png" alt="PsychStudy Night Mode Suite" />
+          </div>
+          <div class="card-meta">
+            <div>
+              <div class="card-title">3. Night / Dark Mode Suite</div>
+              <div class="card-sub">Obsidian Workstation Canvas · Luminescent Accents</div>
+            </div>
+            <div class="dl-btn-group">
+              <a href="assets/logo-dark.png" download class="dl-btn dl-png">PNG (HD)</a>
+              <a href="assets/logo-dark.svg" download class="dl-btn dl-svg">SVG Vector</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Black and White Monochrome Logo -->
+        <div class="logo-card">
+          <div class="card-canvas canvas-white">
+            <img src="assets/logo-monochrome.png" alt="PsychStudy Monochrome Logo" />
+          </div>
+          <div class="card-meta">
+            <div>
+              <div class="card-title">4. Black & White Monochrome</div>
+              <div class="card-sub">High-Contrast Print · University Examination Publishing</div>
+            </div>
+            <div class="dl-btn-group">
+              <a href="assets/logo-monochrome.png" download class="dl-btn dl-png">PNG (HD)</a>
+              <a href="assets/logo-monochrome.svg" download class="dl-btn dl-svg">SVG Vector</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Icon-Only Color -->
+        <div class="logo-card">
+          <div class="card-canvas canvas-checker">
+            <img src="assets/logo-icon.png" style="max-height: 140px;" alt="PsychStudy Brain Sprout Icon" />
+          </div>
+          <div class="card-meta">
+            <div>
+              <div class="card-title">5. Icon-Only (Preserved Symbol)</div>
+              <div class="card-sub">Purple/Blue Gradient · 1000 × 1000 px</div>
+            </div>
+            <div class="dl-btn-group">
+              <a href="assets/logo-icon.png" download class="dl-btn dl-png">PNG (HD)</a>
+              <a href="assets/logo-icon.svg" download class="dl-btn dl-svg">SVG Vector</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Icon-Only Monochrome -->
+        <div class="logo-card">
+          <div class="card-canvas canvas-checker">
+            <img src="assets/logo-icon-bw.png" style="max-height: 140px;" alt="PsychStudy Brain Sprout Icon BW" />
+          </div>
+          <div class="card-meta">
+            <div>
+              <div class="card-title">6. Icon-Only (Monochrome)</div>
+              <div class="card-sub">Tonal Grayscale · Lithographic Scientific Plate</div>
+            </div>
+            <div class="dl-btn-group">
+              <a href="assets/logo-icon-bw.png" download class="dl-btn dl-png">PNG (HD)</a>
+              <a href="assets/logo-icon-bw.svg" download class="dl-btn dl-svg">SVG Vector</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. TYPOGRAPHY SYSTEM -->
+    <section class="section-block">
+      <h2 class="section-title">2. Typography System Specification</h2>
+      <p class="section-desc">Academic editorial elegance anchored by Christian Thalmann’s classic Cormorant Garamond serif and balanced by Łukasz Dziedzic’s architectural Lato sans-serif.</p>
+
+      <!-- Primary Specimen -->
+      <div class="type-spec-card">
+        <div class="type-spec-header">
+          <div>
+            <div class="type-spec-name">Cormorant Garamond</div>
+            <div class="type-spec-role">Primary Wordmark Typeface · SemiBold (Weight 600)</div>
+          </div>
+          <div class="badge" style="margin: 0;">Google Fonts</div>
+        </div>
+        <div class="type-specimen">
+          <div class="specimen-primary"><span style="color: var(--navy);">Psych</span><span style="color: var(--purple); margin-left: -2px;">Study</span></div>
+        </div>
+        <div class="type-metrics">
+          <div class="metric-item">
+            <span class="metric-label">X-Height Proportion</span>
+            <span class="metric-val">0.395 (Delicate & Refined)</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Ascenders</span>
+            <span class="metric-val">Ascends Above Cap-Height ('h', 'd')</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Tracking / Kerning</span>
+            <span class="metric-val">-0.015em (-2.5px Optical Union)</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Baseline Metric</span>
+            <span class="metric-val">Zero Delta (Continuous Baseline)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tagline Specimen -->
+      <div class="type-spec-card">
+        <div class="type-spec-header">
+          <div>
+            <div class="type-spec-name">Lato</div>
+            <div class="type-spec-role">Supporting Brand Tagline & Micro-Typography · Regular (Weight 400)</div>
+          </div>
+          <div class="badge" style="margin: 0;">Google Fonts</div>
+        </div>
+        <div class="type-specimen">
+          <div class="specimen-tag">LEARN <span style="color: #94A3B8; font-weight: 300;">/</span> UNDERSTAND <span style="color: #94A3B8; font-weight: 300;">/</span> GROW</div>
+        </div>
+        <div class="type-metrics">
+          <div class="metric-item">
+            <span class="metric-label">Letter-Spacing</span>
+            <span class="metric-val">0.28em (Architectural Tracking)</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Case Hierarchy</span>
+            <span class="metric-val">All-Caps (Versalien)</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Visual Weight</span>
+            <span class="metric-val">400 (Optical Serenity)</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Alignment</span>
+            <span class="metric-val">Centered Beneath Wordmark</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. COLOR PALETTE REFERENCE -->
+    <section class="section-block">
+      <h2 class="section-title">3. Brand Color Architecture</h2>
+      <p class="section-desc">Color palette harmonizing deep scholarly authority, royal clinical intellect, and crisp WCAG AA/AAA legibility.</p>
+
+      <div class="color-grid">
+
+        <!-- Deep Midnight Navy -->
+        <div class="swatch-card">
+          <div class="swatch-preview" style="background: #0A1128;">
+            <span>#0A1128</span>
+          </div>
+          <div class="swatch-details">
+            <div class="swatch-name">Midnight Navy</div>
+            <div class="swatch-role">Primary Wordmark ("Psych")</div>
+            <div class="spec-row"><span class="spec-key">RGB</span><span class="spec-val">10, 17, 40</span></div>
+            <div class="spec-row"><span class="spec-key">CMYK</span><span class="spec-val">75, 58, 0, 84</span></div>
+            <div class="spec-row"><span class="spec-key">Contrast (White)</span><span class="spec-val">17.5:1 (AAA)</span></div>
+          </div>
+        </div>
+
+        <!-- Royal Purple -->
+        <div class="swatch-card">
+          <div class="swatch-preview" style="background: #5B21B6;">
+            <span>#5B21B6</span>
+          </div>
+          <div class="swatch-details">
+            <div class="swatch-name">Royal Violet</div>
+            <div class="swatch-role">Secondary Wordmark ("Study")</div>
+            <div class="spec-row"><span class="spec-key">RGB</span><span class="spec-val">91, 33, 182</span></div>
+            <div class="spec-row"><span class="spec-key">CMYK</span><span class="spec-val">50, 82, 0, 29</span></div>
+            <div class="spec-row"><span class="spec-key">Contrast (White)</span><span class="spec-val">7.4:1 (AAA)</span></div>
+          </div>
+        </div>
+
+        <!-- Lavender Divider -->
+        <div class="swatch-card">
+          <div class="swatch-preview" style="background: #C4B5FD; color: #0F172A;">
+            <span>#C4B5FD</span>
+          </div>
+          <div class="swatch-details">
+            <div class="swatch-name">Lavender Mist</div>
+            <div class="swatch-role">Vertical Architectural Divider</div>
+            <div class="spec-row"><span class="spec-key">RGB</span><span class="spec-val">196, 181, 253</span></div>
+            <div class="spec-row"><span class="spec-key">CMYK</span><span class="spec-val">23, 28, 0, 1</span></div>
+            <div class="spec-row"><span class="spec-key">Stroke Width</span><span class="spec-val">1.5px – 2px</span></div>
+          </div>
+        </div>
+
+        <!-- Muted Slate Gray -->
+        <div class="swatch-card">
+          <div class="swatch-preview" style="background: #5B6B82;">
+            <span>#5B6B82</span>
+          </div>
+          <div class="swatch-details">
+            <div class="swatch-name">Academic Slate</div>
+            <div class="swatch-role">Supporting Tagline & Metadata</div>
+            <div class="spec-row"><span class="spec-key">RGB</span><span class="spec-val">91, 107, 130</span></div>
+            <div class="spec-row"><span class="spec-key">CMYK</span><span class="spec-val">30, 18, 0, 49</span></div>
+            <div class="spec-row"><span class="spec-key">Contrast (White)</span><span class="spec-val">5.2:1 (AA)</span></div>
+          </div>
+        </div>
+
+        <!-- Dark Mode Lilac -->
+        <div class="swatch-card">
+          <div class="swatch-preview" style="background: #A78BFA; color: #0F172A;">
+            <span>#A78BFA</span>
+          </div>
+          <div class="swatch-details">
+            <div class="swatch-name">Luminous Lilac</div>
+            <div class="swatch-role">Dark Mode Wordmark ("Study")</div>
+            <div class="spec-row"><span class="spec-key">RGB</span><span class="spec-val">167, 139, 250</span></div>
+            <div class="spec-row"><span class="spec-key">CMYK</span><span class="spec-val">33, 44, 0, 2</span></div>
+            <div class="spec-row"><span class="spec-key">Contrast (Dark)</span><span class="spec-val">9.8:1 (AAA)</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. IMPLEMENTATION SNIPPET -->
+    <section class="section-block">
+      <h2 class="section-title">4. Web Implementation & CSS Variables</h2>
+      <p class="section-desc">Standard implementation for web applications, university portals, and digital publications.</p>
+
+      <div class="code-box">/* Google Fonts CDN Import */
+&lt;link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&amp;family=Lato:wght@400&amp;display=swap" rel="stylesheet"&gt;
+
+/* Wordmark Styling */
+.psych-wordmark {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  color: #0A1128;
+  letter-spacing: -0.015em;
+}
+.study-wordmark {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  color: #5B21B6;
+  letter-spacing: -0.015em;
+  margin-left: -2px; /* optical union */
+}
+
+/* Tagline Styling */
+.psych-tagline {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 0.16em; /* relative to wordmark font-size */
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #5B6B82;
+  text-align: center;
+}</div>
+    </section>
+
+  </main>
+
+  <footer style="text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 40px 0; border-top: 1px solid var(--border);">
+    PsychStudy ("The Clinical Atlas") · Made by Harsh Dubey · DSM-5-TR &amp; ICD-11 Standard
+  </footer>
+
+</body>
+</html>
