@@ -281,7 +281,12 @@ PsychStudy/
 │       └── deploy.yml              # Automated validation & GitHub Pages deployment pipeline
 ├── assets/
 │   ├── brain-anatomy.jpg          # Neuroanatomy lateral hemisphere plate
-│   ├── favicon.png                # High-res Minimal White Brain Sprout icon
+│   ├── brain-texture.js           # Offline base64 WebGL brain texture
+│   ├── fonts/                     # Space Grotesk offline typography
+│   ├── hyperrealistic-brain.png   # 3D WebGL neural stage texture
+│   ├── ill-*.svg                  # Educational vector illustrations
+│   ├── libs/                      # Offline runtime engines (Three.js & GSAP)
+│   ├── logo-mark.png              # Navbar brand mark
 │   ├── hero-brain-head.png        # Rorschach synaptic backdrop
 │   ├── logo.png                   # Primary PsychStudy brand emblem
 │   └── platform-preview.svg       # Studio Workstation SVG interactive preview
@@ -305,6 +310,9 @@ PsychStudy/
 │   └── timeline.js                # 25 Historical psychiatric milestones (1800–2024)
 ├── tools/
 │   └── validate-data.mjs          # Standalone Node.js curriculum schema validator
+├── Minimal White Brain Sprout Icon.png # High-resolution favicon & Apple touch icon
+├── PsychStudy Brain Learning Logo.png  # Examination board header emblem
+├── QB of psychology of adjustment .pdf  # Curriculum question bank & syllabus source
 ├── AGENTS.md                      # AI agent protocol, architecture boundaries & guidelines
 ├── index.html                     # Offline single-page application core structure
 ├── script.js                      # Centralized application logic, SM-2, routing & controllers
