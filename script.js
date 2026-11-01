@@ -904,7 +904,21 @@ function navigate(page) {
   }
   if (page === 'exam') renderExam();
   if (page === 'flashcards' && !S.fcCards.length) loadFlashcards('all');
+  updateNavbarScrollState();
 }
+
+function updateNavbarScrollState() {
+  const navbar = document.getElementById('navbar');
+  if (!navbar) return;
+  const isDashboard = S.currentPage === 'dashboard';
+  const isScrolled = window.scrollY > 20;
+  if (!isDashboard || isScrolled) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+}
+window.updateNavbarScrollState = updateNavbarScrollState;
 
 function toggleNav() {
   document.getElementById('navLinks').classList.toggle('open');
@@ -4558,6 +4572,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderExam();
   loadStudyTopic(0);
   updateNavMastery();
+  updateNavbarScrollState();
+  window.addEventListener('scroll', updateNavbarScrollState, { passive: true });
 
   // Close modals on backdrop click
   document.getElementById('noteModal')?.addEventListener('click', function(e) {

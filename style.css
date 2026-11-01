@@ -175,7 +175,7 @@
     --dur-slow:   320ms;
 
     /* Dimensions */
-    --nav-h:       58px;
+    --nav-h:       68px;
     --bottom-nav-h:62px;
     --max-w:       1280px;
   }
@@ -398,37 +398,71 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   PSYCHSTUDY NAVIGATION SYSTEM — REFERENCE-INSPIRED ARCHITECTURE
-   Three-Region Composition: Brand (Left) | Nav Links (Center) | Utilities (Right)
-   Unified Horizontally Elongated Container • Refined Academic SaaS Visuals
+   PSYCHSTUDY LUMINA-INSPIRED NAVIGATION SYSTEM
+   Integrated Hero Architecture · Luminous Atmosphere · Refined Typography
+   Seamless Hero Stage Bleed · Frosted Glass Scroll State · Pill Geometry
    ═══════════════════════════════════════════════════════════════ */
 
 /* ── 1. PRIMARY NAVIGATION CONTAINER ─────────────────────────── */
 .navbar {
   position: sticky;
-  top: 14px;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--nav-h, 68px);
   z-index: 1000;
-  width: calc(100% - 32px);
-  max-width: 1380px;
-  height: 58px;
-  margin: 14px auto 0;
+  margin: 0;
   padding: 0;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(226, 232, 240, 0.90);
-  border-radius: 14px;
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.07), 0 2px 6px -1px rgba(15, 23, 42, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.9);
   box-sizing: border-box;
-  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  box-shadow: none;
+  transition: background-color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              backdrop-filter 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-[data-theme="dark"] .navbar {
-  background: rgba(11, 15, 27, 0.84);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow: 0 10px 32px -4px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+/* Luminous atmospheric top aura (inspired by Lumina reference) */
+.navbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(ellipse 65% 100% at 50% 0%, rgba(121, 85, 183, 0.08), transparent 75%);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+[data-theme="dark"] .navbar::before {
+  background: radial-gradient(ellipse 70% 100% at 50% 0%, rgba(167, 139, 250, 0.16), rgba(67, 56, 202, 0.08) 50%, transparent 80%);
+}
+
+/* Frosted glass active state on scroll or non-hero pages */
+.navbar.scrolled {
+  background: rgba(247, 246, 250, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(230, 225, 237, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02);
+}
+
+.navbar.scrolled::before {
+  opacity: 0;
+}
+
+[data-theme="dark"] .navbar.scrolled {
+  background: rgba(8, 8, 16, 0.85);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .nav-inner {
@@ -437,8 +471,10 @@
   justify-content: space-between;
   height: 100%;
   width: 100%;
-  padding: 0 20px;
-  gap: 16px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 48px;
+  gap: 24px;
   box-sizing: border-box;
 }
 
@@ -447,8 +483,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 24px;
-    gap: 16px;
+    padding: 0 48px;
+    gap: 24px;
   }
   .nav-brand {
     flex-shrink: 0;
@@ -457,7 +493,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 22px;
+    gap: 6px;
     margin: 0 auto;
   }
   .nav-actions {
@@ -472,41 +508,40 @@
   align-items: center;
   background: transparent;
   border: none;
-  padding: 4px;
+  padding: 4px 0;
   margin: 0;
   cursor: pointer;
   text-decoration: none;
-  border-radius: 8px;
   outline: none;
-  flex-shrink: 0;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-brand:hover {
-  opacity: 0.88;
+  opacity: 0.92;
   transform: translateY(-0.5px);
 }
 
 .nav-brand:focus-visible {
   outline: 2px solid var(--primary);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 .nav-brand-group {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
 }
 
 .nav-brand-mark {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
-  border-radius: 6px;
+  border-radius: 7px;
   image-rendering: -webkit-optimize-contrast;
-  filter: drop-shadow(0 2px 6px rgba(99, 102, 241, 0.22));
+  filter: drop-shadow(0 2px 8px rgba(121, 85, 183, 0.28));
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -516,15 +551,15 @@
 
 .nav-brand-divider {
   width: 1px;
-  height: 20px;
+  height: 18px;
   background: var(--border);
   flex-shrink: 0;
   margin: 0 1px;
-  opacity: 0.85;
+  opacity: 0.7;
 }
 
 [data-theme="dark"] .nav-brand-divider {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .nav-brand-text {
@@ -536,10 +571,10 @@
 }
 
 .nav-brand-name {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.25rem;
+  font-family: 'Instrument Sans', 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.15rem;
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   color: var(--text);
   line-height: 1;
   display: inline-flex;
@@ -547,26 +582,27 @@
 }
 
 .brand-name-purple {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Instrument Sans', 'Space Grotesk', -apple-system, sans-serif;
   color: var(--primary);
   font-weight: 600;
 }
 
 [data-theme="dark"] .brand-name-purple {
   color: #A78BFA;
-  text-shadow: 0 0 12px rgba(167, 139, 250, 0.3);
+  text-shadow: 0 0 14px rgba(167, 139, 250, 0.45);
 }
 
 .nav-brand-tag {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.52rem;
+  font-family: 'Instrument Sans', -apple-system, sans-serif;
+  font-size: 0.50rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.15em;
   color: var(--text-3);
   text-transform: uppercase;
   margin-top: 3px;
   line-height: 1;
   white-space: nowrap;
+  opacity: 0.75;
 }
 
 /* ── 3. CENTER REGION: PRIMARY NAVIGATION LINKS ──────────────── */
@@ -575,21 +611,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 22px;
-  margin: 0;
+  gap: 6px;
+  margin: 0 auto;
   padding: 0;
   white-space: nowrap;
 }
 
 .nav-btn {
   font-family: 'Instrument Sans', var(--font-ui), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.835rem;
+  font-size: 0.865rem;
   font-weight: 500;
   letter-spacing: -0.01em;
   color: var(--text-2);
-  height: auto;
-  padding: 6px 2px;
-  border-radius: 4px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
   border: none;
   background: transparent;
   display: inline-flex;
@@ -602,58 +638,47 @@
   line-height: 1;
   box-sizing: border-box;
   position: relative;
-  transition: color 0.18s ease, transform 0.18s ease;
+  transition: color 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   outline: none;
 }
 
-/* Text-led typography navigation (Luminal Reference Inspo) */
+/* Text-led typography navigation (Lumina Reference Inspo) */
 .nav-btn .nav-icon {
   display: none !important;
 }
 
 .nav-btn:hover {
   color: var(--text);
-  background: transparent;
+  background: rgba(121, 85, 183, 0.07);
   transform: translateY(-0.5px);
 }
 
 [data-theme="dark"] .nav-btn:hover {
   color: #FFFFFF;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .nav-btn:focus-visible {
   outline: 2px solid var(--primary);
-  outline-offset: 4px;
+  outline-offset: 2px;
 }
 
-/* Active Page State: Refined Bottom Hairline Indicator (Luminal Inspo) */
+/* Active Page State: Refined Pill Highlight (Lumina Inspo) */
 .nav-btn.active {
   color: var(--primary);
   font-weight: 600;
-  background: transparent;
-  border: none;
-}
-
-.nav-btn.active::after {
-  content: '';
-  position: absolute;
-  bottom: -7px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  border-radius: 999px;
-  background: var(--primary);
+  background: rgba(121, 85, 183, 0.11);
+  box-shadow: inset 0 0 0 1px rgba(121, 85, 183, 0.22);
 }
 
 [data-theme="dark"] .nav-btn.active {
-  color: #A5B4FC;
-  background: transparent;
-}
-
-[data-theme="dark"] .nav-btn.active::after {
-  background: #818CF8;
-  box-shadow: 0 0 10px rgba(129, 140, 248, 0.7);
+  color: #FFFFFF;
+  font-weight: 600;
+  background: rgba(167, 139, 250, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(167, 139, 250, 0.32), 0 0 14px rgba(167, 139, 250, 0.2);
 }
 
 /* ── EXPLORE DROPDOWN ────────────────────────────────────────── */
@@ -671,9 +696,9 @@
 .nav-chevron {
   width: 10px;
   height: 10px;
-  margin-left: 1px;
+  margin-left: 2px;
   opacity: 0.65;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
 }
 
 .nav-dropdown-wrap.open .nav-chevron,
@@ -684,21 +709,26 @@
 
 .nav-dropdown-wrap.open .nav-dropdown-btn {
   color: var(--primary);
-  background: transparent;
+  background: rgba(121, 85, 183, 0.10);
+}
+
+[data-theme="dark"] .nav-dropdown-wrap.open .nav-dropdown-btn {
+  color: #FFFFFF;
+  background: rgba(167, 139, 250, 0.15);
 }
 
 .nav-dropdown-menu {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  min-width: 280px;
-  max-width: 320px;
-  background: var(--surface);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.14), 0 4px 12px rgba(15, 23, 42, 0.05);
+  min-width: 290px;
+  max-width: 330px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px -4px rgba(15, 23, 42, 0.12), 0 4px 12px rgba(15, 23, 42, 0.04);
   padding: 6px;
   display: none;
   flex-direction: column;
@@ -708,9 +738,11 @@
 }
 
 [data-theme="dark"] .nav-dropdown-menu {
-  background: rgba(15, 21, 37, 0.96);
-  border-color: rgba(255, 255, 255, 0.10);
-  box-shadow: 0 20px 40px -4px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  background: rgba(15, 21, 37, 0.95);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 24px 48px -6px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .nav-dropdown-wrap.open .nav-dropdown-menu {
@@ -778,47 +810,67 @@
   margin: 4px 6px;
 }
 
-/* ── 4. RIGHT REGION: UTILITY ACTIONS ────────────────────────── */
+/* ── 4. RIGHT REGION: UTILITY ACTIONS (LUMINA PILL ARCHITECTURE) ── */
 .nav-actions {
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 10px;
   white-space: nowrap;
 }
 
-/* Command Palette Search Trigger */
+/* Command Palette Search Trigger (Translucent Glass Pill) */
 .cmd-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 0 10px;
-  height: 34px;
-  border-radius: 8px;
-  background: var(--surface-inset);
-  border: 1px solid var(--border);
-  color: var(--text-3);
+  gap: 8px;
+  padding: 0 14px 0 12px;
+  height: 36px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  color: var(--text-2);
   font-family: 'Instrument Sans', var(--font-ui), sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 500;
   cursor: pointer;
   line-height: 1;
   box-sizing: border-box;
-  transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] .cmd-trigger {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(245, 243, 250, 0.80);
 }
 
 .cmd-trigger svg {
   width: 14px;
   height: 14px;
-  opacity: 0.75;
+  opacity: 0.8;
   flex-shrink: 0;
 }
 
 .cmd-trigger:hover {
+  background: #FFFFFF;
   border-color: var(--primary-border);
   color: var(--text);
-  background: var(--surface);
+  box-shadow: 0 3px 12px rgba(121, 85, 183, 0.16);
+  transform: translateY(-0.5px);
+}
+
+[data-theme="dark"] .cmd-trigger:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(167, 139, 250, 0.45);
+  color: #FFFFFF;
+  box-shadow: 0 0 18px rgba(167, 139, 250, 0.25);
   transform: translateY(-0.5px);
 }
 
@@ -829,24 +881,32 @@
 
 .kbd-hint {
   font-family: 'JetBrains Mono', var(--font-mono), monospace;
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 600;
-  padding: 1.5px 5px;
-  border-radius: 4px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.07);
   color: var(--text-3);
   line-height: 1;
   letter-spacing: 0.02em;
 }
 
-/* Utility Icon Buttons (Settings & Theme) */
+[data-theme="dark"] .kbd-hint {
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Utility Icon Buttons (Settings & Theme — Circular Glass Pills) */
 .icon-btn-nav, .theme-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface-inset);
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--text-2);
   display: inline-flex;
   align-items: center;
@@ -856,19 +916,36 @@
   flex-shrink: 0;
   box-sizing: border-box;
   outline: none;
-  transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] .icon-btn-nav,
+[data-theme="dark"] .theme-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(245, 243, 250, 0.80);
 }
 
 .icon-btn-nav:hover, .theme-btn:hover {
   border-color: var(--primary-border);
   color: var(--primary);
-  background: var(--primary-light);
+  background: #FFFFFF;
+  box-shadow: 0 3px 12px rgba(121, 85, 183, 0.16);
+  transform: translateY(-0.5px);
+}
+
+[data-theme="dark"] .icon-btn-nav:hover,
+[data-theme="dark"] .theme-btn:hover {
+  border-color: rgba(167, 139, 250, 0.45);
+  color: #FFFFFF;
+  background: rgba(167, 139, 250, 0.18);
+  box-shadow: 0 0 16px rgba(167, 139, 250, 0.25);
   transform: translateY(-0.5px);
 }
 
 .icon-btn-nav:focus-visible, .theme-btn:focus-visible {
   outline: 2px solid var(--primary);
-  outline-offset: 1px;
+  outline-offset: 2px;
 }
 
 .icon-btn-nav svg, .theme-btn svg {
@@ -876,25 +953,48 @@
   height: 15px;
 }
 
-/* Mastery Circular Indicator Chip */
+#themeIcon {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-btn:hover #themeIcon {
+  transform: rotate(24deg) scale(1.08);
+}
+
+/* Mastery Circular Indicator Chip (Sleek Glass Pill) */
 .nav-mastery-wrap {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 34px;
-  padding: 0 8px 0 6px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface-inset);
+  gap: 7px;
+  height: 36px;
+  padding: 0 12px 0 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   cursor: pointer;
   flex-shrink: 0;
   box-sizing: border-box;
-  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] .nav-mastery-wrap {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .nav-mastery-wrap:hover {
   border-color: var(--primary-border);
-  background: var(--surface);
+  background: #FFFFFF;
+  box-shadow: 0 3px 12px rgba(121, 85, 183, 0.16);
+  transform: translateY(-0.5px);
+}
+
+[data-theme="dark"] .nav-mastery-wrap:hover {
+  border-color: rgba(167, 139, 250, 0.45);
+  background: rgba(255, 255, 255, 0.10);
+  box-shadow: 0 0 16px rgba(167, 139, 250, 0.22);
   transform: translateY(-0.5px);
 }
 
@@ -911,12 +1011,21 @@
   stroke-width: 3.5;
 }
 
+[data-theme="dark"] .mastery-mini-ring .ring-bg {
+  stroke: rgba(255, 255, 255, 0.14);
+}
+
 .mastery-mini-ring .ring-fill {
   fill: none;
   stroke: var(--primary);
   stroke-width: 3.5;
   stroke-linecap: round;
-  transition: stroke-dasharray 0.4s ease;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+[data-theme="dark"] .mastery-mini-ring .ring-fill {
+  stroke: #A78BFA;
+  filter: drop-shadow(0 0 4px rgba(167, 139, 250, 0.6));
 }
 
 .nav-mastery-text {
@@ -927,14 +1036,20 @@
   line-height: 1;
 }
 
-/* Mobile Hamburger Menu Control */
+[data-theme="dark"] .nav-mastery-text {
+  color: #F5F3FA;
+}
+
+/* Mobile Hamburger Menu Control (Circular Glass Pill) */
 .hamburger {
   display: none;
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface-inset);
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--text);
   align-items: center;
   justify-content: center;
@@ -943,18 +1058,32 @@
   flex-shrink: 0;
   box-sizing: border-box;
   outline: none;
-  transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] .hamburger {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #F5F3FA;
 }
 
 .hamburger:hover {
   border-color: var(--primary-border);
   color: var(--primary);
-  background: var(--primary-light);
+  background: #FFFFFF;
+  box-shadow: 0 3px 12px rgba(121, 85, 183, 0.16);
+}
+
+[data-theme="dark"] .hamburger:hover {
+  border-color: rgba(167, 139, 250, 0.45);
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 16px rgba(167, 139, 250, 0.25);
 }
 
 .hamburger svg {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
 }
 
 /* ── 5. MOBILE NAVIGATION DRAWER ────────────────────────────────── */
@@ -1357,36 +1486,42 @@
 /* COMPACT DESKTOP (861px – 1180px) */
 @media (max-width: 1180px) and (min-width: 861px) {
   .navbar {
-    width: calc(100% - 24px);
-    margin: 10px auto 0;
+    top: 0;
+    width: 100%;
+    height: 64px;
+    margin: 0;
+    border-radius: 0;
   }
   .nav-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    gap: 12px;
+    padding: 0 28px;
+    gap: 16px;
   }
   .nav-brand-tag {
     display: none;
   }
   .nav-links {
-    gap: 14px;
+    gap: 4px;
     transform: none;
   }
   .nav-btn {
-    padding: 6px 2px;
-    font-size: 0.80rem;
-    height: auto;
+    padding: 0 10px;
+    font-size: 0.82rem;
+    height: 34px;
   }
   .cmd-trigger {
-    padding: 0 10px;
+    padding: 0 12px;
+    height: 34px;
   }
   .cmd-trigger .kbd-hint {
     display: none;
   }
+  .icon-btn-nav, .theme-btn {
+    width: 34px;
+    height: 34px;
+  }
   .nav-mastery-wrap {
-    padding: 0 6px 0 5px;
+    height: 34px;
+    padding: 0 10px 0 6px;
   }
 }
 
@@ -1404,23 +1539,30 @@
 
 /* TABLET & MOBILE VIEWPORT (<= 860px) */
 @media (max-width: 860px) {
+  :root {
+    --nav-h: 58px;
+  }
   .navbar {
-    top: 8px;
-    width: calc(100% - 16px);
-    height: 50px;
-    margin: 8px auto 0;
-    border-radius: 12px;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 58px;
+    margin: 0;
+    border-radius: 0;
   }
   .nav-inner {
     display: flex;
     justify-content: space-between;
-    padding: 0 10px;
+    padding: 0 20px;
   }
   .nav-links {
     display: none;
   }
   .hamburger {
     display: inline-flex;
+    width: 36px;
+    height: 36px;
   }
   .icon-btn-nav {
     display: none;
@@ -1432,10 +1574,14 @@
     display: none;
   }
   .cmd-trigger {
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     padding: 0;
     justify-content: center;
+  }
+  .theme-btn {
+    width: 36px;
+    height: 36px;
   }
   .bottom-nav {
     display: block;
@@ -1447,27 +1593,37 @@
 
 /* COMPACT MOBILE (< 480px) */
 @media (max-width: 480px) {
+  :root {
+    --nav-h: 54px;
+  }
   .navbar {
-    top: 6px;
-    width: calc(100% - 12px);
-    margin: 6px auto 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 54px;
+    margin: 0;
+    border-radius: 0;
+  }
+  .nav-inner {
+    padding: 0 16px;
   }
   .nav-brand-divider {
     display: none;
   }
   .nav-brand-mark {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
   }
   .nav-brand-name {
-    font-size: 1.15rem;
+    font-size: 1.08rem;
   }
   .nav-actions {
-    gap: 5px;
+    gap: 6px;
   }
   .cmd-trigger, .theme-btn, .hamburger {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
   }
   .cmd-trigger svg, .theme-btn svg {
     width: 14px;
@@ -1481,22 +1637,30 @@
 
 /* ULTRA-COMPACT MOBILE (< 360px: e.g. 320px) */
 @media (max-width: 360px) {
+  :root {
+    --nav-h: 52px;
+  }
   .navbar {
-    width: calc(100% - 8px);
-    margin: 4px auto 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 52px;
+    margin: 0;
+    border-radius: 0;
   }
   .nav-inner {
-    padding: 0 6px;
+    padding: 0 10px;
   }
   .nav-brand-name {
-    font-size: 1.05rem;
+    font-size: 1.0rem;
   }
   .nav-actions {
     gap: 4px;
   }
   .cmd-trigger, .theme-btn, .hamburger {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
   }
 }
 
@@ -9464,7 +9628,8 @@ body {
   position: relative;
   width: 100%;
   min-height: 840px;
-  padding: 36px 48px 36px;
+  margin-top: calc(-1 * var(--nav-h, 68px));
+  padding: calc(var(--nav-h, 68px) + 24px) 48px 36px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -9531,7 +9696,8 @@ body {
 
 @media (max-width: 640px) {
   .anorent-hero {
-    padding: 24px 18px 30px !important;
+    margin-top: calc(-1 * var(--nav-h, 54px)) !important;
+    padding: calc(var(--nav-h, 54px) + 18px) 18px 30px !important;
     min-height: auto !important;
   }
   .monumental-headline {
